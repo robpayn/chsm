@@ -188,15 +188,15 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
             ));
       installController(controller);
       
-      loggerManager.statusUpdate("Loading the time resource...");
-      Resource resourceTime = new ResourceTime();
-      resourceTime.initialize(ResourceTime.DEFAULT_NAME);
-      builder.addResource(resourceTime);
-      
       loggerManager.statusUpdate("Loading the configured resources...");
       ArrayList<Resource> resources = getResources();
+      boolean isTimeResourceLoaded = false;
       for (Resource resource: resources)
       {
+         if (resource.getName().equals(ResourceTime.DEFAULT_NAME))
+         {
+            isTimeResourceLoaded = true;
+         }
          builder.addResource(resource);
          loggerManager.statusUpdate(String.format(
                "   Resource %s loaded with name \"%s\" ...", 
@@ -205,6 +205,14 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
                ));
       }
 
+      if (!isTimeResourceLoaded)
+      {
+         loggerManager.statusUpdate("Loading the default time resource...");
+         Resource resourceTime = new ResourceTime();
+         resourceTime.initialize(ResourceTime.DEFAULT_NAME);
+         builder.addResource(resourceTime);
+      }
+      
       loggerManager.statusUpdate("Loading the output handlers...");
       ArrayList<OutputHandlerFactory<?,?>> factories = getOutputHandlerFactories();
       for (OutputHandlerFactory<?,?> factory: factories)
