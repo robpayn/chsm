@@ -8,13 +8,13 @@ import org.payn.chsm.resources.statespace.ResourceStateSpace;
 import org.payn.chsm.values.ValueStateMap;
 
 /**
- * A collection of state variables representing an atomic functional unit
- * of a state machine at a given tier of a hierarchy
+ * A collection of states representing an compositional layer
+ * of a hierarchical state machine
  * 
  * @author robpayn
  *
  */
-public class Holon extends StateVariable {
+public abstract class Holon extends StateVariable {
    
    /**
     * Map of all behaviors tracked by the holon
@@ -27,14 +27,12 @@ public class Holon extends StateVariable {
    protected HashSet<String> installedBehaviorMap;
    
    /**
-    * Create a new holon with the provided name
+    * Create a new holon with the provided name and parent holon
     * 
     * @param name
-    *       name of the new holon
-    * @param hierarchy 
-    *       hierarchy behavior tracked by the holon
+    *       name string for the new holon
     * @param parentHolon 
-    *       parent holon for the state variable
+    *       parent holon that is composed by the new holon
     * @throws Exception 
     */
    public Holon(String name, Holon parentHolon) throws Exception 
@@ -43,7 +41,7 @@ public class Holon extends StateVariable {
       if (parentHolon != null)
       {
          behavior = parentHolon.getBehavior();
-         parentHolon.addStateVariable(this);
+         parentHolon.addState(this);
       }
       else
       {
@@ -60,12 +58,13 @@ public class Holon extends StateVariable {
    }
    
    /**
-    * Add a state to the holon
+    * Add a state to the holon composition
     * 
     * @param state
-    * @throws Exception 
+    *       state object
+    * @throws Exception
     */
-   public void addStateVariable(State state) throws Exception
+   public void addState(State state) throws Exception
    {
       if (getValue() == null)
       {
@@ -89,24 +88,12 @@ public class Holon extends StateVariable {
       {
          behaviorMap.put(behavior.getName(), behavior);
       }
+      
       if (state.isDynamic())
       {
-         addProcessorForState(state);
+         trackProcessor(state);
       }
    }
-
-   /**
-    * Add a processor to an existing state
-    * 
-    * @param state
-    * @param processor
-    * @throws Exception
-    */
-   public void addProcessorForState(State state) throws Exception 
-   {
-      // Default implementation does not track processors
-   }
-
 
    /**
     * Get a reference to the state variable with the provided name
@@ -171,5 +158,13 @@ public class Holon extends StateVariable {
    {
       return installedBehaviorMap.contains(behavior.getName());
    }
+
+   /**
+    * Track the processor for a given state
+    * 
+    * @param state
+    * @throws Exception
+    */
+   public abstract void trackProcessor(State state) throws Exception;
 
 }

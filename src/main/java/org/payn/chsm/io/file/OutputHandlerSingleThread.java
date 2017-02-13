@@ -14,7 +14,7 @@ public abstract class OutputHandlerSingleThread extends OutputHandlerInterval im
    protected Thread thread;
    
    /**
-    * Write the ouptut
+    * Write the output
     * 
     * @throws Exception 
     *       if error in IO

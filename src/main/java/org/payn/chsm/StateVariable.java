@@ -1,8 +1,8 @@
 package org.payn.chsm;
 
 /**
- * Abstract implementation of a state variable, 
- * a fundamental data unit for a continuous hierarchical state machine
+ * Simple implementation of a variable state, 
+ * an atomic data unit for a continuous hierarchical state machine
  * 
  * @author robpayn
  *
@@ -14,12 +14,6 @@ public class StateVariable implements State {
     */
    protected String name;
    
-   /**
-    * Getter for the state name
-    * 
-    * @return
-    *       name of the state
-    */
    @Override
    public String getName() 
    {
@@ -31,12 +25,6 @@ public class StateVariable implements State {
     */
    protected Behavior behavior = null;
 
-   /**
-    * Get the behavior
-    * 
-    * @return
-    *       behavior tracked by this state variable
-    */
    @Override
    public Behavior getBehavior() 
    {
@@ -48,24 +36,12 @@ public class StateVariable implements State {
     */
    protected Value value = null;
    
-   /**
-    * Setter for the value
-    * 
-    * @param value
-    *       value to be associated with the state variable
-    */
    @Override
    public void setValue(Value value) 
    {
       this.value = value;
    }
 
-   /**
-    * Getter for the value
-    * 
-    * @return
-    *       value of the state variable
-    */
    @Override
    public Value getValue() 
    {
@@ -73,28 +49,16 @@ public class StateVariable implements State {
    }
 
    /**
-    * Containing holon
+    * Holon that is composed of the state
     */
    protected Holon parentHolon;
    
-   /**
-    * Set the parent holon
-    * 
-    * @param parentHolon
-    *       parent holon for this state variable
-    */
    @Override
    public void setParentHolon(Holon parentHolon)
    {
       this.parentHolon = parentHolon;
    }
 
-   /**
-    * Get the parent holon for this state variable
-    * 
-    * @return
-    *       parent holon
-    */
    @Override
    public Holon getParentHolon() 
    {
@@ -102,13 +66,11 @@ public class StateVariable implements State {
    }
    
    /**
-    * Processor for the state (null if static state)
+    * Processor that changes the value of the state 
+    * (null if state is not dynamic)
     */
    protected Processor processor;
    
-   /**
-    * Setter for the processor.  
-    */
    @Override
    public void setProcessor(Processor processor) throws Exception
    {
@@ -119,9 +81,6 @@ public class StateVariable implements State {
       }
    }
    
-   /**
-    * Getter for the processor
-    */
    @Override
    public Processor getProcessor()
    {
@@ -129,7 +88,7 @@ public class StateVariable implements State {
    }
    
    /**
-    * Raw constructor
+    * Constructs a new state variable with the given name
     * 
     * @param name
     *       Name of the state variable
@@ -140,7 +99,7 @@ public class StateVariable implements State {
    }
    
    /**
-    * Create a new state variable with the given name and behavior
+    * Constructs a new state variable with the given name and behavior
     * 
     * @param name
     *       name of the state
@@ -154,7 +113,7 @@ public class StateVariable implements State {
    }
    
    /**
-    * Construct a new state variable in the provided holon
+    * Construct a new state variable composing the provided holon
     * 
     * @param name
     *       name of the state variable
@@ -168,12 +127,11 @@ public class StateVariable implements State {
    public StateVariable(String name, Behavior behavior, Holon holon) throws Exception
    {
       this(name, behavior);
-      holon.addStateVariable(this);
+      holon.addState(this);
    }
    
    /**
-    * Create a new state variable with the given name and behavior, and add
-    * it to the given holon
+    * Construct a new state variable with the provided processor
     * 
     * @param name
     *       name of the state variable
@@ -191,7 +149,7 @@ public class StateVariable implements State {
    }
    
    /**
-    * Construct a new state variable with the provided processor and insert into the provided holon
+    * Construct a new state variable with the provided processor and composing the provided holon
     * 
     * @param name
     *       name of the state variable
@@ -207,11 +165,11 @@ public class StateVariable implements State {
    public StateVariable(String name, Behavior behavior, Processor processor, Holon holon) throws Exception
    {
       this(name, behavior, processor);
-      holon.addStateVariable(this);
+      holon.addState(this);
    }
    
    /**
-    * Unique string for the state
+    * Unique string representing the full state composition hierarchy
     */
    @Override
    public String toString()
@@ -220,10 +178,10 @@ public class StateVariable implements State {
    }
 
    /**
-    * Creates a period-delimited unique name based on hierarchy of holon names
+    * Creates a period-delimited string representation of the composition hierarchy 
     * 
     * @return 
-    *       name
+    *       name string
     */
    private String createUniqueName() 
    {
@@ -239,21 +197,12 @@ public class StateVariable implements State {
       return uniqueName;
    }
    
-   /**
-    * Determines if this state is required by the associated behavior
-    * 
-    * @return 
-    *       true if required, false otherwise
-    */
    @Override
    public boolean isRequired()
    {
       return (behavior.isStateRequired(this));
    }
    
-   /**
-    * Determines if state is dynamic during runtime
-    */
    @Override
    public boolean isDynamic()
    {

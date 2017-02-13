@@ -260,7 +260,7 @@ public abstract class Behavior {
       else
       {
          state.setProcessor(processor);
-         holon.addProcessorForState(state);
+         holon.trackProcessor(state);
       }
       controller.addProcessor(processor);
    }

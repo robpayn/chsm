@@ -1,7 +1,7 @@
 package org.payn.chsm;
 
 /**
- * Interface to a state in a composite hierarchy state machine
+ * Interface for a state in a composite hierarchy state machine
  * 
  * @author robpayn
  *
@@ -9,66 +9,31 @@ package org.payn.chsm;
 public interface State {
 
    /**
-    * Get the behavior
+    * Get the behavior tracked by this state
     * 
     * @return
-    *       behavior tracked by this state variable
+    *       behavior object
     */
    public abstract Behavior getBehavior();
 
    /**
-    * Getter for the state name
+    * Get the name of the state
     * 
     * @return
-    *       name of the state
+    *       name string object
     */
    public abstract String getName();
 
    /**
-    * Set the parent holon
+    * Set the parent holon that is composed by this state
     * 
     * @param parentHolon
-    *       parent holon for this state variable
+    *       parent holon object
     */
    public abstract void setParentHolon(Holon parentHolon);
    
    /**
-    * Setter for the processor
-    * 
-    * @param processor 
-    *       Processor for the state
-    *       
-    * @throws Exception
-    *       If error in creating the value 
-    */
-   public abstract void setProcessor(Processor processor) throws Exception;
-   
-   /**
-    * Getter for the processor
-    * 
-    * @return 
-    *       Processor associated with the state; null if static state
-    */
-   public abstract Processor getProcessor();
-
-   /**
-    * Setter for the value
-    * 
-    * @param value
-    *       value to be associated with the state variable
-    */
-   public abstract void setValue(Value value);
-
-   /**
-    * Getter for the value
-    * 
-    * @return
-    *       value of the state variable
-    */
-   public abstract Value getValue();
-
-   /**
-    * Get the parent holon for this state variable
+    * Get the parent holon for this state
     * 
     * @return
     *       parent holon
@@ -76,7 +41,42 @@ public interface State {
    public abstract Holon getParentHolon();
 
    /**
-    * Determines if this state is required by the model
+    * Set the processor that alters this state
+    * 
+    * @param processor 
+    *       processor object
+    *       
+    * @throws Exception
+    *       if error in creating the value for the state 
+    */
+   public abstract void setProcessor(Processor processor) throws Exception;
+   
+   /**
+    * Get the processor that alters this state
+    * 
+    * @return 
+    *       processor object, null if state is not dynamic
+    */
+   public abstract Processor getProcessor();
+
+   /**
+    * Set the value for this state
+    * 
+    * @param value
+    *       value object
+    */
+   public abstract void setValue(Value value);
+
+   /**
+    * Get the value of this state
+    * 
+    * @return
+    *       value object
+    */
+   public abstract Value getValue();
+
+   /**
+    * Determines if this state is required by the behavior
     * 
     * @return 
     *       true if required, false otherwise
