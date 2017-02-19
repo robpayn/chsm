@@ -2,7 +2,7 @@ package org.payn.chsm.values;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.values.ValueAbstract;
+import org.payn.chsm.ValueAbstract;
 
 import resources.particle.Particle;
 

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.payn.chsm.Agent;
 import org.payn.chsm.Value;
-import org.payn.chsm.values.ValueAbstract;
+import org.payn.chsm.ValueAbstract;
 
 public class ValueAgentMap extends ValueAbstract {
 

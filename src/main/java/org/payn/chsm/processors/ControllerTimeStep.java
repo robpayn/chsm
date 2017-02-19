@@ -6,6 +6,7 @@ import org.payn.chsm.OutputHandler;
 import org.payn.chsm.State;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 import org.payn.chsm.resources.time.BehaviorTime;
+import org.payn.chsm.resources.time.Iteration;
 import org.payn.chsm.resources.time.Time;
 import org.payn.chsm.values.ValueLong;
 
@@ -42,12 +43,12 @@ public abstract class ControllerTimeStep extends ControllerHolon {
    {
       Holon holon = (Holon)state;
       State iterationState = 
-            holon.getState(BehaviorTime.DEFAULT_ITERATION_NAME);
+            holon.getState(Iteration.class.getSimpleName());
       iterationValue = (ValueLong)iterationState.getValue();
       iterationUpdater = (UpdaterSimple)iterationState.getProcessor();
       
       State timeState = 
-            holon.getState(BehaviorTime.DEFAULT_TIME_NAME);
+            holon.getState(Time.class.getSimpleName());
       timeUpdater = (Time)timeState.getProcessor();
       timeUpdater.setDependencies();
       

@@ -1,7 +1,7 @@
 package org.payn.chsm.processors;
 
+import org.payn.chsm.ProcessorAbstract;
 import org.payn.chsm.Value;
-import org.payn.chsm.processors.ProcessorAbstract;
 import org.payn.chsm.values.ValueTimeSeries;
 
 public class ProcessorTimeSeries extends ProcessorAbstract<ValueTimeSeries> {

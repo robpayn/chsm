@@ -8,6 +8,7 @@ import org.payn.chsm.InputHandler;
 import org.payn.chsm.LoggerManager;
 import org.payn.chsm.OutputHandler;
 import org.payn.chsm.Processor;
+import org.payn.chsm.ProcessorAbstract;
 import org.payn.chsm.State;
 import org.payn.chsm.Value;
 

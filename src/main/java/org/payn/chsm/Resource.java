@@ -8,12 +8,7 @@ import java.util.HashMap;
  * @author rob payn
  *
  */
-public abstract class Resource {
-   
-   /**
-    * The behavior map used to create the factory
-    */
-   protected HashMap<String, Behavior> behaviorMap;
+public interface Resource {
    
    /**
     * Getter for the behavior map
@@ -21,32 +16,15 @@ public abstract class Resource {
     * @return
     *       behavior map
     */
-   public HashMap<String, Behavior> getBehaviorMap()
-   {
-      return behaviorMap;
-   }
+   public abstract HashMap<String, Behavior> getBehaviorMap();
    
-   /**
-    * Map of behavior names
-    */
-   protected HashMap<String, String> behaviorClassMap;
-   
-   /**
-    * Name of the resource
-    */
-   protected String name;
-
    /**
     * Setter for the name
     * 
     * @param name
     *       name
     */
-   public void initialize(String name) 
-   {
-      this.name = name;
-      addBehaviors();
-   }
+   public abstract void initialize(String name);
 
    /**
     * Getter for the name
@@ -54,10 +32,7 @@ public abstract class Resource {
     * @return
     *       name
     */
-   public String getName() 
-   {
-      return name;
-   }
+   public abstract String getName();
 
     /**
     * Getter for the class loader
@@ -65,20 +40,8 @@ public abstract class Resource {
     * @return
     *       class loader
     */
-   public ClassLoader getClassLoader() 
-   {
-      return getClass().getClassLoader();
-   }
+   public ClassLoader getClassLoader();
 
-   /**
-    * Raw constructor
-    */
-   public Resource()
-   {
-      behaviorClassMap = new HashMap<String, String>();
-      behaviorMap = new HashMap<String, Behavior>();
-   }
-   
    /**
     * Load and create an instance of the named behavior based on the full behavior name
     * 
@@ -89,25 +52,7 @@ public abstract class Resource {
     * @throws Exception
     *       if error in instantiating the behavior
     */
-   public Behavior getBehavior(String fullBehaviorName) throws Exception
-   {
-      Behavior behavior = behaviorMap.get(fullBehaviorName);
-      if (behavior == null)
-      {
-         String url = getBehaviorClassPath(fullBehaviorName);
-         if (url == null)
-            throw new Exception(String.format(
-                  "Behavior %s could not be found for resource %s.",
-                  fullBehaviorName,
-                  name
-                  ));
-         behavior = (Behavior)loadClass(url).newInstance();
-         behavior.setResource(this);
-         behavior.initialize(fullBehaviorName);
-         behaviorMap.put(behavior.getName(), behavior);
-      }
-      return behavior;
-   }
+   public abstract Behavior getBehavior(String fullBehaviorName) throws Exception;
    
   /**
     * Load the class at the specified class path
@@ -119,10 +64,7 @@ public abstract class Resource {
     * @throws Exception
     *       if error in instantiation
     */
-   public Class<?> loadClass(String classpath) throws Exception 
-   {
-      return getClassLoader().loadClass(classpath);
-   }
+   public abstract Class<?> loadClass(String classpath) throws Exception;
 
    /**
     * Get the class path for the named behavior
@@ -134,10 +76,7 @@ public abstract class Resource {
     * @throws Exception
     *       if error in getting behavior
     */
-   public String getBehaviorClassPath(String behaviorName) throws Exception
-   {
-      return behaviorClassMap.get(behaviorName);
-   }
+   public abstract String getBehaviorClassPath(String behaviorName) throws Exception;
 
    /**
     * Add a behavior to the resource
@@ -147,27 +86,11 @@ public abstract class Resource {
     * @param classPath
     *       class path to the behavior package
     */
-   protected void addBehavior(String behaviorName, String classPath)
-   {
-       behaviorClassMap.put(behaviorName, classPath);
-   }
-
-   /**
-    * Get the full state name using the base name
-    * 
-    * @param baseName
-    *       base name
-    * @return
-    *       full state name
-    */
-   public String getStateName(String baseName) 
-   {
-      return name + baseName;
-   }
-
+   public abstract void addBehavior(String behaviorName, String classPath);
+   
    /**
     * Add the behaviors for the resource
     */
-   protected abstract void addBehaviors();
+   public abstract void addBehaviors();
 
 }

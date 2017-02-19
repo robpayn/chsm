@@ -1,5 +1,7 @@
 package org.payn.chsm.values;
 
+import org.payn.chsm.ValueAbstract;
+
 /**
  * Value for a string
  * 

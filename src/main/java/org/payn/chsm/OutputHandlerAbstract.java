@@ -1,9 +1,9 @@
-package org.payn.chsm.io;
+package org.payn.chsm;
 
-import org.payn.chsm.Holon;
-import org.payn.chsm.OutputHandler;
-import org.payn.chsm.State;
-import org.payn.chsm.resources.time.BehaviorTime;
+import java.sql.Time;
+
+import org.payn.chsm.io.OutputHandlerFactory;
+import org.payn.chsm.resources.time.Iteration;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueLong;
 
@@ -62,10 +62,10 @@ public abstract class OutputHandlerAbstract<LT> implements OutputHandler {
    public void initialize(Holon source) throws Exception
    {
       State iterationState = 
-            source.getState(BehaviorTime.DEFAULT_ITERATION_NAME);
+            source.getState(Iteration.class.getSimpleName());
       iterationValue = (ValueLong)iterationState.getValue();
       State timeState = 
-            source.getState(BehaviorTime.DEFAULT_TIME_NAME);
+            source.getState(Time.class.getSimpleName());
       timeValue = (ValueDouble)timeState.getValue();
       this.source = source;
       

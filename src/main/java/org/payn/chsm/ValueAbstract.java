@@ -1,6 +1,4 @@
-package org.payn.chsm.values;
-
-import org.payn.chsm.Value;
+package org.payn.chsm;
 
 /**
  * Abstract implementation of a value

@@ -2,7 +2,7 @@ package org.payn.chsm.io.file;
 
 import java.io.File;
 
-import org.payn.chsm.io.OutputHandlerAbstract;
+import org.payn.chsm.OutputHandlerAbstract;
 
 /**
  * Output handler that targets a directory in a file system

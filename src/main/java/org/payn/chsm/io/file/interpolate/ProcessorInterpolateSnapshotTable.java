@@ -1,11 +1,11 @@
 package org.payn.chsm.io.file.interpolate;
 
 import java.io.File;
+import java.sql.Time;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.processors.interfaces.UpdaterAutoSimple;
-import org.payn.chsm.resources.time.BehaviorTime;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueString;
 
@@ -50,7 +50,7 @@ public class ProcessorInterpolateSnapshotTable extends ProcessorDouble implement
       ValueString delimiter = (ValueString)createDependency(getDelimiter()).getValue();
       ValueDouble time = (ValueDouble)createDependency(
             (Holon)getController().getState(),
-            BehaviorTime.DEFAULT_TIME_NAME
+            Time.class.getSimpleName()
             ).getValue();
       this.header = getHeaderName();
       interp = InterpolatorSnapshotTable.getInstance(

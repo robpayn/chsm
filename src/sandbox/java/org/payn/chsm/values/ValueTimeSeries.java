@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import org.payn.chsm.values.ValueAbstract;
+import org.payn.chsm.ValueAbstract;
 import org.payn.chsm.values.ValueDouble;
 
 public class ValueTimeSeries extends ValueAbstract {

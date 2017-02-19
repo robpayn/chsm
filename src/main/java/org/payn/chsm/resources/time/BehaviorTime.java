@@ -1,6 +1,6 @@
 package org.payn.chsm.resources.time;
 
-import org.payn.chsm.Behavior;
+import org.payn.chsm.BehaviorAbstract;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueLong;
 
@@ -10,7 +10,7 @@ import org.payn.chsm.values.ValueLong;
  * @author robpayn
  *
  */
-public class BehaviorTime extends Behavior {
+public class BehaviorTime extends BehaviorAbstract {
    
    /**
     * Parse an integer value of milliseconds into days/hours/minutes/seconds/milliseconds
@@ -67,18 +67,6 @@ public class BehaviorTime extends Behavior {
    public static String NAME = "SimulationTime";
    
    /**
-    * Default name of iteration state
-    */
-   public static String DEFAULT_ITERATION_NAME = 
-         ResourceTime.DEFAULT_NAME + Iteration.class.getSimpleName();
-
-   /**
-    * Default name of time state
-    */
-   public static String DEFAULT_TIME_NAME = 
-         ResourceTime.DEFAULT_NAME + Time.class.getSimpleName();
-
-   /**
     * Name of the iteration interval state variable
     */
    public static String ITERATION_INTERVAL = "TimeIterationInterval";
@@ -89,14 +77,14 @@ public class BehaviorTime extends Behavior {
    public static String LAST_ITERATION = "LastIteration";
 
    @Override
-   protected void addRequiredStates()
+   public void addRequiredStates()
    {
        addRequiredState(ITERATION_INTERVAL, ValueDouble.class);
        addRequiredState(LAST_ITERATION, ValueLong.class);
    }
 
    @Override
-   protected void addProcessors()
+   public void addProcessors()
    {
        addProcessor(Iteration.class.getSimpleName(), Iteration.class, Iteration.getValueClass());
        addProcessor(Time.class.getSimpleName(), Time.class, Time.getValueClass());

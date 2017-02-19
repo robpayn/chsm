@@ -1,6 +1,6 @@
 package org.payn.chsm.resources.time;
 
-import org.payn.chsm.Resource;
+import org.payn.chsm.ResourceAbstract;
 
 /**
  * Time resource
@@ -8,7 +8,7 @@ import org.payn.chsm.Resource;
  * @author robpayn
  *
  */
-public class ResourceTime extends Resource {
+public class ResourceTime extends ResourceAbstract {
 
    /**
     * Default name for the resource
@@ -21,7 +21,7 @@ public class ResourceTime extends Resource {
    public static final String BEHAVIOR_TIME = "SimulationTime";
 
    @Override
-   protected void addBehaviors() 
+   public void addBehaviors() 
    {
       addBehavior(
             BEHAVIOR_TIME,

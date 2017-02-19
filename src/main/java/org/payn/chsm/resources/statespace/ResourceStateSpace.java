@@ -1,7 +1,7 @@
 package org.payn.chsm.resources.statespace;
 
 import org.payn.chsm.Behavior;
-import org.payn.chsm.Resource;
+import org.payn.chsm.ResourceAbstract;
 
 /**
  * State space resource
@@ -9,7 +9,7 @@ import org.payn.chsm.Resource;
  * @author robpayn
  *
  */
-public class ResourceStateSpace extends Resource {
+public class ResourceStateSpace extends ResourceAbstract {
    
    /**
     * Create a behavior hierarchy in the state space resource
@@ -29,7 +29,7 @@ public class ResourceStateSpace extends Resource {
    }
 
    @Override
-   protected void addBehaviors() 
+   public void addBehaviors() 
    {
    }
 

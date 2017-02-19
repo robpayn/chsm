@@ -1,6 +1,6 @@
 package org.payn.chsm.resources.statespace;
 
-import org.payn.chsm.Behavior;
+import org.payn.chsm.BehaviorAbstract;
 
 /**
  * Behavior for hierarchical (holon) state variables
@@ -8,15 +8,15 @@ import org.payn.chsm.Behavior;
  * @author robpayn
  *
  */
-public class BehaviorHierarchy extends Behavior {
+public class BehaviorHierarchy extends BehaviorAbstract {
 
    @Override
-   protected void addRequiredStates()
+   public void addRequiredStates()
    {
    }
 
    @Override
-   protected void addProcessors()
+   public void addProcessors()
    {
    }
 
