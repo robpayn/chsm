@@ -1,16 +1,6 @@
-package org.payn.chsm.processors;
+package org.payn.chsm;
 
 import java.util.ArrayList;
-
-import org.payn.chsm.Controller;
-import org.payn.chsm.DependencyHandler;
-import org.payn.chsm.InputHandler;
-import org.payn.chsm.LoggerManager;
-import org.payn.chsm.OutputHandler;
-import org.payn.chsm.Processor;
-import org.payn.chsm.ProcessorAbstract;
-import org.payn.chsm.State;
-import org.payn.chsm.Value;
 
 /**
  * A processor that controls other processors in a state variable map

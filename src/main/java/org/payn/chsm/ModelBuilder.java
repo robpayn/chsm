@@ -313,27 +313,7 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @throws Exception
     *       if error in model creation
     */
-   public HT createModel() throws Exception 
-   {
-      HT model = newModel();
-      // Initialize output handlers
-      loggerManager.statusUpdate("Initializing output handlers...");
-      for (OutputHandler outputHandler: controller.getOutputHandlers())
-      {
-         outputHandler.initialize(holon);
-      }
-      return model;
-   }
-
-   /**
-    * Create a specific type of new model
-    * 
-    * @return
-    *       new model
-    * @throws Exception
-    *       if error in creating model
-    */
-   protected abstract HT newModel() throws Exception;
+   public abstract HT createModel() throws Exception;
 
    /**
     * Build the model

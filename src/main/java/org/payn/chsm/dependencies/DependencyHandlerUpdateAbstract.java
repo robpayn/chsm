@@ -2,7 +2,7 @@ package org.payn.chsm.dependencies;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.DependencyHandler;
+import org.payn.chsm.DependencyHandlerAbstract;
 import org.payn.chsm.Processor;
 import org.payn.chsm.processors.interfaces.UpdaterAuto;
 import org.payn.chsm.processors.interfaces.UpdaterSlave;
@@ -14,7 +14,7 @@ import org.payn.chsm.processors.interfaces.UpdaterSlave;
  * @param <PT> 
  *
  */
-public abstract class DependencyHandlerUpdateAbstract<PT extends UpdaterAuto> extends DependencyHandler<PT> {
+public abstract class DependencyHandlerUpdateAbstract<PT extends UpdaterAuto> extends DependencyHandlerAbstract<PT> {
 
    /**
     * Constructor

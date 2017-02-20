@@ -42,6 +42,15 @@ public abstract class ControllerTimeStep extends ControllerHolon {
    public void initializeController() throws Exception
    {
       Holon holon = (Holon)state;
+
+      // Initialize output handlers
+      loggerManager.statusUpdate("Initializing output handlers...");
+      for (OutputHandler outputHandler: getOutputHandlers())
+      {
+         outputHandler.initialize(holon);
+      }
+      
+      // Initialize time
       State iterationState = 
             holon.getState(Iteration.class.getSimpleName());
       iterationValue = (ValueLong)iterationState.getValue();

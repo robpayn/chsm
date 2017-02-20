@@ -2,7 +2,7 @@ package org.payn.chsm.dependencies;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.DependencyHandler;
+import org.payn.chsm.DependencyHandlerAbstract;
 import org.payn.chsm.Processor;
 import org.payn.chsm.processors.interfaces.InitializerAuto;
 import org.payn.chsm.processors.interfaces.InitializerAutoSimple;
@@ -13,7 +13,7 @@ import org.payn.chsm.processors.interfaces.InitializerAutoSimple;
  * @author robpayn
  *
  */
-public class DependencyHandlerInitialize extends DependencyHandler<InitializerAutoSimple> {
+public class DependencyHandlerInitialize extends DependencyHandlerAbstract<InitializerAutoSimple> {
 
    /**
     * Constructs a new instance based on an array of initializers

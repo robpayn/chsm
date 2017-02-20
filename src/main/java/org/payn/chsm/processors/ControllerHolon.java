@@ -1,5 +1,6 @@
 package org.payn.chsm.processors;
 
+import org.payn.chsm.ControllerAbstract;
 import org.payn.chsm.Holon;
 import org.payn.chsm.ModelBuilder;
 import org.payn.chsm.values.ValueStateMap;
