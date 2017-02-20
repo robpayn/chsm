@@ -203,12 +203,12 @@ public class ElementHelper {
    /**
     * Checks to see if at least one element of a tag name exists
     * 
-    * @param string
+    * @param tagName
     *       tag name to seek
     * @return
     *       true if at least one element exists, false otherwise
     */
-   protected boolean hasElement(String tagName) 
+   public boolean hasElement(String tagName) 
    {
       return !(getFirstChildElement(tagName) == null);
    }

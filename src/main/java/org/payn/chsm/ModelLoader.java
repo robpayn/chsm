@@ -32,6 +32,36 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
    public static final Object ARG_CLASS_PATH = "loaderClassPath";
 
    /**
+    * Create a hashmap of key value pairs from the command line arguments.
+    * Delimiter between the key and value is expected to be an equals sign.
+    * 
+    * @param args
+    *       Array of arguments
+    * @return
+    *       Hashmap of key value pairs
+    * @throws Exception
+    *       If error in key value format
+    */
+   public static HashMap<String,String> createArgMap(String[] args) throws Exception
+   {
+      // Build the argument map
+      HashMap<String,String> argMap = new HashMap<String,String>();
+      for (int i = 0; i < args.length; i++)
+      {
+         String[] arg = args[i].split("=");
+         if (arg.length != 2)
+         {
+            throw new Exception(String.format(
+                  "'%s' is a malformed command line argument.",
+                  args[i]
+                  ));
+         }
+         argMap.put(arg[0], arg[1]);
+      }
+      return argMap;
+   }
+
+   /**
     * Create an object from a provided file system path and class path
     * 
     * @param classLoader 
@@ -147,7 +177,8 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
     * @throws Exception
     *       if errors in loading the builder, processor, outputters, or matrix
     */
-   public MBT createBuilder(HashMap<String, String> argMap, File workingDir) throws Exception
+   public MBT load(HashMap<String, String> argMap, File workingDir) 
+         throws Exception
    {
       this.argMap = argMap;
       this.workingDir = workingDir;
@@ -169,10 +200,10 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
             ));
       }
 
-      loggerManager.statusUpdate("Loading the matrix builder...");
+      loggerManager.statusUpdate("Loading the model builder...");
       builder = createBuilder();
       loggerManager.statusUpdate(String.format(
-            "   Loaded the matrix builder %s...",
+            "   Loaded the model builder %s...",
             builder.getClass().getCanonicalName()
             ));
       builder.setWorkingDirectory(workingDir);

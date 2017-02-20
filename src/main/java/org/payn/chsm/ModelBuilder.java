@@ -12,39 +12,9 @@ import org.payn.chsm.values.ValueDouble;
  * @author v78h241
  * 
  * @param <HT> 
- *
+ *      Type of the model holon
  */
 public abstract class ModelBuilder<HT extends Holon> {
-
-   /**
-    * Create a hashmap of key value pairs from the command line arguments.
-    * Delimiter between the key and value is expected to be an equals sign.
-    * 
-    * @param args
-    *       Array of arguments
-    * @return
-    *       Hashmap of key value pairs
-    * @throws Exception
-    *       If error in key value format
-    */
-   public static HashMap<String,String> createArgMap(String[] args) throws Exception
-   {
-      // Build the argument map
-      HashMap<String,String> argMap = new HashMap<String,String>();
-      for (int i = 0; i < args.length; i++)
-      {
-         String[] arg = args[i].split("=");
-         if (arg.length != 2)
-         {
-            throw new Exception(String.format(
-                  "'%s' is a malformed command line argument.",
-                  args[i]
-                  ));
-         }
-         argMap.put(arg[0], arg[1]);
-      }
-      return argMap;
-   }
 
    /**
     * Map of supported aliases for initial value types
@@ -336,11 +306,41 @@ public abstract class ModelBuilder<HT extends Holon> {
    }
    
    /**
+    * Create the model
+    * 
+    * @return
+    *       model object
+    * @throws Exception
+    *       if error in model creation
+    */
+   public HT createModel() throws Exception 
+   {
+      HT model = newModel();
+      // Initialize output handlers
+      loggerManager.statusUpdate("Initializing output handlers...");
+      for (OutputHandler outputHandler: controller.getOutputHandlers())
+      {
+         outputHandler.initialize(holon);
+      }
+      return model;
+   }
+
+   /**
+    * Create a specific type of new model
+    * 
+    * @return
+    *       new model
+    * @throws Exception
+    *       if error in creating model
+    */
+   protected abstract HT newModel() throws Exception;
+
+   /**
     * Build the model
     * 
     * @throws Exception
     *       if error in building the model
     */
-   public abstract void build() throws Exception;
+   public abstract void buildModel() throws Exception;
 
 }
