@@ -78,7 +78,19 @@ public interface Processor {
     * @throws Exception
     *       if error in finding the state 
     */
-   public abstract State createDependency(String stateName) throws Exception;
+   State createDependency(String stateName) throws Exception;
+
+   /**
+    * Create a dependency on the processor associated with the named state variable
+    * 
+    * @param stateName
+    *       name of the state variable on which this processor is dependent
+    * @return
+    *       reference to the value of the needed state 
+    * @throws Exception
+    *       if error in finding the state 
+    */
+   Value createDependencyOnValue(String stateName) throws Exception;
 
    /**
     * Create a dependency on a state in the same resource
@@ -104,7 +116,22 @@ public interface Processor {
     * @throws Exception
     *       if error in finding the state variable
     */
-   public abstract State createDependency(Holon holon, String stateName)
+   State createDependency(Holon holon, String stateName)
+         throws Exception;
+
+   /**
+    * Create a dependency on the processor associated with the named state variable in the named holon
+    * 
+    * @param holon 
+    *       holon containing the needed processor
+    * @param stateName
+    *       name of the state variable on which this processor is dependent
+    * @return
+    *       reference to the value of the needed state variable
+    * @throws Exception
+    *       if error in finding the state variable
+    */
+   Value createDependencyOnValue(Holon holon, String stateName)
          throws Exception;
 
    /**

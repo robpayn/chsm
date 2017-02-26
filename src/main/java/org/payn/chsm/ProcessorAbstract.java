@@ -29,6 +29,7 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
       if (state.getValue() == null)
       {
          createValue();
+         value.setToNoValue();
          state.setValue(value);
       }
       else
@@ -123,6 +124,12 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    }
 
    @Override
+   public Value createDependencyOnValue(String stateName) throws Exception 
+   {
+      return createDependency(stateName).getValue();
+   }
+
+   @Override
    public State createAbstractDependency(String stateName) throws Exception 
    {
       return createDependency(getResourceName() + stateName);
@@ -144,7 +151,13 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
       controller.createDependency(this, state);
       return state;
    }
-   
+
+   @Override
+   public Value createDependencyOnValue(Holon holon, String stateName) throws Exception
+   {
+      return createDependency(holon, stateName).getValue();
+   }
+
    @Override
    public State createAbstractDependency(Holon holon, String stateName) throws Exception 
    {

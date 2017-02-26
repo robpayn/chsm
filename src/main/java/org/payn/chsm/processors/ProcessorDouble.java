@@ -12,7 +12,7 @@ import org.payn.chsm.values.ValueDouble;
  */
 public class ProcessorDouble
 extends ProcessorAbstract<ValueDouble> {
-   
+
    /**
     * Get the value class for the processor
     * 
