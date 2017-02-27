@@ -1,11 +1,11 @@
 package org.payn.chsm.io.file.interpolate;
 
 import java.io.File;
-import java.sql.Time;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.processors.interfaces.UpdaterAutoSimple;
+import org.payn.chsm.resources.time.Time;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueString;
 
@@ -15,7 +15,8 @@ import org.payn.chsm.values.ValueString;
  * @author robpayn
  *
  */
-public class ProcessorInterpolateSnapshotTable extends ProcessorDouble implements UpdaterAutoSimple {
+public abstract class ProcessorInterpolateSnapshotTable 
+extends ProcessorDouble implements UpdaterAutoSimple {
    
    /**
     * Name of required state for interpolation type
@@ -45,13 +46,13 @@ public class ProcessorInterpolateSnapshotTable extends ProcessorDouble implement
    @Override
    public void setUpdateDependencies() throws Exception 
    {
-      ValueString pathName = (ValueString)createDependency(getPathName()).getValue();
-      ValueString type = (ValueString)createDependency(getTypeName()).getValue();
-      ValueString delimiter = (ValueString)createDependency(getDelimiter()).getValue();
-      ValueDouble time = (ValueDouble)createDependency(
+      ValueString pathName = createPathDependency();
+      ValueString type = createTypeDependency();
+      ValueString delimiter = createDelimiterDependency();
+      ValueDouble time = (ValueDouble)createDependencyOnValue(
             (Holon)getController().getState(),
             Time.class.getSimpleName()
-            ).getValue();
+            );
       this.header = getHeaderName();
       interp = InterpolatorSnapshotTable.getInstance(
             controller, 
@@ -61,28 +62,6 @@ public class ProcessorInterpolateSnapshotTable extends ProcessorDouble implement
             header, 
             type.toString()
             );
-   }
-
-   /**
-    * Get the delimiter
-    * 
-    * @return
-    *       name of delimiter state
-    */
-   protected String getDelimiter() 
-   {
-      return state.getBehavior().getResource().getName() + REQ_STATE_DELIMITER;
-   }
-
-   /**
-    * Get the name of the type
-    * 
-    * @return
-    *       name of the type state
-    */
-   protected String getTypeName() 
-   {
-      return state.getBehavior().getResource().getName() + REQ_STATE_TYPE;
    }
 
    /**
@@ -96,21 +75,46 @@ public class ProcessorInterpolateSnapshotTable extends ProcessorDouble implement
       return state.toString();
    }
 
-   /**
-    * Get the name of the path state
-    * 
-    * @return
-    *       name of the path state
-    */
-   protected String getPathName() 
-   {
-      return state.getBehavior().getResource().getName() + REQ_STATE_PATH;
-   }
-
    @Override
    public void update() throws Exception 
    {
       value.n = interp.interpolate(header);
+   }
+
+   /**
+    * Create the required parameter dependencies in the local holon
+    * 
+    * @throws Exception
+    */
+   protected ValueString createPathDependency() throws Exception 
+   {
+      return (ValueString)createDependency(
+            ProcessorInterpolateSnapshotTable.REQ_STATE_PATH
+            ).getValue();
+   }
+
+   /**
+    * Create the required parameter dependencies in the local holon
+    * 
+    * @throws Exception
+    */
+   protected ValueString createTypeDependency() throws Exception 
+   {
+      return (ValueString)createDependency(
+            ProcessorInterpolateSnapshotTable.REQ_STATE_TYPE
+            ).getValue();
+   }
+
+   /**
+    * Create the required parameter dependencies in the local holon
+    * 
+    * @throws Exception
+    */
+   protected ValueString createDelimiterDependency() throws Exception 
+   {
+      return (ValueString)createDependency(
+            ProcessorInterpolateSnapshotTable.REQ_STATE_DELIMITER
+            ).getValue();
    }
 
 }

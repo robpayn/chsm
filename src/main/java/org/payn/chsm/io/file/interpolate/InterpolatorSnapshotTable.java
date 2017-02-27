@@ -46,7 +46,8 @@ public class InterpolatorSnapshotTable extends Interpolator {
     *       if error in creating interpolator
     */
    public static InterpolatorSnapshotTable getInstance(
-         Controller controller, File path, ValueDouble time, String delimiter, String header, String interpolationType
+         Controller controller, File path, ValueDouble time, String delimiter, 
+         String header, String interpolationType
          ) throws Exception 
    {
       InterpolatorSnapshotTable table;
@@ -126,7 +127,9 @@ public class InterpolatorSnapshotTable extends Interpolator {
     * @param interpolationType
     * @throws Exception
     */
-   private InterpolatorSnapshotTable(File path, ValueDouble time, String delimiter, String interpolationType) throws Exception
+   private InterpolatorSnapshotTable(File path, ValueDouble time, 
+         String delimiter, String interpolationType) 
+         throws Exception
    {
       this.time = time;
       setCalculator(interpolationType, time);
