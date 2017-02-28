@@ -1,6 +1,7 @@
 package org.payn.chsm.resources.time;
 
 import org.payn.chsm.processors.ProcessorLong;
+import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 
 /**
@@ -9,7 +10,16 @@ import org.payn.chsm.processors.interfaces.UpdaterSimple;
  * @author robpayn
  *
  */
-public class Iteration extends ProcessorLong implements UpdaterSimple {
+public class Iteration extends ProcessorLong implements InitializerSimple, UpdaterSimple {
+
+   @Override
+   public void initialize() throws Exception 
+   {
+      if (value.isNoValue())
+      {
+         value.n = 0;
+      }
+   }
 
    /**
     * Increment the iteration counter
@@ -17,7 +27,7 @@ public class Iteration extends ProcessorLong implements UpdaterSimple {
    @Override
    public void update() 
    {
-      value.n = value.n + 1;
+      value.n += 1;
    }
 
 }

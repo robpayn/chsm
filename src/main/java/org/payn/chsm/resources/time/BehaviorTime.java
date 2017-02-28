@@ -69,7 +69,7 @@ public class BehaviorTime extends BehaviorAbstract {
    /**
     * Name of the iteration interval state variable
     */
-   public static String ITERATION_INTERVAL = "TimeIterationInterval";
+   public static String ITERATION_INTERVAL = "TimeInterval";
    
    /**
     * Name of the last iteration state variable

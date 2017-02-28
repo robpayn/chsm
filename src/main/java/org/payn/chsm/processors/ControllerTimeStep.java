@@ -4,6 +4,7 @@ import org.payn.chsm.Holon;
 import org.payn.chsm.InputHandler;
 import org.payn.chsm.OutputHandler;
 import org.payn.chsm.State;
+import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 import org.payn.chsm.resources.time.BehaviorTime;
 import org.payn.chsm.resources.time.Iteration;
@@ -31,7 +32,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
    /**
     * Updater for the time
     */
-   private Time timeUpdater;
+   private UpdaterSimple timeUpdater;
 
    /**
     * Initialize the time fields
@@ -55,11 +56,12 @@ public abstract class ControllerTimeStep extends ControllerHolon {
             holon.getState(Iteration.class.getSimpleName());
       iterationValue = (ValueLong)iterationState.getValue();
       iterationUpdater = (UpdaterSimple)iterationState.getProcessor();
+      ((InitializerSimple)iterationUpdater).initialize();
       
       State timeState = 
             holon.getState(Time.class.getSimpleName());
-      timeUpdater = (Time)timeState.getProcessor();
-      timeUpdater.setDependencies();
+      timeUpdater = (UpdaterSimple)timeState.getProcessor();
+      ((InitializerSimple)timeUpdater).initialize();
       
       loggerManager.statusUpdate("Sorting initialization dependencies...");
       handleInitializationDependencies();

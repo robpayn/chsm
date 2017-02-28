@@ -1,6 +1,7 @@
 package org.payn.chsm.resources.time;
 
 import org.payn.chsm.processors.ProcessorDouble;
+import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 import org.payn.chsm.values.ValueDouble;
 
@@ -10,18 +11,20 @@ import org.payn.chsm.values.ValueDouble;
  * @author robpayn
  *
  */
-public class Time extends ProcessorDouble implements UpdaterSimple {
+public class Time extends ProcessorDouble implements InitializerSimple, UpdaterSimple {
 
    /**
     * Time interval value
     */
    private ValueDouble interval;
 
-   /**
-    * Define the state variables necessary to calculate time
-    */
-   public void setDependencies() 
-   {  
+   @Override
+   public void initialize() throws Exception 
+   {
+      if (value.isNoValue())
+      {
+         value.n = 0;
+      }
       interval = (ValueDouble)state.getParentHolon().getState(BehaviorTime.ITERATION_INTERVAL).getValue();
    }
 
