@@ -3,9 +3,7 @@ package org.payn.chsm.io.file.interpolate;
 import java.io.File;
 
 import org.payn.chsm.Holon;
-import org.payn.chsm.processors.ProcessorDouble;
-import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
-import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
+import org.payn.chsm.processors.auto.ProcessorDoubleSimpleInit;
 import org.payn.chsm.resources.time.Time;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueString;
@@ -16,8 +14,7 @@ import org.payn.chsm.values.ValueString;
  * @author robpayn
  *
  */
-public abstract class ProcessorInterpolateSnapshotTable 
-extends ProcessorDouble implements InitializerSimpleAuto, UpdaterSimpleAuto {
+public abstract class ProcessorInterpolateSnapshotTable extends ProcessorDoubleSimpleInit {
    
    /**
     * Name of required state for interpolation type
@@ -39,11 +36,6 @@ extends ProcessorDouble implements InitializerSimpleAuto, UpdaterSimpleAuto {
     */
    private Interpolator interp;
    
-   /**
-    * Header name for state to be interpolated
-    */
-   private String header;
-
    @Override
    public void setInitDependencies() throws Exception
    {
@@ -53,13 +45,12 @@ extends ProcessorDouble implements InitializerSimpleAuto, UpdaterSimpleAuto {
       ValueDouble time = (ValueDouble)((Holon)getController().getState()).getState(
             Time.class.getSimpleName()
             ).getValue();
-      this.header = getHeaderName();
       interp = InterpolatorSnapshotTable.getInterpolator(
             controller, 
-            new File(pathName.toString()), 
+            new File(pathName.string), 
             time, 
-            delimiter.toString(), 
-            header, 
+            delimiter.string, 
+            getHeaderName(), 
             type.toString()
             );
    }
