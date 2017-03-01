@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.sql.Time;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.payn.chsm.Controller;
+import org.payn.chsm.InputHandler;
 import org.payn.chsm.io.file.OutputHandlerBehavior;
 import org.payn.chsm.values.ValueDouble;
 
@@ -16,7 +18,7 @@ import org.payn.chsm.values.ValueDouble;
  * @author robpayn
  *
  */
-public class InterpolatorSnapshotTable extends Interpolator {
+public class InterpolatorSnapshotTable implements InputHandler {
    
    /**
     * Map of interpolators to ensure only one instance for each file
@@ -45,7 +47,7 @@ public class InterpolatorSnapshotTable extends Interpolator {
     * @throws Exception
     *       if error in creating interpolator
     */
-   public static InterpolatorSnapshotTable getInstance(
+   public static Interpolator getInterpolator(
          Controller controller, File path, ValueDouble time, String delimiter, 
          String header, String interpolationType
          ) throws Exception 
@@ -57,20 +59,15 @@ public class InterpolatorSnapshotTable extends Interpolator {
          {
             interpolatorMap = new HashMap<File, InterpolatorSnapshotTable>();
          }
-         table = new InterpolatorSnapshotTable(path, time, delimiter, interpolationType);
+         table = new InterpolatorSnapshotTable(path, time, delimiter);
+         controller.addInputHandler(table);
          interpolatorMap.put(path, table);
       }
       else
       {
          table = interpolatorMap.get(path);
-         if (!interpolationType.equals(table.getCalculator().getTypeName()))
-         {
-            throw new Exception("Cannot change the interpolation type on an existing calculator.");
-         }
       }
-      table.addInterpolatedHeader(header);
-      controller.addInputHandler(table);
-      return table;
+      return table.createInterpolator(header, interpolationType, time);
    }
 
    /**
@@ -82,11 +79,6 @@ public class InterpolatorSnapshotTable extends Interpolator {
     * Map of columns in the snapshot table
     */
    private HashMap<String, Integer> columnMap;
-   
-   /**
-    * Map of columns with registered interpolators
-    */
-   private HashMap<String, Integer> interpolatedColumnMap;
    
    /**
     * Reader for the file
@@ -119,6 +111,11 @@ public class InterpolatorSnapshotTable extends Interpolator {
    private double nextTime;
    
    /**
+    * Map of calculators using this table
+    */
+   private HashMap<InterpolatorCalculator, Integer> calculatorMap;
+   
+   /**
     * Constructor (private to control unique instantiations for each path)
     * 
     * @param path
@@ -128,11 +125,10 @@ public class InterpolatorSnapshotTable extends Interpolator {
     * @throws Exception
     */
    private InterpolatorSnapshotTable(File path, ValueDouble time, 
-         String delimiter, String interpolationType) 
+         String delimiter) 
          throws Exception
    {
       this.time = time;
-      setCalculator(interpolationType, time);
       if (delimiter != null)
       {
          this.delimiter  = delimiter;
@@ -140,7 +136,6 @@ public class InterpolatorSnapshotTable extends Interpolator {
       reader = new BufferedReader(new FileReader(path));
       String[] header = readLine();
       columnMap = new HashMap<String, Integer>();
-      interpolatedColumnMap = new HashMap<String, Integer>();
       for (int i = 0; i < header.length; i++)
       {
          columnMap.put(header[i], new Integer(i));
@@ -153,9 +148,26 @@ public class InterpolatorSnapshotTable extends Interpolator {
       {
          timeIndex = columnMap.get(Time.class.getSimpleName());
       }
+      calculatorMap = new HashMap<InterpolatorCalculator, Integer>();
       nextLine = null;
       lastLine = null;
       nextTime = -1;
+   }
+
+   /**
+    * Create a new interpolator for this table
+    * 
+    * @param header
+    * @param interpolationType
+    * @param time
+    * @return
+    */
+   private Interpolator createInterpolator(String header, String interpolationType,
+         ValueDouble time) 
+   {
+      Interpolator interp = new Interpolator(this, interpolationType, time);
+      calculatorMap.put(interp.getCalculator(), columnMap.get(header));
+      return interp;
    }
 
    /**
@@ -171,36 +183,38 @@ public class InterpolatorSnapshotTable extends Interpolator {
    }
 
    /**
-    * Add an interpolated header to register it
-    * 
-    * @param header
-    */
-   private void addInterpolatedHeader(String header) 
-   {
-      interpolatedColumnMap.put(header, columnMap.get(header));
-   }
-
-   /**
     * Interpolate, including moving to the next line if necessary
     * 
-    * @param header
-    * @return
-    *       interpolated value
-    * @throws Exception
+    * @param calculator 
+    * @param column 
+    * @throws Exception 
+    * 
     */
-   public double interpolate(String header) throws Exception 
+   public void checkTime() throws Exception 
    {
-      while (nextTime < time.n)
+      while (nextTime <= time.n)
       {
          lastLine = nextLine;
-         nextLine = readLine();
-         nextTime = Double.valueOf(nextLine[timeIndex]);
-         calculator.updateTime(nextTime);
+         if (reader.ready())
+         {
+            nextLine = readLine();
+            nextTime = Double.valueOf(nextLine[timeIndex]);
+         }
+         else
+         {
+            nextLine = lastLine;
+            nextTime = Double.MAX_VALUE;
+         }
+         if (nextTime > time.n)
+         {
+            for (Entry<InterpolatorCalculator, Integer> entry: calculatorMap.entrySet())
+            {
+               entry.getKey().updateTime(nextTime);
+               entry.getKey().setLastValue(Double.valueOf(lastLine[entry.getValue()]));
+               entry.getKey().setNextValue(Double.valueOf(nextLine[entry.getValue()]));
+            }
+         }
       }
-      calculator.setLastValue(Double.valueOf(lastLine[interpolatedColumnMap.get(header)]));
-      calculator.setNextValue(Double.valueOf(nextLine[interpolatedColumnMap.get(header)]));
-      
-      return calculator.calculate();
    }
 
    @Override

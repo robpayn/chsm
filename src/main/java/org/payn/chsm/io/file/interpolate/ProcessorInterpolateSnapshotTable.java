@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.processors.ProcessorDouble;
+import org.payn.chsm.processors.interfaces.InitializerAutoSimple;
 import org.payn.chsm.processors.interfaces.UpdaterAutoSimple;
 import org.payn.chsm.resources.time.Time;
 import org.payn.chsm.values.ValueDouble;
@@ -16,7 +17,7 @@ import org.payn.chsm.values.ValueString;
  *
  */
 public abstract class ProcessorInterpolateSnapshotTable 
-extends ProcessorDouble implements UpdaterAutoSimple {
+extends ProcessorDouble implements InitializerAutoSimple, UpdaterAutoSimple {
    
    /**
     * Name of required state for interpolation type
@@ -36,7 +37,7 @@ extends ProcessorDouble implements UpdaterAutoSimple {
    /**
     * Interpolator
     */
-   private InterpolatorSnapshotTable interp;
+   private Interpolator interp;
    
    /**
     * Header name for state to be interpolated
@@ -44,17 +45,16 @@ extends ProcessorDouble implements UpdaterAutoSimple {
    private String header;
 
    @Override
-   public void setUpdateDependencies() throws Exception 
+   public void setInitDependencies() throws Exception
    {
       ValueString pathName = createPathDependency();
       ValueString type = createTypeDependency();
       ValueString delimiter = createDelimiterDependency();
-      ValueDouble time = (ValueDouble)createDependencyOnValue(
-            (Holon)getController().getState(),
+      ValueDouble time = (ValueDouble)((Holon)getController().getState()).getState(
             Time.class.getSimpleName()
-            );
+            ).getValue();
       this.header = getHeaderName();
-      interp = InterpolatorSnapshotTable.getInstance(
+      interp = InterpolatorSnapshotTable.getInterpolator(
             controller, 
             new File(pathName.toString()), 
             time, 
@@ -62,6 +62,20 @@ extends ProcessorDouble implements UpdaterAutoSimple {
             header, 
             type.toString()
             );
+   }
+   
+   @Override
+   public void initialize() throws Exception
+   {
+      if (value.isNoValue())
+      {
+         update();
+      }
+   }
+   
+   @Override
+   public void setUpdateDependencies() throws Exception 
+   {
    }
 
    /**
@@ -78,7 +92,7 @@ extends ProcessorDouble implements UpdaterAutoSimple {
    @Override
    public void update() throws Exception 
    {
-      value.n = interp.interpolate(header);
+      value.n = interp.interpolate();
    }
 
    /**

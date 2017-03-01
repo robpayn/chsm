@@ -1,6 +1,5 @@
 package org.payn.chsm.io.file.interpolate;
 
-import org.payn.chsm.InputHandler;
 import org.payn.chsm.values.ValueDouble;
 
 /**
@@ -9,7 +8,7 @@ import org.payn.chsm.values.ValueDouble;
  * @author robpayn
  *
  */
-public abstract class Interpolator implements InputHandler {
+public class Interpolator {
    
    /**
     * Name for linear calculation option
@@ -25,6 +24,26 @@ public abstract class Interpolator implements InputHandler {
     * Calculator
     */
    protected InterpolatorCalculator calculator;
+
+   /**
+    * Table with the column being processed by this interpolator
+    */
+   private InterpolatorSnapshotTable table;
+   
+   /**
+    * Construct a new interpolator for the table and column number provided
+    * 
+    * @param table
+    * @param columnNumber
+    * @param interpolationType
+    * @param time
+    */
+   public Interpolator(InterpolatorSnapshotTable table, String interpolationType, 
+         ValueDouble time)
+   {
+      this.table = table;
+      setCalculator(interpolationType, time);
+   }
    
    /**
     * Getter 
@@ -68,6 +87,19 @@ public abstract class Interpolator implements InputHandler {
             break;
       }
       calculator.setTime(time);
+   }
+
+   /**
+    * Interpolate the value for the column
+    * 
+    * @return
+    *       interpolated value
+    * @throws Exception
+    */
+   public double interpolate() throws Exception 
+   {
+      table.checkTime();
+      return calculator.calculate();
    }
 
 }
