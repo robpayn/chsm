@@ -6,6 +6,6 @@ package org.payn.chsm.processors.interfaces;
  * @author robpayn
  *
  */
-public interface UpdaterAutoSimple extends UpdaterAuto, UpdaterSimple {
+public interface UpdaterSimpleAuto extends UpdaterAuto, UpdaterSimple {
 
 }

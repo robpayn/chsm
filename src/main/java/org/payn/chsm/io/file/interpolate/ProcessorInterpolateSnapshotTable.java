@@ -4,8 +4,8 @@ import java.io.File;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.processors.ProcessorDouble;
-import org.payn.chsm.processors.interfaces.InitializerAutoSimple;
-import org.payn.chsm.processors.interfaces.UpdaterAutoSimple;
+import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
+import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 import org.payn.chsm.resources.time.Time;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueString;
@@ -17,7 +17,7 @@ import org.payn.chsm.values.ValueString;
  *
  */
 public abstract class ProcessorInterpolateSnapshotTable 
-extends ProcessorDouble implements InitializerAutoSimple, UpdaterAutoSimple {
+extends ProcessorDouble implements InitializerSimpleAuto, UpdaterSimpleAuto {
    
    /**
     * Name of required state for interpolation type

@@ -6,6 +6,6 @@ package org.payn.chsm.processors.interfaces;
  * @author robpayn
  *
  */
-public interface InitializerAutoSimple extends InitializerAuto, InitializerSimple {
+public interface InitializerSimpleAuto extends InitializerAuto, InitializerSimple {
 
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.payn.chsm.DependencyHandlerAbstract;
 import org.payn.chsm.Processor;
 import org.payn.chsm.processors.interfaces.InitializerAuto;
-import org.payn.chsm.processors.interfaces.InitializerAutoSimple;
+import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
 
 /**
  * Handles dependencies during the initialization phase of a NEO lite simulation
@@ -13,14 +13,14 @@ import org.payn.chsm.processors.interfaces.InitializerAutoSimple;
  * @author robpayn
  *
  */
-public class DependencyHandlerInitialize extends DependencyHandlerAbstract<InitializerAutoSimple> {
+public class DependencyHandlerInitialize extends DependencyHandlerAbstract<InitializerSimpleAuto> {
 
    /**
     * Constructs a new instance based on an array of initializers
     * 
     * @param initializers
     */
-   public DependencyHandlerInitialize(ArrayList<InitializerAutoSimple> initializers) 
+   public DependencyHandlerInitialize(ArrayList<InitializerSimpleAuto> initializers) 
    {
       super(initializers);
    }
@@ -32,13 +32,13 @@ public class DependencyHandlerInitialize extends DependencyHandlerAbstract<Initi
    @Override
    public void addDependency(Processor processor, Processor neededProcessor) throws Exception 
    {
-      if (!InitializerAutoSimple.class.isInstance(processor))
+      if (!InitializerSimpleAuto.class.isInstance(processor))
       {
          throw new Exception("Processor not compatible with InitilzerAutoSimple dependency handler");
       }
       if (InitializerAuto.class.isInstance(neededProcessor))
       {
-         addToGraph((InitializerAutoSimple)processor, (InitializerAutoSimple)neededProcessor);
+         addToGraph((InitializerSimpleAuto)processor, (InitializerSimpleAuto)neededProcessor);
       }
    }
 
