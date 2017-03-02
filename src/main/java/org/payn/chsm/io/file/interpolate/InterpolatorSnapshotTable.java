@@ -53,13 +53,45 @@ public class InterpolatorSnapshotTable implements InputHandler {
     */
    public static Interpolator getInterpolator(ProcessorDouble processor) throws Exception 
    {
-      ValueString pathName = (ValueString)processor.createDependency(
+      ValueString pathName = (ValueString)processor.createDependencyOnValue(
+            InterpolatorSnapshotTable.REQ_STATE_PATH
+            );
+      ValueString type = (ValueString)processor.createDependencyOnValue(
+            InterpolatorSnapshotTable.REQ_STATE_TYPE
+            );
+      ValueString delimiter = (ValueString)processor.createDependencyOnValue(
+            InterpolatorSnapshotTable.REQ_STATE_DELIMITER
+            );
+      ValueDouble time = (ValueDouble)((Holon)processor.getController().getState()).getState(
+            Time.class.getSimpleName()
+            ).getValue();
+      return InterpolatorSnapshotTable.getInterpolator(
+            processor.getController(), 
+            new File(pathName.string), 
+            time, 
+            delimiter.string, 
+            processor.getState().toString(), 
+            type.toString()
+            );
+   }
+ 
+   /**
+    * Get an instance of an interpolator for a behavior that has been abstracted
+    * 
+    * @param processor
+    * @return
+    *       interpolator
+    * @throws Exception
+    */
+   public static Interpolator getInterpolatorAbstract(ProcessorDouble processor) throws Exception 
+   {
+      ValueString pathName = (ValueString)processor.createAbstractDependency(
             InterpolatorSnapshotTable.REQ_STATE_PATH
             ).getValue();
-      ValueString type = (ValueString)processor.createDependency(
+      ValueString type = (ValueString)processor.createAbstractDependency(
             InterpolatorSnapshotTable.REQ_STATE_TYPE
             ).getValue();
-      ValueString delimiter = (ValueString)processor.createDependency(
+      ValueString delimiter = (ValueString)processor.createAbstractDependency(
             InterpolatorSnapshotTable.REQ_STATE_DELIMITER
             ).getValue();
       ValueDouble time = (ValueDouble)((Holon)processor.getController().getState()).getState(
@@ -74,7 +106,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
             type.toString()
             );
    }
- 
+
    /**
     * Get the instance for a given file.
     * 
