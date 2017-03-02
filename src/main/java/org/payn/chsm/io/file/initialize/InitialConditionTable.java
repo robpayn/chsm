@@ -8,6 +8,9 @@ import java.util.LinkedHashMap;
 
 import org.payn.chsm.Controller;
 import org.payn.chsm.InputHandler;
+import org.payn.chsm.State;
+import org.payn.chsm.processors.ProcessorDouble;
+import org.payn.chsm.values.ValueString;
 
 /**
  * Manages tables of initial conditions.
@@ -32,6 +35,38 @@ public class InitialConditionTable implements InputHandler {
     */
    private static HashMap<File, InitialConditionTable> tableMap  = null;
 
+   /**
+    * Get an instance of an initial condition table for a basic model setup
+    * 
+    * @param processor
+    * @return
+    *       initial condition table
+    * @throws Exception
+    */
+   public static InitialConditionTable getInstance(ProcessorDouble processor) throws Exception 
+   {
+      ValueString initPath = null;
+      ValueString initDelimiter = null;
+      try
+      {
+         initPath = (ValueString)processor.createDependencyOnValue(
+               InitialConditionTable.NAME_INITIAL_CONDITION_PATH
+               );
+         initDelimiter = (ValueString)processor.createDependencyOnValue(
+               InitialConditionTable.NAME_INITIAL_CONDITION_DELIMITER
+               );
+      }
+      catch (Exception e)
+      {
+         return null;
+      }
+      return InitialConditionTable.getInstance(
+            processor.getController(), 
+            new File(initPath.string), 
+            initDelimiter.string
+            );
+   }
+   
    /**
     * Get an instance of the the initial condition table for the path selected
     * 
@@ -98,6 +133,25 @@ public class InitialConditionTable implements InputHandler {
    }
 
    /**
+    * Find the initial condition of the provided state.
+    * 
+    * This method assumes fully qualified state and holon names
+    * are provided in the initial condition table.
+    * 
+    * @param state
+    * @return
+    *       initial value for the state
+    * @throws Exception
+    */
+   public double find(State state) throws Exception 
+   {
+      return find(
+            state.getBehavior().getName() + "." + state.getName(), 
+            state.getParentHolon().toString()
+            );
+   }
+
+   /**
     * Find a state's initial value from the table
     * 
     * @param stateName
@@ -117,5 +171,5 @@ public class InitialConditionTable implements InputHandler {
    @Override
    public void close() throws Exception 
    {}
-   
+
 }

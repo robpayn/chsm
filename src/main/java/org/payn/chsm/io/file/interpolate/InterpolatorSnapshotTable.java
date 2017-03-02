@@ -8,9 +8,12 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.payn.chsm.Controller;
+import org.payn.chsm.Holon;
 import org.payn.chsm.InputHandler;
 import org.payn.chsm.io.file.OutputHandlerBehavior;
+import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.values.ValueDouble;
+import org.payn.chsm.values.ValueString;
 
 /**
  * An interpolator for data in the form of a snapshot table output
@@ -21,10 +24,57 @@ import org.payn.chsm.values.ValueDouble;
 public class InterpolatorSnapshotTable implements InputHandler {
    
    /**
+    * Name of required state for interpolation type
+    */
+   public static final String REQ_STATE_TYPE = "InterpolationType";
+
+   /**
+    * Name of required state for path to interpolation file
+    */
+   public static final String REQ_STATE_PATH = "InterpolationPath";
+
+   /**
+    * Name of required state for delimiter
+    */
+   public static final String REQ_STATE_DELIMITER = "Delimiter";
+
+   /**
     * Map of interpolators to ensure only one instance for each file
     */
    private static HashMap<File, InterpolatorSnapshotTable> interpolatorMap  = null;
 
+   /**
+    * Get an instance of an interpolator for a basic model setup
+    * 
+    * @param processor
+    * @return
+    *       interpolator
+    * @throws Exception
+    */
+   public static Interpolator getInterpolator(ProcessorDouble processor) throws Exception 
+   {
+      ValueString pathName = (ValueString)processor.createDependency(
+            InterpolatorSnapshotTable.REQ_STATE_PATH
+            ).getValue();
+      ValueString type = (ValueString)processor.createDependency(
+            InterpolatorSnapshotTable.REQ_STATE_TYPE
+            ).getValue();
+      ValueString delimiter = (ValueString)processor.createDependency(
+            InterpolatorSnapshotTable.REQ_STATE_DELIMITER
+            ).getValue();
+      ValueDouble time = (ValueDouble)((Holon)processor.getController().getState()).getState(
+            Time.class.getSimpleName()
+            ).getValue();
+      return InterpolatorSnapshotTable.getInterpolator(
+            processor.getController(), 
+            new File(pathName.string), 
+            time, 
+            delimiter.string, 
+            processor.getState().toString(), 
+            type.toString()
+            );
+   }
+ 
    /**
     * Get the instance for a given file.
     * 
@@ -222,5 +272,5 @@ public class InterpolatorSnapshotTable implements InputHandler {
    {
       reader.close();
    }
- 
+
 }
