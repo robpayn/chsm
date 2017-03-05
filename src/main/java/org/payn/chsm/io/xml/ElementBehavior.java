@@ -85,7 +85,7 @@ public class ElementBehavior extends ElementHelperLoader {
     * @param value
     *       string representing the value of the state
     * @param valueType
-    *       type of the state (necessary of state is not required)
+    *       type of the state (necessary if state is not required)
     * @return
     *       created initial value element
     */

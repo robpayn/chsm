@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import org.payn.chsm.Controller;
 import org.payn.chsm.InputHandler;
 import org.payn.chsm.State;
+import org.payn.chsm.io.file.SnapshotTable;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.values.ValueString;
 
@@ -63,7 +64,7 @@ public class InitialConditionTable implements InputHandler {
       return InitialConditionTable.getInstance(
             processor.getController(), 
             new File(initPath.string), 
-            initDelimiter.string
+            SnapshotTable.getDelimiter(initDelimiter.string)
             );
    }
    

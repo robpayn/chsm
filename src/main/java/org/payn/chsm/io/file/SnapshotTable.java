@@ -3,6 +3,7 @@ package org.payn.chsm.io.file;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.payn.chsm.State;
@@ -17,6 +18,36 @@ import org.payn.chsm.values.ValueLong;
  *
  */
 public class SnapshotTable {
+
+   /**
+    * A map of delimiters
+    */
+   private static final HashMap<String, String> DELIMITER_MAP;
+   static
+   {
+      DELIMITER_MAP = new HashMap<String, String>(2);
+      DELIMITER_MAP.put("space", " ");
+      DELIMITER_MAP.put("comma", ",");
+   }
+
+   /**
+    * Check if a key word is used for a delimiter and return
+    * the appropriate delimiter
+    * 
+    * @param delimiterKeyword
+    * @return
+    *       delimiter associated with the keyword, the keyword
+    *       is return as the delimiter if it is not recognized
+    */
+   public static String getDelimiter(String delimiterKeyword) 
+   {
+      String delimiter = DELIMITER_MAP.get(delimiterKeyword);
+      if (delimiter == null)
+      {
+         delimiter = delimiterKeyword;
+      }
+      return delimiter;
+   }
 
    /**
     * Array of values to track

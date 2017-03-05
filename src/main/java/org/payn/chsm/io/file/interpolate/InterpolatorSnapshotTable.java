@@ -11,6 +11,7 @@ import org.payn.chsm.Controller;
 import org.payn.chsm.Holon;
 import org.payn.chsm.InputHandler;
 import org.payn.chsm.io.file.OutputHandlerBehavior;
+import org.payn.chsm.io.file.SnapshotTable;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueString;
@@ -51,7 +52,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
     *       interpolator
     * @throws Exception
     */
-   public static Interpolator getInterpolator(ProcessorDouble processor) throws Exception 
+   public static Interpolator getInterpolatorInstance(ProcessorDouble processor) throws Exception 
    {
       ValueString pathName = (ValueString)processor.createDependencyOnValue(
             InterpolatorSnapshotTable.REQ_STATE_PATH
@@ -65,11 +66,11 @@ public class InterpolatorSnapshotTable implements InputHandler {
       ValueDouble time = (ValueDouble)((Holon)processor.getController().getState()).getState(
             Time.class.getSimpleName()
             ).getValue();
-      return InterpolatorSnapshotTable.getInterpolator(
+      return InterpolatorSnapshotTable.getInterpolatorInstance(
             processor.getController(), 
             new File(pathName.string), 
             time, 
-            delimiter.string, 
+            SnapshotTable.getDelimiter(delimiter.string), 
             processor.getState().toString(), 
             type.toString()
             );
@@ -83,7 +84,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
     *       interpolator
     * @throws Exception
     */
-   public static Interpolator getInterpolatorAbstract(ProcessorDouble processor) throws Exception 
+   public static Interpolator getInterpolatorInstanceAbstract(ProcessorDouble processor) throws Exception 
    {
       ValueString pathName = (ValueString)processor.createAbstractDependency(
             InterpolatorSnapshotTable.REQ_STATE_PATH
@@ -97,7 +98,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
       ValueDouble time = (ValueDouble)((Holon)processor.getController().getState()).getState(
             Time.class.getSimpleName()
             ).getValue();
-      return InterpolatorSnapshotTable.getInterpolator(
+      return InterpolatorSnapshotTable.getInterpolatorInstance(
             processor.getController(), 
             new File(pathName.string), 
             time, 
@@ -129,7 +130,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
     * @throws Exception
     *       if error in creating interpolator
     */
-   public static Interpolator getInterpolator(
+   public static Interpolator getInterpolatorInstance(
          Controller controller, File path, ValueDouble time, String delimiter, 
          String header, String interpolationType
          ) throws Exception 
@@ -141,7 +142,11 @@ public class InterpolatorSnapshotTable implements InputHandler {
          {
             interpolatorMap = new HashMap<File, InterpolatorSnapshotTable>();
          }
-         table = new InterpolatorSnapshotTable(path, time, delimiter);
+         table = new InterpolatorSnapshotTable(
+               path, 
+               time, 
+               SnapshotTable.getDelimiter(delimiter)
+               );
          controller.addInputHandler(table);
          interpolatorMap.put(path, table);
       }
@@ -196,6 +201,11 @@ public class InterpolatorSnapshotTable implements InputHandler {
     * Map of calculators using this table
     */
    private HashMap<InterpolatorCalculator, Integer> calculatorMap;
+
+   /**
+    * The path to the file
+    */
+   private File path;
    
    /**
     * Constructor (private to control unique instantiations for each path)
@@ -215,6 +225,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
       {
          this.delimiter  = delimiter;
       }
+      this.path = path;
       reader = new BufferedReader(new FileReader(path));
       String[] header = readLine();
       columnMap = new HashMap<String, Integer>();
@@ -243,11 +254,20 @@ public class InterpolatorSnapshotTable implements InputHandler {
     * @param interpolationType
     * @param time
     * @return
+    * @throws Exception 
     */
    private Interpolator createInterpolator(String header, String interpolationType,
-         ValueDouble time) 
+         ValueDouble time) throws Exception 
    {
       Interpolator interp = new Interpolator(this, interpolationType, time);
+      if (!columnMap.containsKey(header))
+      {
+         throw new Exception(String.format(
+               "Interpolation table %s does not have the header %s.",
+               path,
+               header
+               ));
+      }
       calculatorMap.put(interp.getCalculator(), columnMap.get(header));
       return interp;
    }

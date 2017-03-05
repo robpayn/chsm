@@ -213,4 +213,63 @@ public class ElementHelper {
       return !(getFirstChildElement(tagName) == null);
    }
 
+   /**
+    * Get a long integer representation of an attribute
+    * 
+    * @param key
+    * @return
+    *       a Long object, or null if attribute does not exist
+    */
+   public Long getAttributeLong(String key) 
+   {
+      String value = getAttribute(key);
+      if (value.equals(""))
+      {
+         return null;
+      }
+      else
+      {
+         return Long.valueOf(value);
+      }
+   }
+
+   /**
+    * Get a string representation of an attribute
+    * 
+    * @param key
+    * @return
+    *       a String object, or null if attribute does not exist
+    */
+   public String getAttributeString(String key) 
+   {
+      String value = getAttribute(key);
+      if (value.equals(""))
+      {
+         return null;
+      }
+      else
+      {
+         return value;
+      }
+   }
+
+   /**
+    * Get a Double representation of an attribute
+    * 
+    * @param key
+    * @return
+    *       a Double object, or null if attribute does not exist
+    */
+   public Double getAttributeDouble(String key) 
+   {
+      String value = getAttribute(key);
+      if (value.equals(""))
+      {
+         return null;
+      }
+      else
+      {
+         return Double.valueOf(value);
+      }
+   }
 }

@@ -178,4 +178,13 @@ public interface Behavior {
     */
    public abstract boolean isStateRequired(State state);
 
+   /**
+    * Get the state name for abstracted behaviors
+    * 
+    * @param stateName
+    * @return
+    *       state name with resource name prefix
+    */
+   public String getAbstractStateName(String stateName);
+
 }

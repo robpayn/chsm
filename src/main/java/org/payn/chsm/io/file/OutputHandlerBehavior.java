@@ -39,7 +39,7 @@ public class OutputHandlerBehavior extends OutputHandlerSingleThread
     */
    public void setDelimiter(String delimiter) 
    {
-      this.delimiter = delimiter;
+      this.delimiter = SnapshotTable.getDelimiter(delimiter);
    }
    
    /**

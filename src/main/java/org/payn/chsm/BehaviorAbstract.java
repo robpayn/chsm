@@ -201,6 +201,12 @@ public abstract class BehaviorAbstract implements Behavior{
             (reqStateMap != null && 
                   reqStateMap.containsKey(name));
    }
+   
+   @Override
+   public String getAbstractStateName(String stateName)
+   {
+      return resource.getName() + stateName;
+   }
 
    /**
     * Add the processors to be installed in this behavior
