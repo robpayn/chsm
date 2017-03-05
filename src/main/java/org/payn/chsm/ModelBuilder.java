@@ -282,6 +282,13 @@ public abstract class ModelBuilder<HT extends Holon> {
    protected Behavior getBehaviorFromResource(String resourceName, String behaviorName) throws Exception 
    {
       Resource resource = resourceMap.get(resourceName);
+      if (resourceName == null)
+      {
+         throw new Exception(String.format(
+               "Resource %s was not installed.", 
+               resourceName
+               ));
+      }
       Behavior behavior;
       try
       {
