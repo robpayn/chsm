@@ -4,14 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.payn.chsm.io.ReporterFactory;
-import org.payn.chsm.io.ReporterFactoryXML;
-import org.payn.chsm.io.xml.ElementBuilder;
-import org.payn.chsm.io.xml.ElementLogger;
-import org.payn.chsm.io.xml.ElementReporter;
-import org.payn.chsm.io.xml.ElementProcessor;
-import org.payn.chsm.io.xml.ElementResource;
-import org.payn.chsm.io.xml.XMLDocumentModelConfig;
+import org.payn.chsm.io.xmltools.ElementBuilder;
+import org.payn.chsm.io.xmltools.ElementLogger;
+import org.payn.chsm.io.xmltools.ElementProcessor;
+import org.payn.chsm.io.xmltools.ElementReporter;
+import org.payn.chsm.io.xmltools.ElementResource;
+import org.payn.chsm.io.xmltools.XMLDocumentModelConfig;
 import org.payn.chsm.processors.ControllerHolon;
 
 /**

@@ -2,7 +2,6 @@ package org.payn.chsm;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.io.logger.Logger;
 import org.payn.chsm.io.logger.StatusUpdateListener;
 
 /**

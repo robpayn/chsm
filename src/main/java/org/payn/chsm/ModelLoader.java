@@ -6,8 +6,6 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.payn.chsm.io.ReporterFactory;
-import org.payn.chsm.io.logger.Logger;
 import org.payn.chsm.processors.ControllerHolon;
 import org.payn.chsm.resources.time.ResourceTime;
 

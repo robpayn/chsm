@@ -4,7 +4,6 @@ import java.io.File;
 import java.sql.Time;
 import java.util.HashMap;
 
-import org.payn.chsm.io.ReporterFactory;
 import org.payn.chsm.resources.time.Iteration;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueLong;

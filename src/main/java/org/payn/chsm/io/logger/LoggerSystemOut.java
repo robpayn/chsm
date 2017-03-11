@@ -1,5 +1,7 @@
 package org.payn.chsm.io.logger;
 
+import org.payn.chsm.LoggerAbstract;
+
 /**
  * A logger that will send status updates to the System.out
  * 

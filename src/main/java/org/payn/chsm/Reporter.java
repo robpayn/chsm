@@ -2,8 +2,6 @@ package org.payn.chsm;
 
 import java.io.File;
 
-import org.payn.chsm.io.ReporterFactory;
-
 /**
  * Interface for a reporter
  * 
