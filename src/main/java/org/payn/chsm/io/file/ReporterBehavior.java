@@ -13,8 +13,7 @@ import org.payn.chsm.State;
  * @author rob payn
  * 
  */
-public class ReporterBehavior extends ReporterSingleThread
-{
+public class ReporterBehavior extends ReporterSingleThread {
    
    /**
     * Default delimiter for columns
@@ -55,10 +54,15 @@ public class ReporterBehavior extends ReporterSingleThread
    private boolean isInitActive;
    
    /**
-    * Basic constructor
+    * Construct a new instance with the provided working directory and
+    * argument map
+    * 
+    * @param workingDir
+    * @param argMap
     */
-   public ReporterBehavior()
+   public ReporterBehavior(File workingDir, HashMap<String, String> argMap) 
    {
+      super(workingDir, argMap);
    }
 
    /**

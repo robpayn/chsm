@@ -1,6 +1,7 @@
 package org.payn.chsm.io.file;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.payn.chsm.io.ReporterFactoryXML;
 import org.payn.chsm.io.xml.ElementReporter;
@@ -27,18 +28,15 @@ public class ReporterFileSystemFactoryXML extends ReporterFactoryXML<ReporterFil
    }
 
    @Override
-   public void init() 
+   public void init() throws Exception 
    {
-      ReporterFileSystem handler = 
-            ((ReporterFileSystem)reporter);
       Element fileElement = config.getFirstChildElement("file");
-      File workingDir = new File(System.getProperty("user.dir"));
-      handler.setWorkingDir(workingDir);
       File outputDir;
       if(Boolean.valueOf(fileElement.getAttribute("fromWorkingDir")))
       {
          outputDir = new File(
-               workingDir.getAbsolutePath() + File.separator + fileElement.getAttribute("outputpath")
+               reporter.getWorkingDir().getAbsolutePath() + File.separator 
+                  + fileElement.getAttribute("outputpath")
                );
       }
       else
@@ -51,11 +49,11 @@ public class ReporterFileSystemFactoryXML extends ReporterFactoryXML<ReporterFil
       {
          outputDir.mkdirs();
       }
-      handler.setOutputDir(outputDir);
+      reporter.setOutputDir(outputDir);
    }
 
    @Override
-   public ReporterFileSystem newReporter() throws Exception 
+   public ReporterFileSystem newReporter(File workingDir, HashMap<String, String> argMap) throws Exception 
    {
       throw new Exception("Cannot create an abstract file system reporter");
    }

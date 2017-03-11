@@ -1,6 +1,8 @@
 package org.payn.chsm;
 
+import java.io.File;
 import java.sql.Time;
+import java.util.HashMap;
 
 import org.payn.chsm.io.ReporterFactory;
 import org.payn.chsm.resources.time.Iteration;
@@ -41,13 +43,42 @@ public abstract class ReporterAbstract<LT> implements Reporter {
     * Factory that created this reporter
     */
    protected ReporterFactory<?,?> factory;
-   
+
    @Override
    public void setFactory(ReporterFactory<?,?> factory)
    {
       this.factory = factory;
    }
 
+   /**
+    * Working directory
+    */
+   protected File workingDir;
+   
+   @Override
+   public File getWorkingDir()
+   {
+      return workingDir;
+   }
+
+   /**
+    * Map of command line arguments
+    */
+   protected HashMap<String, String> argMap;
+   
+   /**
+    * Construct a new instance based on the provided working directory
+    * and argument map
+    * 
+    * @param workingDir
+    * @param argMap
+    */
+   public ReporterAbstract(File workingDir, HashMap<String, String> argMap)
+   {
+      this.workingDir = workingDir;
+      this.argMap = argMap;
+   }
+   
    /**
     * Initialize the outputter based on the output element and the source provided
     * 

@@ -1,5 +1,8 @@
 package org.payn.chsm.io.file;
 
+import java.io.File;
+import java.util.HashMap;
+
 /**
  * Outputter that runs IO operations in a single separate thread
  * 
@@ -13,6 +16,19 @@ public abstract class ReporterSingleThread extends ReporterInterval implements R
     */
    protected Thread thread;
    
+   /**
+    * Construct a new instance with the provided working directory and
+    * argument map
+    * 
+    * @param workingDir
+    * @param argMap
+    */
+   public ReporterSingleThread(File workingDir,
+         HashMap<String, String> argMap) 
+   {
+      super(workingDir, argMap);
+   }
+
    /**
     * Write the output
     * 

@@ -225,7 +225,7 @@ public abstract class ModelLoader {
       ArrayList<ReporterFactory<?,?>> factories = loadReporterFactories();
       for (ReporterFactory<?,?> factory: factories)
       {
-         Reporter reporter = factory.createReporter();
+         Reporter reporter = factory.createReporter(workingDir, argMap);
          builder.getController().addReporter(reporter);
          loggerManager.statusUpdate(String.format(
                "   Loaded reporter %s ...", 

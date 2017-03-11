@@ -1,6 +1,7 @@
 package org.payn.chsm.io.file;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.payn.chsm.ReporterAbstract;
 
@@ -12,22 +13,6 @@ import org.payn.chsm.ReporterAbstract;
  */
 public abstract class ReporterFileSystem extends ReporterAbstract<File> {
 
-   /**
-    * Working directory
-    */
-   protected File workingDir;
-   
-   /**
-    * Setter 
-    * 
-    * @param workingDir
-    *       File object for working directory
-    */
-   public void setWorkingDir(File workingDir) 
-   {
-      this.workingDir = workingDir;
-   }
-   
    /**
     * Output directory
     */
@@ -44,4 +29,16 @@ public abstract class ReporterFileSystem extends ReporterAbstract<File> {
       this.outputDir = outputDir;
    }
    
+   /**
+    * Construct a new instance with the provided working directory and 
+    * command line arguments
+    * 
+    * @param workingDir
+    * @param argMap
+    */
+   public ReporterFileSystem(File workingDir, HashMap<String, String> argMap) 
+   {
+      super(workingDir, argMap);
+   }
+
 }

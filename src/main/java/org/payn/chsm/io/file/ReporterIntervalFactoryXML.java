@@ -1,5 +1,8 @@
 package org.payn.chsm.io.file;
 
+import java.io.File;
+import java.util.HashMap;
+
 import org.payn.chsm.io.ReporterFactoryXML;
 import org.payn.chsm.io.xml.ElementReporter;
 import org.w3c.dom.Element;
@@ -25,7 +28,7 @@ public class ReporterIntervalFactoryXML extends ReporterFactoryXML<ReporterInter
    }
 
    @Override
-   public void init() 
+   public void init() throws Exception 
    {
       Element intElement = (Element)config.getFirstChildElement("interval");
       String interval = intElement.getAttribute("interval");
@@ -42,7 +45,7 @@ public class ReporterIntervalFactoryXML extends ReporterFactoryXML<ReporterInter
    }
 
    @Override
-   public ReporterInterval newReporter() throws Exception 
+   public ReporterInterval newReporter(File workingDir, HashMap<String, String> argMap) throws Exception 
    {
       throw new Exception("Cannot create an abstract interval reporter");
    }

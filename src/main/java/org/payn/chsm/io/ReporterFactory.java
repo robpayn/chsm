@@ -1,5 +1,8 @@
 package org.payn.chsm.io;
 
+import java.io.File;
+import java.util.HashMap;
+
 import org.payn.chsm.LoggerManager;
 import org.payn.chsm.Reporter;
 
@@ -56,16 +59,19 @@ public abstract class ReporterFactory<CT, HT extends Reporter> {
    /**
     * Create the reporter associated with this factory
     * 
-    * @param holon
-    *       source holon
+    * @param workingDir
+    *       File representation of the model working directory 
+    * @param argMap 
+    *       map of command line arguments (key/value pairs)
     * @return
     *       reference to reporter object
     * @throws Exception
     *       if error in creating reporter object
     */
-   public Reporter createReporter() throws Exception
+   public Reporter createReporter(File workingDir, HashMap<String, String> argMap) 
+         throws Exception
    {
-      reporter = newReporter();
+      reporter = newReporter(workingDir, argMap);
       reporter.setFactory(this);
       return reporter;
    }
@@ -92,8 +98,9 @@ public abstract class ReporterFactory<CT, HT extends Reporter> {
     * 
     * @param config
     *       object containing configuration information
+    * @throws Exception 
     */
-   protected abstract void init();
+   protected abstract void init() throws Exception;
 
    /**
     * Create a new reporter of the appropriate type for this factory
@@ -103,6 +110,7 @@ public abstract class ReporterFactory<CT, HT extends Reporter> {
     * @throws Exception
     *       if error in creating the new reporter
     */
-   protected abstract HT newReporter() throws Exception;
+   protected abstract HT newReporter(File workingDir, HashMap<String, String> argMap) 
+         throws Exception;
 
  }

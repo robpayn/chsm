@@ -1,6 +1,8 @@
 package org.payn.chsm.io.file;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.payn.chsm.io.ReporterFactoryXML;
 import org.payn.chsm.io.xml.ElementBehavior;
@@ -17,7 +19,7 @@ import org.w3c.dom.NodeList;
 public class ReporterBehaviorFactoryXML extends ReporterFactoryXML<ReporterBehavior> {
 
    @Override
-   public void init() 
+   public void init() throws Exception 
    {
       new ReporterIntervalFactoryXML(reporter, config).init();
       Element behElement = config.getFirstChildElement("delimiter");
@@ -58,9 +60,9 @@ public class ReporterBehaviorFactoryXML extends ReporterFactoryXML<ReporterBehav
    }
 
    @Override
-   public ReporterBehavior newReporter() 
+   public ReporterBehavior newReporter(File workingDir, HashMap<String, String> argMap) 
    {
-      return new ReporterBehavior();
+      return new ReporterBehavior(workingDir, argMap);
    }
 
 }

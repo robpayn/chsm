@@ -1,5 +1,7 @@
 package org.payn.chsm.io.file;
 
+import java.io.File;
+import java.util.HashMap;
 
 /**
  * A file system reporter where the condition is based on regular iteration intervals
@@ -23,6 +25,18 @@ public abstract class ReporterInterval extends ReporterFileSystem {
    public void setInterval(long interval) 
    {
       this.interval = interval;
+   }
+
+   /**
+    * Construct a new instance with the provided working directory and
+    * argument map
+    * 
+    * @param workingDir
+    * @param argMap
+    */
+   public ReporterInterval(File workingDir, HashMap<String, String> argMap) 
+   {
+      super(workingDir, argMap);
    }
 
    /**

@@ -1,5 +1,7 @@
 package org.payn.chsm;
 
+import java.io.File;
+
 import org.payn.chsm.io.ReporterFactory;
 
 /**
@@ -48,7 +50,7 @@ public interface Reporter {
     * @throws Exception
     *       if error in closing location to io
     */
-   public abstract void closeLocation() throws Exception;
+   void closeLocation() throws Exception;
 
    /**
     * Initialize the reporter
@@ -59,6 +61,15 @@ public interface Reporter {
     *       Source holon for output
     * @throws Exception
     */
-   public abstract void initialize(Holon source) throws Exception;
-
+   void initialize(Holon source) throws Exception;
+   
+   /**
+    * Get the working directory
+    * 
+    * @return
+    *       File object representing the working directory
+    * @throws Exception
+    */
+   File getWorkingDir() throws Exception;
+   
 }
