@@ -2,7 +2,7 @@ package org.payn.chsm;
 
 import java.sql.Time;
 
-import org.payn.chsm.io.OutputHandlerFactory;
+import org.payn.chsm.io.ReporterFactory;
 import org.payn.chsm.resources.time.Iteration;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueLong;
@@ -15,7 +15,7 @@ import org.payn.chsm.values.ValueLong;
  * @param <LT>
  *      output location object type
  */
-public abstract class OutputHandlerAbstract<LT> implements OutputHandler {
+public abstract class ReporterAbstract<LT> implements Reporter {
    
    /**
     * Holon containing the source of output
@@ -38,12 +38,12 @@ public abstract class OutputHandlerAbstract<LT> implements OutputHandler {
    protected ValueDouble timeValue;
    
    /**
-    * Factory that created this output handler
+    * Factory that created this reporter
     */
-   protected OutputHandlerFactory<?,?> factory;
+   protected ReporterFactory<?,?> factory;
    
    @Override
-   public void setFactory(OutputHandlerFactory<?,?> factory)
+   public void setFactory(ReporterFactory<?,?> factory)
    {
       this.factory = factory;
    }

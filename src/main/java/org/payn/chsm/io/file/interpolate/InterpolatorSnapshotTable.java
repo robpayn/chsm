@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import org.payn.chsm.Controller;
 import org.payn.chsm.Holon;
 import org.payn.chsm.InputHandler;
-import org.payn.chsm.io.file.OutputHandlerBehavior;
+import org.payn.chsm.io.file.ReporterBehavior;
 import org.payn.chsm.io.file.SnapshotTable;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.values.ValueDouble;
@@ -180,7 +180,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
    /**
     * Delimiter for columns in the file
     */
-   private String delimiter = OutputHandlerBehavior.DEFAULT_DELIMITER;
+   private String delimiter = ReporterBehavior.DEFAULT_DELIMITER;
    
    /**
     * The next line of text in the file

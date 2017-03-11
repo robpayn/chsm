@@ -6,7 +6,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.payn.chsm.io.OutputHandlerFactory;
+import org.payn.chsm.io.ReporterFactory;
 import org.payn.chsm.io.logger.Logger;
 import org.payn.chsm.processors.ControllerHolon;
 import org.payn.chsm.resources.time.ResourceTime;
@@ -77,7 +77,8 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
     * @throws Exception
     *       if error in loading object
     */
-   public static Object createObjectInstance(ClassLoader classLoader, File path, String classPath, String errorMessage) throws Exception
+   public static Object createObjectInstance(ClassLoader classLoader, File path, 
+         String classPath, String errorMessage) throws Exception
    {
       if (!path.exists())
       {
@@ -148,24 +149,6 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
    }
    
    /**
-    * Create the matrix and load the controller
-    * 
-    * @param path
-    *       file system path
-    * @param classPath
-    *       class path
-    * @param matrixName
-    *       name of the matrix holon
-    * @throws Exception
-    *       if error in loading controller class
-    */
-   protected void installController(ControllerHolon controller) throws Exception 
-   {
-      controller.setBuilder(builder);
-      controller.setLogger(loggerManager);
-   }
-
-   /**
     * Create the matrix with loaded builder
     * 
     * @param argMap
@@ -183,8 +166,8 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
       this.argMap = argMap;
       this.workingDir = workingDir;
       
-      initializeInputs();
-      initializeLoggers();
+      loadConfiguration();
+      loadLoggers();
       
       System.out.println("Loading the loggers...");
       if (loggerList.isEmpty())
@@ -217,7 +200,8 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
             "   Loaded the controller %s ...",
             controller.getClass().getCanonicalName()
             ));
-      installController(controller);
+      controller.setBuilder(builder);
+      controller.setLogger(loggerManager);
       
       loggerManager.statusUpdate("Loading the configured resources...");
       ArrayList<Resource> resources = getResources();
@@ -244,15 +228,15 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
          builder.addResource(resourceTime);
       }
       
-      loggerManager.statusUpdate("Loading the output handlers...");
-      ArrayList<OutputHandlerFactory<?,?>> factories = getOutputHandlerFactories();
-      for (OutputHandlerFactory<?,?> factory: factories)
+      loggerManager.statusUpdate("Loading the reporters...");
+      ArrayList<ReporterFactory<?,?>> factories = getReporterFactories();
+      for (ReporterFactory<?,?> factory: factories)
       {
-         OutputHandler outputHandler = factory.createOutputHandler();
-         builder.getController().addOutputHandler(outputHandler);
+         Reporter reporter = factory.createReporter();
+         builder.getController().addReporter(reporter);
          loggerManager.statusUpdate(String.format(
-               "   Loaded output handler %s ...", 
-               outputHandler.getClass().getCanonicalName()
+               "   Loaded reporter %s ...", 
+               reporter.getClass().getCanonicalName()
                ));
       }
 
@@ -264,14 +248,14 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
     * 
     * @throws Exception
     */
-   protected abstract void initializeInputs() throws Exception;
+   protected abstract void loadConfiguration() throws Exception;
    
    /**
     * Initialize the loggers
     * 
     * @throws Exception
     */
-   protected abstract void initializeLoggers() throws Exception;
+   protected abstract void loadLoggers() throws Exception;
 
    /**
     * Get the appropriate loaded builder class
@@ -283,12 +267,12 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
    protected abstract MBT createBuilder() throws Exception;
    
    /**
-    * Get the list of output handler factories
+    * Get the list of reporter factories
     * 
     * @return
     * @throws Exception 
     */
-   protected abstract ArrayList<OutputHandlerFactory<?,?>> getOutputHandlerFactories() throws Exception;
+   protected abstract ArrayList<ReporterFactory<?,?>> getReporterFactories() throws Exception;
 
    /**
     * Get the configured controller class

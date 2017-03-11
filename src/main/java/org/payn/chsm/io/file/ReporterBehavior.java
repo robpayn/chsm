@@ -13,7 +13,7 @@ import org.payn.chsm.State;
  * @author rob payn
  * 
  */
-public class OutputHandlerBehavior extends OutputHandlerSingleThread
+public class ReporterBehavior extends ReporterSingleThread
 {
    
    /**
@@ -57,7 +57,7 @@ public class OutputHandlerBehavior extends OutputHandlerSingleThread
    /**
     * Basic constructor
     */
-   public OutputHandlerBehavior()
+   public ReporterBehavior()
    {
    }
 

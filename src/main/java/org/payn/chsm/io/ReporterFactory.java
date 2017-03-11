@@ -1,25 +1,25 @@
 package org.payn.chsm.io;
 
 import org.payn.chsm.LoggerManager;
-import org.payn.chsm.OutputHandler;
+import org.payn.chsm.Reporter;
 
 /**
- * Factory for an output handler
+ * Factory for a reporter
  * 
  * @author v78h241
  * 
  * @param <CT>
- *      Type of object containing the configuration information 
+ *      Type of object containing the configuration of the reporter
  * @param <HT> 
- *      Type of output handler
+ *      Type of reporter configured by this factory
  *
  */
-public abstract class OutputHandlerFactory<CT, HT extends OutputHandler> {
+public abstract class ReporterFactory<CT, HT extends Reporter> {
    
    /**
-    * Output handler built by this factory
+    * Reporter built by this factory
     */
-   protected HT outputHandler;
+   protected HT reporter;
    
    /**
     * Configuration information
@@ -54,24 +54,24 @@ public abstract class OutputHandlerFactory<CT, HT extends OutputHandler> {
    
 
    /**
-    * Create the output handler associated with this factory
+    * Create the reporter associated with this factory
     * 
     * @param holon
     *       source holon
     * @return
-    *       output handler
+    *       reference to reporter object
     * @throws Exception
-    *       if error in creating factory
+    *       if error in creating reporter object
     */
-   public OutputHandler createOutputHandler() throws Exception
+   public Reporter createReporter() throws Exception
    {
-      outputHandler = newOutputHandler();
-      outputHandler.setFactory(this);
-      return outputHandler;
+      reporter = newReporter();
+      reporter.setFactory(this);
+      return reporter;
    }
    
    /**
-    * Initialize the associated output handler
+    * Initialize the associated reporter
     * 
     * @throws Exception
     *       if error in initialization
@@ -88,7 +88,7 @@ public abstract class OutputHandlerFactory<CT, HT extends OutputHandler> {
    }
    
    /**
-    * Initialize the associated output handler based on the provided configuration information
+    * Initialize the associated reporter based on the provided configuration information
     * 
     * @param config
     *       object containing configuration information
@@ -96,13 +96,13 @@ public abstract class OutputHandlerFactory<CT, HT extends OutputHandler> {
    protected abstract void init();
 
    /**
-    * Create a new output handler of the appropriate type for this factory
+    * Create a new reporter of the appropriate type for this factory
     * 
     * @return
-    *       output handler
+    *       reference to reporter
     * @throws Exception
-    *       if error in creating the new output handler 
+    *       if error in creating the new reporter
     */
-   protected abstract HT newOutputHandler() throws Exception;
+   protected abstract HT newReporter() throws Exception;
 
  }

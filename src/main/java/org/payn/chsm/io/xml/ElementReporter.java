@@ -8,12 +8,12 @@ import org.w3c.dom.Element;
  * @author robpayn
  *
  */
-public class ElementOutput extends ElementHelperLoader {
+public class ElementReporter extends ElementHelperLoader {
 
    /**
     * Tag name for the output element
     */
-   public static final String TAG_NAME = "output";
+   public static final String TAG_NAME = "reporter";
 
    /**
     * Create an output element based on given XML element
@@ -21,7 +21,7 @@ public class ElementOutput extends ElementHelperLoader {
     * @param element
     *       XML element
     */
-   public ElementOutput(Element element) 
+   public ElementReporter(Element element) 
    {
       super(element);
    }

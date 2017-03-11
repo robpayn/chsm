@@ -6,7 +6,7 @@ package org.payn.chsm.io.file;
  * @author robpayn
  *
  */
-public abstract class OutputHandlerSingleThread extends OutputHandlerInterval implements Runnable {
+public abstract class ReporterSingleThread extends ReporterInterval implements Runnable {
    
    /**
     * Thread where IO operations are running

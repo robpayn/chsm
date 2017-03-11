@@ -2,34 +2,35 @@ package org.payn.chsm.io.file;
 
 import java.io.File;
 
-import org.payn.chsm.io.OutputHandlerFactoryXML;
-import org.payn.chsm.io.xml.ElementOutput;
+import org.payn.chsm.io.ReporterFactoryXML;
+import org.payn.chsm.io.xml.ElementReporter;
 import org.w3c.dom.Element;
 
 /**
- * Factory for a file system output handler
+ * Factory for a file system reporter
+ * 
  * @author v78h241
  *
  */
-public class OutputHandlerFileSystemFactoryXML extends OutputHandlerFactoryXML<OutputHandlerFileSystem> {
+public class ReporterFileSystemFactoryXML extends ReporterFactoryXML<ReporterFileSystem> {
    
    /**
-    * Construct the factory with the provided output handler
+    * Construct the factory with the provided reporter
     * 
-    * @param outputHandler
+    * @param reporter
     * @param config 
     */
-   public OutputHandlerFileSystemFactoryXML(OutputHandlerFileSystem outputHandler, ElementOutput config)
+   public ReporterFileSystemFactoryXML(ReporterFileSystem reporter, ElementReporter config)
    {
-      this.outputHandler = outputHandler;
+      this.reporter = reporter;
       this.config = config;
    }
 
    @Override
    public void init() 
    {
-      OutputHandlerFileSystem handler = 
-            ((OutputHandlerFileSystem)outputHandler);
+      ReporterFileSystem handler = 
+            ((ReporterFileSystem)reporter);
       Element fileElement = config.getFirstChildElement("file");
       File workingDir = new File(System.getProperty("user.dir"));
       handler.setWorkingDir(workingDir);
@@ -54,9 +55,9 @@ public class OutputHandlerFileSystemFactoryXML extends OutputHandlerFactoryXML<O
    }
 
    @Override
-   public OutputHandlerFileSystem newOutputHandler() throws Exception 
+   public ReporterFileSystem newReporter() throws Exception 
    {
-      throw new Exception("Cannot create an abstract file system output handler");
+      throw new Exception("Cannot create an abstract file system reporter");
    }
 
 }

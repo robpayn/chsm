@@ -2,15 +2,15 @@ package org.payn.chsm.io.file;
 
 import java.io.File;
 
-import org.payn.chsm.OutputHandlerAbstract;
+import org.payn.chsm.ReporterAbstract;
 
 /**
- * Output handler that targets a directory in a file system
+ * Reporter that writes reports to a directory in a file system
  * 
  * @author robpayn
  * 
  */
-public abstract class OutputHandlerFileSystem extends OutputHandlerAbstract<File> {
+public abstract class ReporterFileSystem extends ReporterAbstract<File> {
 
    /**
     * Working directory

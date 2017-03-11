@@ -19,12 +19,12 @@ public interface Controller extends Processor {
    public abstract void setLogger(LoggerManager loggerManager);
 
    /**
-    * Getter
+    * Get the reporter list
     * 
     * @return
-    *       list of output handlers
+    *       list of reporters
     */
-   public abstract ArrayList<OutputHandler> getOutputHandlers();
+   public abstract ArrayList<Reporter> getReporters();
 
    /**
     * Add a processor to be controlled

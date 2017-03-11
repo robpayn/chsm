@@ -13,14 +13,14 @@ import java.util.ArrayList;
 public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbstract<VT> implements Controller {
    
    /**
-    * Output handlers for generating output
+    * List of reporters that generate output
     */
-   protected ArrayList<OutputHandler> outputHandlers;
+   protected ArrayList<Reporter> reporters;
    
    @Override
-   public ArrayList<OutputHandler> getOutputHandlers()
+   public ArrayList<Reporter> getReporters()
    {
-      return outputHandlers;
+      return reporters;
    }
    
    /**
@@ -49,19 +49,19 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
     */
    public ControllerAbstract()
    {
-      outputHandlers = new ArrayList<OutputHandler>();
+      reporters = new ArrayList<Reporter>();
       inputHandlers = new ArrayList<InputHandler>();
    }
    
    /**
-    * Add an output handler
+    * Add a reporter to the controller
     * 
-    * @param outputHandler
-    *       new output handler to add
+    * @param reporter
+    *       reporter to add
     */
-   public void addOutputHandler(OutputHandler outputHandler)
+   public void addReporter(Reporter reporter)
    {
-      outputHandlers.add(outputHandler);
+      reporters.add(reporter);
    }
 
    /**

@@ -2,7 +2,7 @@ package org.payn.chsm.processors;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.InputHandler;
-import org.payn.chsm.OutputHandler;
+import org.payn.chsm.Reporter;
 import org.payn.chsm.State;
 import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
@@ -44,11 +44,11 @@ public abstract class ControllerTimeStep extends ControllerHolon {
    {
       Holon holon = (Holon)state;
 
-      // Initialize output handlers
-      loggerManager.statusUpdate("Initializing output handlers...");
-      for (OutputHandler outputHandler: getOutputHandlers())
+      // Initialize reporters
+      loggerManager.statusUpdate("Initializing reporters...");
+      for (Reporter reporter: getReporters())
       {
-         outputHandler.initialize(holon);
+         reporter.initialize(holon);
       }
       
       // Initialize time
@@ -69,17 +69,17 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       initialize();
       
       loggerManager.statusUpdate("Outputting initialized model...");
-      for (OutputHandler outputHandler: outputHandlers)
+      for (Reporter reporter: reporters)
       {
-         outputHandler.openLocation();
+         reporter.openLocation();
       }
-      for (OutputHandler outputHandler: outputHandlers)
+      for (Reporter reporter: reporters)
       {
-         outputHandler.write();
+         reporter.write();
       }
-      for (OutputHandler outputHandler: outputHandlers)
+      for (Reporter reporter: reporters)
       {
-         outputHandler.closeLocation();
+         reporter.closeLocation();
       }
    }
 
@@ -100,17 +100,17 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       loggerManager.statusUpdate("Executing update loop...");
       executeIteration();
       
-      for (OutputHandler outputHandler: outputHandlers)
+      for (Reporter reporter: reporters)
       {
-         outputHandler.openLocation();
-         outputHandler.conditionalWrite();
+         reporter.openLocation();
+         reporter.conditionalWrite();
       }
       while(iterationValue.n < lastIter.n)
       {
          executeIteration();
-         for (OutputHandler outputHandler: outputHandlers)
+         for (Reporter reporter: reporters)
          {
-            outputHandler.conditionalWrite();
+            reporter.conditionalWrite();
          }
       }
       long time = System.currentTimeMillis() - startTime;
@@ -124,10 +124,10 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       {
          inputHandler.close();
       }
-      loggerManager.statusUpdate("Closing output handlers...");
-      for (OutputHandler outputHandler: outputHandlers)
+      loggerManager.statusUpdate("Closing reporters...");
+      for (Reporter reporter: reporters)
       {
-         outputHandler.closeLocation();
+         reporter.closeLocation();
       }
       
       loggerManager.statusUpdate("Execution complete...");

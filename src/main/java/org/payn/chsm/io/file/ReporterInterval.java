@@ -2,12 +2,12 @@ package org.payn.chsm.io.file;
 
 
 /**
- * An file system output handler where the condition is based on regular iteration intervals
+ * A file system reporter where the condition is based on regular iteration intervals
  * 
  * @author robpayn
  *
  */
-public abstract class OutputHandlerInterval extends OutputHandlerFileSystem {
+public abstract class ReporterInterval extends ReporterFileSystem {
 
    /**
     * Iteration interval between output events

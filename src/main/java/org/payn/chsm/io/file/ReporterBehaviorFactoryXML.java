@@ -2,28 +2,28 @@ package org.payn.chsm.io.file;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.io.OutputHandlerFactoryXML;
+import org.payn.chsm.io.ReporterFactoryXML;
 import org.payn.chsm.io.xml.ElementBehavior;
 import org.payn.chsm.io.xml.ElementHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 /**
- * Factory for the behavior output handler
+ * Factory for the behavior reporter
  * 
  * @author v78h241
  *
  */
-public class OutputHandlerBehaviorFactoryXML extends OutputHandlerFactoryXML<OutputHandlerBehavior> {
+public class ReporterBehaviorFactoryXML extends ReporterFactoryXML<ReporterBehavior> {
 
    @Override
    public void init() 
    {
-      new OutputHandlerIntervalFactoryXML(outputHandler, config).init();
+      new ReporterIntervalFactoryXML(reporter, config).init();
       Element behElement = config.getFirstChildElement("delimiter");
       if (behElement != null && behElement.hasAttribute("value"))
       {
-         outputHandler.setDelimiter(behElement.getAttribute("value"));
+         reporter.setDelimiter(behElement.getAttribute("value"));
       }
       
       ElementHelper initElem = config.getFirstChildElementHelper("init");
@@ -32,7 +32,7 @@ public class OutputHandlerBehaviorFactoryXML extends OutputHandlerFactoryXML<Out
       {
          isInitActive = initElem.isActive();
       }
-      outputHandler.setInitActive(isInitActive);
+      reporter.setInitActive(isInitActive);
       
       // Set up the filters if filter element is present and active
       ElementHelper filterElem = config.getFirstChildElementHelper("filter");
@@ -52,15 +52,15 @@ public class OutputHandlerBehaviorFactoryXML extends OutputHandlerFactoryXML<Out
                   stateFilterList.add(((Element)stateList.item(stateCount)).getAttribute("name"));
                }
             }
-            outputHandler.addBehaviorFilter(behaviorElement.getAttribute("name"), stateFilterList);
+            reporter.addBehaviorFilter(behaviorElement.getAttribute("name"), stateFilterList);
          }
       }
    }
 
    @Override
-   public OutputHandlerBehavior newOutputHandler() 
+   public ReporterBehavior newReporter() 
    {
-      return new OutputHandlerBehavior();
+      return new ReporterBehavior();
    }
 
 }

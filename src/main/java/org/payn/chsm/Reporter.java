@@ -1,22 +1,22 @@
 package org.payn.chsm;
 
-import org.payn.chsm.io.OutputHandlerFactory;
+import org.payn.chsm.io.ReporterFactory;
 
 /**
- * Interface for an output handler
+ * Interface for a reporter
  * 
  * @author robpayn
  *
  */
-public interface OutputHandler {
+public interface Reporter {
 
    /**
     * Setter 
     * 
     * @param factory
-    *       factory that created the output handler
+    *       factory that created the reporter
     */
-   public abstract void setFactory(OutputHandlerFactory<?,?> factory);
+   public abstract void setFactory(ReporterFactory<?,?> factory);
    
    /**
     * Conditionally write output
@@ -51,7 +51,7 @@ public interface OutputHandler {
    public abstract void closeLocation() throws Exception;
 
    /**
-    * Initialize the output handler
+    * Initialize the reporter
     * 
     * @param configObject
     *       Object with configuration information
