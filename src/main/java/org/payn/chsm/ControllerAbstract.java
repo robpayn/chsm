@@ -24,9 +24,9 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
    }
    
    /**
-    * Dependency handler for managing call order
+    * Sorter for managing call order
     */
-   protected DependencyHandler<? extends Processor> dependencyHandler;
+   protected Sorter<? extends Processor> sorter;
    
    /**
     * List of input handlers
@@ -65,14 +65,14 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
    }
 
    /**
-    * Get the dependency handler
+    * Get the sorter
     * 
     * @return
-    *       dependency handler
+    *       sorter
     */
-   public DependencyHandler<? extends Processor> getDependencyHandler() 
+   public Sorter<? extends Processor> getSorter() 
    {
-      return dependencyHandler;
+      return sorter;
    }
    
 
@@ -94,7 +94,7 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
       if (state.isDynamic())
       {
          Processor neededProc = state.getProcessor();
-         dependencyHandler.addDependency(processor, neededProc);
+         sorter.addDependency(processor, neededProc);
       }
    }
    

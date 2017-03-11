@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *      Processor type handled by this class
  *
  */
-public interface DependencyHandler<PT extends Processor> {
+public interface Sorter<PT extends Processor> {
 
    /**
     * Provide the sorted list of processors in the correct execution order

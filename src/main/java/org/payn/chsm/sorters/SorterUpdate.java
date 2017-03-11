@@ -1,4 +1,4 @@
-package org.payn.chsm.dependencies;
+package org.payn.chsm.sorters;
 
 import java.util.ArrayList;
 
@@ -6,19 +6,19 @@ import org.payn.chsm.Processor;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
 /**
- * Dependency handler for updating processors
+ * Sorter for ordering updating of processors
  * 
  * @author robpayn
  * 
  */
-public class DependencyHandlerUpdate extends DependencyHandlerUpdateAbstract<UpdaterSimpleAuto> {
+public class SorterUpdate extends SorterUpdateAbstract<UpdaterSimpleAuto> {
 
    /**
     * Constructor
     * 
     * @param processors
     */
-   public DependencyHandlerUpdate(ArrayList<UpdaterSimpleAuto> processors) 
+   public SorterUpdate(ArrayList<UpdaterSimpleAuto> processors) 
    {
       super(processors);
    }
@@ -28,7 +28,7 @@ public class DependencyHandlerUpdate extends DependencyHandlerUpdateAbstract<Upd
    {
       if (!UpdaterSimpleAuto.class.isInstance(processor))
       {
-         throw new Exception("Processor not compatible with UpdaterAutoSimple dependency handler");
+         throw new Exception("Processor not compatible with UpdaterAutoSimple sorter");
       }
       if (UpdaterSimpleAuto.class.isInstance(neededProcessor))
       {

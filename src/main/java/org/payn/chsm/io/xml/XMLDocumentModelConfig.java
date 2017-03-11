@@ -159,7 +159,7 @@ public class XMLDocumentModelConfig extends XMLDocument {
     * Get the iterator over the output elements
     * 
     * @return 
-    *       iterator over output handler elements
+    *       iterator over reporter elements
     */
    public Iterator<ElementReporter> getReporterIterator() 
    {

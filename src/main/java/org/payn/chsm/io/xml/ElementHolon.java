@@ -26,15 +26,11 @@ public class ElementHolon extends ElementHelper {
    public static final String TAG_NAME = "holon";
 
    /**
-    * Tag name for a cell element
-    */
-   public static final String TAG_NAME_CELL = "cell";
-   
-   /**
-    * Create a new instance based on the provided XML element
+    * Create a new instance based on information in
+    * the provided XML element
     * 
     * @param element
-    *       XML element for a cell
+    *       XML element
     */
    public ElementHolon(Element element) 
    {
@@ -47,7 +43,7 @@ public class ElementHolon extends ElementHelper {
     * @return 
     *       iterator
     */
-   public Iterator<? extends ElementBehavior> iterator() 
+   public Iterator<ElementBehavior> iterator() 
    {
       NodeList nodeList = element.getChildNodes();
       ArrayList<ElementBehavior> list = new ArrayList<ElementBehavior>();
@@ -63,7 +59,20 @@ public class ElementHolon extends ElementHelper {
    }
    
    /**
-    * Create a new behavior element in the cell element
+    * Convenience method equivalent to calling createBehaviorElment(behavior, true)
+    * 
+    * @param behavior
+    * @return
+    *       a matrix behavior element
+    *       
+    */
+   public ElementBehavior createBehaviorElement(Behavior behavior)
+   {
+      return createBehaviorElement(behavior, true);
+   }
+   
+   /**
+    * Create a new behavior element in the holon
     * 
     * @param behavior 
     *       behavior on which to base the element

@@ -1,4 +1,4 @@
-package org.payn.chsm.dependencies.graph;
+package org.payn.chsm.sorters.graph;
 
 import java.util.HashSet;
 

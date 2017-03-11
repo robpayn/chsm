@@ -2,7 +2,7 @@ package org.payn.chsm;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.dependencies.graph.Graph;
+import org.payn.chsm.sorters.graph.Graph;
 
 /**
  * Handles dependencies between processors
@@ -11,7 +11,7 @@ import org.payn.chsm.dependencies.graph.Graph;
  * @param <PT> 
  *
  */
-public abstract class DependencyHandlerAbstract<PT extends Processor> implements DependencyHandler<PT> {
+public abstract class SorterAbstract<PT extends Processor> implements Sorter<PT> {
    
    /**
     * List of processors
@@ -29,7 +29,7 @@ public abstract class DependencyHandlerAbstract<PT extends Processor> implements
     * @param processors
     *       list of processors
     */
-   public DependencyHandlerAbstract(ArrayList<PT> processors) 
+   public SorterAbstract(ArrayList<PT> processors) 
    {
       graph = new Graph<PT>();
       this.processors = processors;

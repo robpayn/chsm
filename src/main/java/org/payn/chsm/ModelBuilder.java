@@ -48,7 +48,7 @@ public abstract class ModelBuilder<HT extends Holon> {
    }
 
    /**
-    * The cell network controller created by the factory
+    * The holon controller created by the factory
     */
    protected ControllerHolon controller;
    

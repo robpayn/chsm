@@ -1,27 +1,27 @@
-package org.payn.chsm.dependencies;
+package org.payn.chsm.sorters;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.DependencyHandlerAbstract;
+import org.payn.chsm.SorterAbstract;
 import org.payn.chsm.Processor;
 import org.payn.chsm.processors.interfaces.UpdaterAuto;
 import org.payn.chsm.processors.interfaces.UpdaterSlave;
 
 /**
- * Dependency handler for updating processors
+ * Abstract sorter for ordering updating of processors
  * 
  * @author robpayn
  * @param <PT> 
  *
  */
-public abstract class DependencyHandlerUpdateAbstract<PT extends UpdaterAuto> extends DependencyHandlerAbstract<PT> {
+public abstract class SorterUpdateAbstract<PT extends UpdaterAuto> extends SorterAbstract<PT> {
 
    /**
     * Constructor
     * 
     * @param processors
     */
-   public DependencyHandlerUpdateAbstract(ArrayList<PT> processors) 
+   public SorterUpdateAbstract(ArrayList<PT> processors) 
    {
       super(processors);
    }

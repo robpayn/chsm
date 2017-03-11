@@ -160,7 +160,7 @@ public abstract class ModelLoaderXML extends ModelLoader {
    @Override
    protected ArrayList<ReporterFactory<?,?>> loadReporterFactories() throws Exception 
    {
-      // Create the output handlers and set their configurations
+      // Create the reporters and set their configurations
       Iterator<ElementReporter> outputIter = documentConfig.getReporterIterator();
       ArrayList<ReporterFactory<?,?>> list = new ArrayList<ReporterFactory<?,?>>();
       while (outputIter.hasNext())
@@ -168,17 +168,17 @@ public abstract class ModelLoaderXML extends ModelLoader {
          ElementReporter outputElem = outputIter.next();
          if (outputElem.isActive())
          {
-            ReporterFactoryXML<?> outputHandlerFactory = getReporterFactory(outputElem);
-            outputHandlerFactory.setConfig(outputElem);
-            outputHandlerFactory.setLogger(loggerManager);
-            list.add(outputHandlerFactory);
+            ReporterFactoryXML<?> reporterFactory = getReporterFactory(outputElem);
+            reporterFactory.setConfig(outputElem);
+            reporterFactory.setLogger(loggerManager);
+            list.add(reporterFactory);
          }
       }
       return list;
    }
 
    /**
-    * Get a configured output handler factory
+    * Get a configured reporter factory
     * 
     * @param outputElem
     * @return
@@ -193,7 +193,7 @@ public abstract class ModelLoaderXML extends ModelLoader {
             getClass().getClassLoader(), 
             outputElem.getFile(pathRoot), 
             classPath, 
-            String.format("Output handler factory %s", classPath)
+            String.format("Reporter factory %s", classPath)
             );
       }
       else

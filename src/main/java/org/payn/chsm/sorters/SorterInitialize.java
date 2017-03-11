@@ -1,8 +1,8 @@
-package org.payn.chsm.dependencies;
+package org.payn.chsm.sorters;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.DependencyHandlerAbstract;
+import org.payn.chsm.SorterAbstract;
 import org.payn.chsm.Processor;
 import org.payn.chsm.processors.interfaces.InitializerAuto;
 import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
@@ -13,14 +13,14 @@ import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
  * @author robpayn
  *
  */
-public class DependencyHandlerInitialize extends DependencyHandlerAbstract<InitializerSimpleAuto> {
+public class SorterInitialize extends SorterAbstract<InitializerSimpleAuto> {
 
    /**
     * Constructs a new instance based on an array of initializers
     * 
     * @param initializers
     */
-   public DependencyHandlerInitialize(ArrayList<InitializerSimpleAuto> initializers) 
+   public SorterInitialize(ArrayList<InitializerSimpleAuto> initializers) 
    {
       super(initializers);
    }
@@ -34,7 +34,7 @@ public class DependencyHandlerInitialize extends DependencyHandlerAbstract<Initi
    {
       if (!InitializerSimpleAuto.class.isInstance(processor))
       {
-         throw new Exception("Processor not compatible with InitilzerAutoSimple dependency handler");
+         throw new Exception("Processor not compatible with InitilzerAutoSimple sorter");
       }
       if (InitializerAuto.class.isInstance(neededProcessor))
       {
