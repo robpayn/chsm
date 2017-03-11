@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import org.payn.chsm.io.ReporterFactory;
 import org.payn.chsm.io.ReporterFactoryXML;
+import org.payn.chsm.io.xml.ElementBuilder;
 import org.payn.chsm.io.xml.ElementLogger;
 import org.payn.chsm.io.xml.ElementReporter;
 import org.payn.chsm.io.xml.ElementProcessor;
@@ -17,16 +18,25 @@ import org.payn.chsm.processors.ControllerHolon;
  * Model loader that is configured by an XML document
  * 
  * @author robpayn
- *
- * @param <MBT>
  */
-public abstract class ModelLoaderXML<MBT extends ModelBuilder<?>> extends ModelLoader<MBT> {
+public abstract class ModelLoaderXML extends ModelLoader {
 
    /**
     * XML document with configuration information
     */
    protected XMLDocumentModelConfig documentConfig;
-   
+
+   /**
+    * Get the XML configuration document
+    * 
+    * @return
+    *       XML document
+    */
+   public XMLDocumentModelConfig getDocument() 
+   {
+      return documentConfig;
+   }
+
    /**
     * Root path for loading
     */
@@ -55,7 +65,7 @@ public abstract class ModelLoaderXML<MBT extends ModelBuilder<?>> extends ModelL
       }
       
       // Parse the XML configuration file
-      documentConfig = getModelConfigXML(configFile);
+      documentConfig = new XMLDocumentModelConfig(configFile);
       pathRoot = documentConfig.getPathRoot();
    }
 
@@ -78,7 +88,7 @@ public abstract class ModelLoaderXML<MBT extends ModelBuilder<?>> extends ModelL
    }
 
    @Override
-   protected ControllerHolon getController() throws Exception 
+   protected ControllerHolon loadController() throws Exception 
    {
       ElementProcessor procElem = documentConfig.getProcessorElement();
       if (procElem != null)
@@ -98,7 +108,7 @@ public abstract class ModelLoaderXML<MBT extends ModelBuilder<?>> extends ModelL
    }
 
    @Override
-   protected ArrayList<Resource> getResources() throws Exception 
+   protected ArrayList<Resource> loadResources() throws Exception 
    {
       Iterator<ElementResource> resourceIter = documentConfig.getResourceIterator();
       ArrayList<Resource> list = new ArrayList<Resource>();
@@ -148,7 +158,7 @@ public abstract class ModelLoaderXML<MBT extends ModelBuilder<?>> extends ModelL
    }
 
    @Override
-   protected ArrayList<ReporterFactory<?,?>> getReporterFactories() throws Exception 
+   protected ArrayList<ReporterFactory<?,?>> loadReporterFactories() throws Exception 
    {
       // Create the output handlers and set their configurations
       Iterator<ElementReporter> outputIter = documentConfig.getReporterIterator();
@@ -192,14 +202,25 @@ public abstract class ModelLoaderXML<MBT extends ModelBuilder<?>> extends ModelL
       }
    }
 
-   /**
-    * Get the XML document with the model configuration
-    * 
-    * @param configFile
-    * @return
-    *       XML document
-    * @throws Exception
-    */
-   public abstract XMLDocumentModelConfig getModelConfigXML(File configFile) throws Exception;
+   @Override
+   protected ModelBuilder<?> loadBuilder() throws Exception 
+   {
+      ElementBuilder builderElem = 
+            documentConfig.getBuilderElement();
+      String classPath = builderElem.getClassPath();
+      if (!classPath.equals(""))
+      {
+         return (ModelBuilder<?>)ModelLoader.createObjectInstance(
+               getClass().getClassLoader(), 
+               builderElem.getFile(pathRoot), 
+               classPath,
+               String.format("Builder %s", classPath)
+               );
+      }
+      else
+      {
+         return null;
+      }
+   }
 
 }

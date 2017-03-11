@@ -41,6 +41,14 @@ public interface Behavior {
    public abstract Resource getResource();
 
    /**
+    * Check if the behavior has a resource
+    * 
+    * @return
+    *       true if a resource is defined, false otherwise
+    */
+   public abstract boolean hasResource();
+
+   /**
     * Setter for the file system path
     * 
     * @param fileSystemPath

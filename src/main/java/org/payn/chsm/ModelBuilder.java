@@ -37,16 +37,6 @@ public abstract class ModelBuilder<HT extends Holon> {
    protected HT holon;
    
    /**
-    * Set the holon that will be the subject of the build
-    * 
-    * @param holon
-    */
-   public void setHolon(HT holon) 
-   {
-      this.holon = holon;
-   }
-   
-   /**
     * Get the matrix being built
     * 
     * @return
@@ -87,7 +77,7 @@ public abstract class ModelBuilder<HT extends Holon> {
    /**
     * Loader for this builder
     */
-   protected ModelLoader<?> loader;
+   protected ModelLoader loader;
    
    /**
     * Setter for the loader for this builder
@@ -95,7 +85,7 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @param loader
     *       MatrixBuilderLoader for this builder
     */
-   public void setLoader(ModelLoader<?> loader)
+   public void setLoader(ModelLoader loader)
    {
       this.loader = loader;
    }
@@ -106,7 +96,7 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @return
     *       MatrixBuilderLoader that loaded this builder
     */
-   public ModelLoader<?> getLoader()
+   public ModelLoader getLoader()
    {
       return loader;
    }
@@ -320,7 +310,7 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @throws Exception
     *       if error in model creation
     */
-   public abstract HT createModel() throws Exception;
+   public abstract HT buildModel() throws Exception;
 
    /**
     * Build the model
@@ -328,6 +318,6 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @throws Exception
     *       if error in building the model
     */
-   public abstract void buildModel() throws Exception;
+   public abstract void installStates() throws Exception;
 
 }

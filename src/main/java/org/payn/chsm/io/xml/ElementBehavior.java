@@ -160,13 +160,21 @@ public class ElementBehavior extends ElementHelperLoader {
     */
    public void configureBehaviorElement(Behavior behavior, boolean install) 
    {
-      setName(behavior.getName());
+      if (behavior.hasResource())
+      {
+         setName(behavior.getSimpleName());
+         setResourceName(behavior.getResource().getName());
+      }
+      else
+      {
+         setName(behavior.getName());
+         setClassPath(behavior.getClass().getCanonicalName());
+         setPath(behavior.getFileSystemPath());
+      }
       if (!install)
       {
          setInstall(Boolean.toString(install));
       }
-      setClassPath(behavior.getClass().getCanonicalName());
-      setPath(behavior.getFileSystemPath());
    }
 
    /**

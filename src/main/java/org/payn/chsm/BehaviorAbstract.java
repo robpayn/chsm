@@ -50,6 +50,12 @@ public abstract class BehaviorAbstract implements Behavior{
       return resource;
    }
 
+   @Override
+   public boolean hasResource()
+   {
+      return resource != null;
+   }
+   
    /**
     * Map of processor to install with the behavior
     */

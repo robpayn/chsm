@@ -17,6 +17,38 @@ import org.w3c.dom.NodeList;
 public class XMLDocumentModelConfig extends XMLDocument {
 
    /**
+    * Element containing the base holon information
+    */
+   private ElementHolon holonElem;
+
+   /**
+    * Get a holon helper element for the root element
+    * 
+    * @return
+    *       holon element
+    */
+   public ElementHolon getHolonElement() 
+   {
+      return holonElem;
+   }
+
+   /**
+    * Element containing information about the builder
+    */
+   private ElementBuilder builderElem;
+
+   /**
+    * Get the builder element
+    * 
+    * @return
+    *       Element for the builder
+    */
+   public ElementBuilder getBuilderElement() 
+   {
+      return builderElem;
+   }
+
+   /**
     * The the root path for paths to java classes
     */
    private String pathRoot;
@@ -41,6 +73,8 @@ public class XMLDocumentModelConfig extends XMLDocument {
    public XMLDocumentModelConfig(File file) throws Exception 
    {
       super(file);
+      builderElem = new ElementBuilder(rootElementHelper.getFirstChildElement(ElementBuilder.TAG_NAME));
+      holonElem = new ElementHolon(rootElementHelper.getFirstChildElement(ElementHolon.TAG_NAME));
       pathRoot = this.rootElementHelper.getAttribute("pathroot");
    }
 
@@ -141,6 +175,17 @@ public class XMLDocumentModelConfig extends XMLDocument {
          }
       }
       return reporterList.iterator();
+   }
+
+   /**
+    * Get the name attribute of the document element
+    * 
+    * @return
+    *       name of the document element
+    */
+   public String getHolonName() 
+   {
+      return holonElem.getName();
    }
 
 }

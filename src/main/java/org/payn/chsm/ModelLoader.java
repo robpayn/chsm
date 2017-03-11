@@ -16,10 +16,8 @@ import org.payn.chsm.resources.time.ResourceTime;
  * 
  * @author v78h241
  *
- * @param <MBT>
- *      model builder type
  */
-public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
+public abstract class ModelLoader {
 
    /**
     * Key name in command line argument to the file path for the builder
@@ -114,11 +112,6 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
    }
 
    /**
-    * Matrix builder
-    */
-   protected MBT builder;
-   
-   /**
     * The logger manager for all logging
     */
    protected LoggerManager loggerManager;
@@ -149,27 +142,27 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
    }
    
    /**
-    * Create the matrix with loaded builder
+    * Load model components
     * 
-    * @param argMap
-    *       map of arguments
     * @param workingDir
     *       working directory
-    * @return
-    *       matrix
+    * @param argMap
+    *       map of key-value pair arguments
+    * @return 
+    *       reference to the loaded builder
     * @throws Exception
-    *       if errors in loading the builder, processor, outputters, or matrix
+    *       if errors in loading the builder, processor, reporters, or matrix
     */
-   public MBT load(HashMap<String, String> argMap, File workingDir) 
+   public ModelBuilder<?> load(File workingDir, HashMap<String, String> argMap) 
          throws Exception
    {
       this.argMap = argMap;
       this.workingDir = workingDir;
       
       loadConfiguration();
-      loadLoggers();
       
       System.out.println("Loading the loggers...");
+      loadLoggers();
       if (loggerList.isEmpty())
       {
          System.out.println("No loggers are selected, model status is invisible...");
@@ -184,7 +177,7 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
       }
 
       loggerManager.statusUpdate("Loading the model builder...");
-      builder = createBuilder();
+      ModelBuilder<?> builder = loadBuilder();
       loggerManager.statusUpdate(String.format(
             "   Loaded the model builder %s...",
             builder.getClass().getCanonicalName()
@@ -195,7 +188,7 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
       builder.setLogger(loggerManager);
 
       loggerManager.statusUpdate("Loading the controller...");
-      ControllerHolon controller = getController();
+      ControllerHolon controller = loadController();
       loggerManager.statusUpdate(String.format(
             "   Loaded the controller %s ...",
             controller.getClass().getCanonicalName()
@@ -204,7 +197,7 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
       controller.setLogger(loggerManager);
       
       loggerManager.statusUpdate("Loading the configured resources...");
-      ArrayList<Resource> resources = getResources();
+      ArrayList<Resource> resources = loadResources();
       boolean isTimeResourceLoaded = false;
       for (Resource resource: resources)
       {
@@ -229,7 +222,7 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
       }
       
       loggerManager.statusUpdate("Loading the reporters...");
-      ArrayList<ReporterFactory<?,?>> factories = getReporterFactories();
+      ArrayList<ReporterFactory<?,?>> factories = loadReporterFactories();
       for (ReporterFactory<?,?> factory: factories)
       {
          Reporter reporter = factory.createReporter();
@@ -239,7 +232,7 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
                reporter.getClass().getCanonicalName()
                ));
       }
-
+      
       return builder;
    }
 
@@ -260,11 +253,9 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
    /**
     * Get the appropriate loaded builder class
     * 
-    * @return
-    *       builder class
     * @throws Exception
     */
-   protected abstract MBT createBuilder() throws Exception;
+   protected abstract ModelBuilder<?> loadBuilder() throws Exception;
    
    /**
     * Get the list of reporter factories
@@ -272,7 +263,7 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
     * @return
     * @throws Exception 
     */
-   protected abstract ArrayList<ReporterFactory<?,?>> getReporterFactories() throws Exception;
+   protected abstract ArrayList<ReporterFactory<?,?>> loadReporterFactories() throws Exception;
 
    /**
     * Get the configured controller class
@@ -281,7 +272,7 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
     *       controller class
     * @throws Exception
     */
-   protected abstract ControllerHolon getController() throws Exception;
+   protected abstract ControllerHolon loadController() throws Exception;
 
    /**
     * Get the list of configured resources
@@ -290,6 +281,6 @@ public abstract class ModelLoader<MBT extends ModelBuilder<?>> {
     *       resource list
     * @throws Exception
     */
-   protected abstract ArrayList<Resource> getResources() throws Exception;
+   protected abstract ArrayList<Resource> loadResources() throws Exception;
 
 }
