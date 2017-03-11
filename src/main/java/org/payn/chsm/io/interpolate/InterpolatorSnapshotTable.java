@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 import org.payn.chsm.Controller;
 import org.payn.chsm.Holon;
-import org.payn.chsm.InputHandler;
+import org.payn.chsm.Inputter;
 import org.payn.chsm.io.SnapshotTable;
 import org.payn.chsm.io.reporters.ReporterBehavior;
 import org.payn.chsm.processors.ProcessorDouble;
@@ -22,7 +22,7 @@ import org.payn.chsm.values.ValueString;
  * @author robpayn
  *
  */
-public class InterpolatorSnapshotTable implements InputHandler {
+public class InterpolatorSnapshotTable implements Inputter {
    
    /**
     * Name of required state for interpolation type
@@ -147,7 +147,7 @@ public class InterpolatorSnapshotTable implements InputHandler {
                time, 
                SnapshotTable.getDelimiter(delimiter)
                );
-         controller.addInputHandler(table);
+         controller.addInputter(table);
          interpolatorMap.put(path, table);
       }
       else

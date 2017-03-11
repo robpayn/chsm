@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.payn.chsm.Controller;
-import org.payn.chsm.InputHandler;
+import org.payn.chsm.Inputter;
 import org.payn.chsm.State;
 import org.payn.chsm.io.SnapshotTable;
 import org.payn.chsm.processors.ProcessorDouble;
@@ -19,7 +19,7 @@ import org.payn.chsm.values.ValueString;
  * @author v78h241
  *
  */
-public class InitialConditionTable implements InputHandler {
+public class InitialConditionTable implements Inputter {
 
    /**
     * Name of the state for the path to the initial condition table
@@ -89,7 +89,7 @@ public class InitialConditionTable implements InputHandler {
             tableMap = new HashMap<File, InitialConditionTable>();
          }
          table = new InitialConditionTable(pathToFile, delimiter);
-         controller.addInputHandler(table);
+         controller.addInputter(table);
          tableMap.put(pathToFile, table);
       }
       else

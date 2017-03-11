@@ -29,9 +29,9 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
    protected Sorter<? extends Processor> sorter;
    
    /**
-    * List of input handlers
+    * List of inputters
     */
-   protected ArrayList<InputHandler> inputHandlers;
+   protected ArrayList<Inputter> inputters;
    
    /**
     * Logger manager to use for logging
@@ -50,7 +50,7 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
    public ControllerAbstract()
    {
       reporters = new ArrayList<Reporter>();
-      inputHandlers = new ArrayList<InputHandler>();
+      inputters = new ArrayList<Inputter>();
    }
    
    /**
@@ -99,9 +99,9 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
    }
    
    @Override
-   public void addInputHandler(InputHandler inputHandler)
+   public void addInputter(Inputter inputter)
    {
-      inputHandlers.add(inputHandler);
+      inputters.add(inputter);
    }
    
 }

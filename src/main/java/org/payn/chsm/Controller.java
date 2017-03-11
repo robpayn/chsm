@@ -49,11 +49,11 @@ public interface Controller extends Processor {
    public abstract void createDependency(Processor processor, State state) throws Exception;
 
    /**
-    * Add an input handler
+    * Add an inputter
     * 
-    * @param inputHandler
-    *       input handler to be added
+    * @param inputter
+    *       inputter to be added
     */
-   public abstract void addInputHandler(InputHandler inputHandler);
+   public abstract void addInputter(Inputter inputter);
 
 }

@@ -1,7 +1,7 @@
 package org.payn.chsm.processors;
 
 import org.payn.chsm.Holon;
-import org.payn.chsm.InputHandler;
+import org.payn.chsm.Inputter;
 import org.payn.chsm.Reporter;
 import org.payn.chsm.State;
 import org.payn.chsm.processors.interfaces.InitializerSimple;
@@ -119,10 +119,10 @@ public abstract class ControllerTimeStep extends ControllerHolon {
             BehaviorTime.parseTimeInMillis(time)
             ));
       loggerManager.statusUpdate("");
-      loggerManager.statusUpdate("Closing input handlers...");
-      for (InputHandler inputHandler: inputHandlers)
+      loggerManager.statusUpdate("Closing inputters...");
+      for (Inputter inputter: inputters)
       {
-         inputHandler.close();
+         inputter.close();
       }
       loggerManager.statusUpdate("Closing reporters...");
       for (Reporter reporter: reporters)
