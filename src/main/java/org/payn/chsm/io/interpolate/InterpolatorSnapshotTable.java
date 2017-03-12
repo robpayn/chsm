@@ -27,17 +27,17 @@ public class InterpolatorSnapshotTable implements Inputter {
    /**
     * Name of required state for interpolation type
     */
-   public static final String REQ_STATE_TYPE = "InterpolationType";
+   public static final String NAME_TYPE = "InterpolationType";
 
    /**
     * Name of required state for path to interpolation file
     */
-   public static final String REQ_STATE_PATH = "InterpolationPath";
+   public static final String NAME_PATH = "InterpolationPath";
 
    /**
     * Name of required state for delimiter
     */
-   public static final String REQ_STATE_DELIMITER = "Delimiter";
+   public static final String NAME_DELIMITER = "Delimiter";
 
    /**
     * Map of interpolators to ensure only one instance for each file
@@ -55,13 +55,13 @@ public class InterpolatorSnapshotTable implements Inputter {
    public static Interpolator getInterpolatorInstance(ProcessorDouble processor) throws Exception 
    {
       ValueString pathName = (ValueString)processor.createDependencyOnValue(
-            InterpolatorSnapshotTable.REQ_STATE_PATH
+            InterpolatorSnapshotTable.NAME_PATH
             );
       ValueString type = (ValueString)processor.createDependencyOnValue(
-            InterpolatorSnapshotTable.REQ_STATE_TYPE
+            InterpolatorSnapshotTable.NAME_TYPE
             );
       ValueString delimiter = (ValueString)processor.createDependencyOnValue(
-            InterpolatorSnapshotTable.REQ_STATE_DELIMITER
+            InterpolatorSnapshotTable.NAME_DELIMITER
             );
       ValueDouble time = (ValueDouble)((Holon)processor.getController().getState()).getState(
             Time.class.getSimpleName()
@@ -87,13 +87,13 @@ public class InterpolatorSnapshotTable implements Inputter {
    public static Interpolator getInterpolatorInstanceAbstract(ProcessorDouble processor) throws Exception 
    {
       ValueString pathName = (ValueString)processor.createAbstractDependency(
-            InterpolatorSnapshotTable.REQ_STATE_PATH
+            InterpolatorSnapshotTable.NAME_PATH
             ).getValue();
       ValueString type = (ValueString)processor.createAbstractDependency(
-            InterpolatorSnapshotTable.REQ_STATE_TYPE
+            InterpolatorSnapshotTable.NAME_TYPE
             ).getValue();
       ValueString delimiter = (ValueString)processor.createAbstractDependency(
-            InterpolatorSnapshotTable.REQ_STATE_DELIMITER
+            InterpolatorSnapshotTable.NAME_DELIMITER
             ).getValue();
       ValueDouble time = (ValueDouble)((Holon)processor.getController().getState()).getState(
             Time.class.getSimpleName()
