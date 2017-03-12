@@ -192,7 +192,7 @@ public abstract class ModelLoader {
             controller.getClass().getCanonicalName()
             ));
       controller.setBuilder(builder);
-      controller.setLogger(loggerManager);
+      controller.setLoggerManager(loggerManager);
       
       loggerManager.statusUpdate("Loading the configured resources...");
       ArrayList<Resource> resources = loadResources();

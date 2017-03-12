@@ -198,9 +198,9 @@ public class StateVariable implements State {
    }
    
    @Override
-   public boolean isRequired()
+   public boolean isRegistered()
    {
-      return (behavior.isStateRequired(this));
+      return (behavior.isStateRegistered(name));
    }
    
    @Override

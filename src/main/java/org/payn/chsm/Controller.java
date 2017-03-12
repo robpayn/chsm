@@ -16,7 +16,7 @@ public interface Controller extends Processor {
     * @param loggerManager
     *       logger manager
     */
-   public abstract void setLogger(LoggerManager loggerManager);
+   public abstract void setLoggerManager(LoggerManager loggerManager);
 
    /**
     * Get the reporter list

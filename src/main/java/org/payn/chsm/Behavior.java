@@ -14,7 +14,7 @@ public interface Behavior {
     * @return
     *       name of the behavior
     */
-   public abstract String getName();
+   String getName();
    
    /**
     * Getter
@@ -22,7 +22,7 @@ public interface Behavior {
     * @return
     *       simple name of the behavior (without resource prefix)
     */
-   public abstract String getSimpleName();
+   String getSimpleName();
    
    /**
     * Set the resource for the behavior
@@ -30,7 +30,7 @@ public interface Behavior {
     * @param resource
     *       Resource for this behavior
     */
-   public abstract void setResource(Resource resource);
+   void setResource(Resource resource);
 
    /**
     * Get the resource characterized by this behavior
@@ -38,7 +38,7 @@ public interface Behavior {
     * @return
     *       Resource characterized by this behavior
     */
-   public abstract Resource getResource();
+   Resource getResource();
 
    /**
     * Check if the behavior has a resource
@@ -73,26 +73,16 @@ public interface Behavior {
    public abstract void initialize(String name);
    
    /**
-    * Get the value for a state variable required by the behavior
+    * Get the value for a state variable registered with the behavior
     * 
     * @param stateName
-    *       name of the state variable required
+    *       name of the registered state 
     * @return
-    *       value associated with the state variable required
+    *       value associated with the registered state
     * @throws Exception
-    *       if error in finding the state variable
+    *       if error in finding the state
     */
-   public abstract Value createValueForReqState(String stateName) throws Exception;
-
-   /**
-    * Determines if a given state name is required
-    * 
-    * @param stateName
-    *       state name to test
-    * @return
-    *       true if state is required, false otherwise
-    */
-   public abstract boolean hasReqState(String stateName);
+   public abstract Value createValueForRegisteredState(String stateName) throws Exception;
 
    /**
     * Add a processor class to the processor map
@@ -119,31 +109,31 @@ public interface Behavior {
     * @param valueClass
     *       class of the value
     */
-   public abstract void addAbstractProcessor(String name,
+   public abstract void addProcessorAbstract(String name,
          Class<? extends Processor> processorClass, Class<? extends Value> valueClass);
    
    /**
-    * Add a required state to the state map
+    * Register a state that may (or may not) be added as part of this
+    * behavior without a processor
     * 
     * @param name
-    *       name of required state
+    *       name of state
     * @param valueClass
-    *       value class for the required state
+    *       value class for the state
     */
-   public void addRequiredState(String name, 
-         Class<? extends Value> valueClass);
+   public void registerState(String name, Class<? extends Value> valueClass);
 
    /**
-    * Add an abstracted required state
+    * Register an abstracted state
     * 
     * Resource name will be appended to the state name
     * 
     * @param stateName
-    *       name of required state
+    *       name of registered state
     * @param valueClass
-    *       value class for the required state
+    *       value class for the registered state
     */
-   public abstract void addAbstractRequiredState(String stateName,
+   public abstract void registerStateAbstract(String stateName,
          Class<? extends Value> valueClass);
    
    /**
@@ -177,14 +167,15 @@ public interface Behavior {
          String stateName, Processor processor) throws Exception;
 
    /**
-    * Determine if a state is required by the behavior, either as a processor or required state
+    * Determine if a state is registered, 
+    * either as a processor or registered state
     * 
-    * @param state
-    *       state to check
+    * @param stateName
+    *       name of state to check
     * @return
-    *       true if state is required, false otherwise
+    *       true if state is registered, false otherwise
     */
-   public abstract boolean isStateRequired(State state);
+   public abstract boolean isStateRegistered(String stateName);
 
    /**
     * Get the state name for abstracted behaviors

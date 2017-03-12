@@ -39,7 +39,7 @@ public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbst
    protected LoggerManager loggerManager;
    
    @Override
-   public void setLogger(LoggerManager loggerManager)
+   public void setLoggerManager(LoggerManager loggerManager)
    {
       this.loggerManager = loggerManager;
    }

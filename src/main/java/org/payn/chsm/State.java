@@ -81,7 +81,7 @@ public interface State {
     * @return 
     *       true if required, false otherwise
     */
-   public abstract boolean isRequired();
+   public abstract boolean isRegistered();
    
    /**
     * Determines if the state is dynamic during run time

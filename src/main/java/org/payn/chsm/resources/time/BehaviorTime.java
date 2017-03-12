@@ -77,10 +77,10 @@ public class BehaviorTime extends BehaviorAbstract {
    public static String LAST_ITERATION = "LastIteration";
 
    @Override
-   public void addRequiredStates()
+   public void registerStates()
    {
-       addRequiredState(ITERATION_INTERVAL, ValueDouble.class);
-       addRequiredState(LAST_ITERATION, ValueLong.class);
+       registerState(ITERATION_INTERVAL, ValueDouble.class);
+       registerState(LAST_ITERATION, ValueLong.class);
    }
 
    @Override

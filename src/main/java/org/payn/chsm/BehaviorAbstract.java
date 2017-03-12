@@ -62,9 +62,9 @@ public abstract class BehaviorAbstract implements Behavior{
    protected HashMap<String, Class<? extends Processor>> processorMap;
    
    /**
-    * Map of required states
+    * Map of registered states
     */
-   private HashMap<String, Class<? extends Value>> reqStateMap;
+   private HashMap<String, Class<? extends Value>> registeredStateMap;
    
    /**
     * Text that provided the file system path for loading the behavior
@@ -89,7 +89,7 @@ public abstract class BehaviorAbstract implements Behavior{
    public BehaviorAbstract()
    {
        this.processorMap = new HashMap<String, Class<? extends Processor>>();
-       this.reqStateMap = new HashMap<String, Class<? extends Value>>();
+       this.registeredStateMap = new HashMap<String, Class<? extends Value>>();
    }
 
    @Override
@@ -98,32 +98,19 @@ public abstract class BehaviorAbstract implements Behavior{
       this.simpleName = name;
       this.name = resource.getName() + "." + name;
       addProcessors();
-      addRequiredStates();
+      registerStates();
    }
 
    @Override
-   public Value createValueForReqState(String stateName) throws Exception
+   public Value createValueForRegisteredState(String stateName) throws Exception
    {
-      if (!hasReqState(stateName))
+      if (!isStateRegistered(stateName))
       {
          return null;
       }
       else
       {
-         return (Value)reqStateMap.get(stateName).newInstance();
-      }
-   }
-
-   @Override
-   public boolean hasReqState(String stateName) 
-   {
-      if (reqStateMap == null)
-      {
-         return false;
-      }
-      else
-      {
-         return reqStateMap.containsKey(stateName);
+         return (Value)registeredStateMap.get(stateName).newInstance();
       }
    }
 
@@ -132,28 +119,27 @@ public abstract class BehaviorAbstract implements Behavior{
          Class<? extends Processor> processorClass, Class<? extends Value> valueClass)
    {
       processorMap.put(name, processorClass);
-      reqStateMap.put(name, valueClass);
+      registeredStateMap.put(name, valueClass);
    }
 
    @Override
-   public void addAbstractProcessor(String name,
+   public void addProcessorAbstract(String name,
          Class<? extends Processor> processorClass, Class<? extends Value> valueClass) 
    {
       addProcessor(resource.getName() + name, processorClass, valueClass);
    }
 
    @Override
-   public void addRequiredState(String name, 
-         Class<? extends Value> valueClass)
+   public void registerState(String name, Class<? extends Value> valueClass)
    {
-       reqStateMap.put(name, valueClass);
+       registeredStateMap.put(name, valueClass);
    }
 
    @Override
-   public void addAbstractRequiredState(String stateName,
+   public void registerStateAbstract(String stateName,
          Class<? extends Value> valueClass) 
    {
-      addRequiredState(resource.getName() + stateName, valueClass);
+      registerState(resource.getName() + stateName, valueClass);
    }
 
    @Override
@@ -200,12 +186,10 @@ public abstract class BehaviorAbstract implements Behavior{
    }
 
    @Override
-   public boolean isStateRequired(State state) 
+   public boolean isStateRegistered(String stateName) 
    {
-      return (processorMap != null && 
-            processorMap.containsKey(name)) || 
-            (reqStateMap != null && 
-                  reqStateMap.containsKey(name));
+      return registeredStateMap != null && 
+            registeredStateMap.containsKey(stateName);
    }
    
    @Override
@@ -220,8 +204,8 @@ public abstract class BehaviorAbstract implements Behavior{
    protected abstract void addProcessors();
 
    /**
-    * Add the states required by this behavior
+    * Register states without processors for the behavior
     */
-   protected abstract void addRequiredStates();
+   protected abstract void registerStates();
 
 }

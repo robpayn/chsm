@@ -205,7 +205,7 @@ public abstract class ModelBuilder<HT extends Holon> {
       if (stateVar == null)
       {
          stateVar = new StateVariable(stateVarName, behavior, holon);
-         Value value = behavior.createValueForReqState(stateVarName);
+         Value value = behavior.createValueForRegisteredState(stateVarName);
          if (typeAlias != null && !typeAlias.isEmpty())
          {
             Class<? extends Value> valueClass = SUPPORTED_INIT_VALTYPES.get(typeAlias);

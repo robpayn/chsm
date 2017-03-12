@@ -70,7 +70,7 @@ public class ElementBehavior extends ElementHelperLoader {
       initValElem.setStateVariableName(state.getName());
       initValElem.setValue(state.getValue().toString());
       initValElem.setParentElement(element);
-      if (!state.isRequired())
+      if (!state.isRegistered())
       {
          initValElem.setTypeAlias(state.getValue().getClass().getSimpleName());
       }

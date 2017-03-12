@@ -11,7 +11,7 @@ import org.payn.chsm.BehaviorAbstract;
 public class BehaviorHierarchy extends BehaviorAbstract {
 
    @Override
-   public void addRequiredStates()
+   public void registerStates()
    {
    }
 
