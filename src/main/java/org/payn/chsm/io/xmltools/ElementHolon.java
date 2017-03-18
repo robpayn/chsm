@@ -2,8 +2,6 @@ package org.payn.chsm.io.xmltools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import org.payn.chsm.Behavior;
 import org.payn.chsm.Holon;
 import org.payn.chsm.State;
@@ -38,12 +36,12 @@ public class ElementHolon extends ElementHelper {
    }
 
    /**
-    * Get an iterator over behavior elements
+    * Get the list of behavior elements
     * 
     * @return 
-    *       iterator
+    *       list of behavior elements
     */
-   public Iterator<ElementBehavior> iterator() 
+   public ArrayList<ElementBehavior> getBehaviorList() 
    {
       NodeList nodeList = element.getChildNodes();
       ArrayList<ElementBehavior> list = new ArrayList<ElementBehavior>();
@@ -55,7 +53,7 @@ public class ElementHolon extends ElementHelper {
             list.add(this.newBehaviorInstance((Element)nodeList.item(i)));
          }
       }
-      return list.iterator();
+      return list;
    }
    
    /**

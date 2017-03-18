@@ -1,8 +1,6 @@
 package org.payn.chsm.io.xmltools;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.payn.chsm.Behavior;
 import org.payn.chsm.State;
 import org.w3c.dom.Element;
@@ -23,6 +21,11 @@ public class ElementBehavior extends ElementHelperLoader {
    public static final String TAG_NAME = "behavior";
    
    /**
+    * The initialization table element
+    */
+   private ElementHelper inittableElement;
+   
+   /**
     * Create a new instance from an existing element
     * 
     * @param element
@@ -39,7 +42,7 @@ public class ElementBehavior extends ElementHelperLoader {
     * @return
     *       iterator over initial value elements
     */
-   public Iterator<ElementInitValue> iterator() 
+   public ArrayList<ElementInitValue> getInitValueList() 
    {
       NodeList nodeList = element.getChildNodes();
       ArrayList<ElementInitValue> list = new ArrayList<ElementInitValue>();
@@ -51,7 +54,7 @@ public class ElementBehavior extends ElementHelperLoader {
             list.add(new ElementInitValue((Element)nodeList.item(i)));
          }
       }
-      return list.iterator();
+      return list;
    }
 
    /**
@@ -207,6 +210,99 @@ public class ElementBehavior extends ElementHelperLoader {
    public String getResourceName() 
    {
       return element.getAttribute(ElementResource.TAG_NAME);
+   }
+
+   /**
+    * Get the full name of the behavior based on the resource
+    * name prefix
+    * 
+    * @return
+    *       full behavior name
+    */
+   public String getFullBehaviorName() 
+   {
+      return getResourceName() + "." + getName();
+   }
+
+   /**
+    * Determine if an initial condition table is configured
+    * 
+    * @return
+    *       true if configured, false otherwise
+    */
+   public boolean hasInitialConditionConfig() 
+   {
+      return getInitTableElement() != null;
+   }
+
+   /**
+    * Set the path and delimiter for the initial value table
+    * 
+    * @param path
+    *       path to the file
+    * @param delimiter
+    *       column delimiter for the file
+    */
+   public void setInitTable(String path, String delimiter) 
+   {
+      if (!hasInitialConditionConfig())
+      {
+         inittableElement = 
+               new ElementHelper(getDocument().createElement("inittable"));
+         element.appendChild(inittableElement.getElement());
+      }
+      inittableElement.setAttribute("initialConditionPath", path);;
+      inittableElement.setAttribute("initialConditionDelimiter", delimiter);
+   }
+
+   /**
+    * Get the initial conditions table path
+    * 
+    * @return
+    *       path
+    */
+   public String getAttributeInitConditionPath() 
+   {
+      if (getInitTableElement() != null)
+      {
+         return getInitTableElement().getAttributeString("initialConditionPath");
+      }
+      else
+      {
+         return null;
+      }
+   }
+
+   /**
+    * Column delimiter for the initial conditions table
+    * 
+    * @return
+    *       delimiter
+    */
+   public String getAttributeInitConditionDelimiter() 
+   {
+      if (getInitTableElement() != null)
+      {
+         return getInitTableElement().getAttributeString("initialConditionDelimiter");
+      }
+      else
+      {
+         return null;
+      }
+   }
+
+   /**
+    * Get the element for the initial condition table configuration
+    * 
+    * @return
+    */
+   private ElementHelper getInitTableElement() 
+   {
+      if (inittableElement == null)
+      {
+         inittableElement = getFirstChildElementHelper("inittable");
+      }
+      return inittableElement;
    }
 
 }

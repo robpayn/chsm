@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import org.payn.chsm.Controller;
-import org.payn.chsm.Inputter;
 import org.payn.chsm.State;
 import org.payn.chsm.io.SnapshotTable;
 import org.payn.chsm.processors.ProcessorDouble;
@@ -19,7 +17,7 @@ import org.payn.chsm.values.ValueString;
  * @author v78h241
  *
  */
-public class InitialConditionTable implements Inputter {
+public class InitialConditionTable {
 
    /**
     * Name of the state for the path to the initial condition table
@@ -62,9 +60,8 @@ public class InitialConditionTable implements Inputter {
          return null;
       }
       return InitialConditionTable.getInstance(
-            processor.getController(), 
             new File(initPath.string), 
-            SnapshotTable.getDelimiter(initDelimiter.string)
+            initDelimiter.string
             );
    }
    
@@ -78,7 +75,7 @@ public class InitialConditionTable implements Inputter {
     *       reference to initial condition table
     * @throws Exception
     */
-   public static InitialConditionTable getInstance(Controller controller, File pathToFile, 
+   public static InitialConditionTable getInstance(File pathToFile, 
          String delimiter) throws Exception
    {
       InitialConditionTable table;
@@ -88,8 +85,7 @@ public class InitialConditionTable implements Inputter {
          {
             tableMap = new HashMap<File, InitialConditionTable>();
          }
-         table = new InitialConditionTable(pathToFile, delimiter);
-         controller.addInputter(table);
+         table = new InitialConditionTable(pathToFile, SnapshotTable.getDelimiter(delimiter));
          tableMap.put(pathToFile, table);
       }
       else
@@ -102,7 +98,7 @@ public class InitialConditionTable implements Inputter {
    /**
     * Map of states and their values
     */
-   private LinkedHashMap<String, HashMap<String, Double>> stateMap;
+   private LinkedHashMap<String, HashMap<String, String>> stateMap;
 
    /**
     * Construct a new instance for the provided path
@@ -115,10 +111,10 @@ public class InitialConditionTable implements Inputter {
    {
       BufferedReader reader = new BufferedReader(new FileReader(pathToFile));
       String[] line = reader.readLine().split(delimiter);
-      stateMap = new LinkedHashMap<String, HashMap<String, Double>>();
+      stateMap = new LinkedHashMap<String, HashMap<String, String>>();
       for (int column = 1; column < line.length; column++)
       {
-         stateMap.put(line[column], new LinkedHashMap<String, Double>());
+         stateMap.put(line[column], new LinkedHashMap<String, String>());
       }
       String[] headers = stateMap.keySet().toArray(new String[0]);
       while(reader.ready())
@@ -126,7 +122,7 @@ public class InitialConditionTable implements Inputter {
          line = reader.readLine().split(delimiter);
          for (int column = 1; column < line.length; column++)
          {
-            stateMap.get(headers[column - 1]).put(line[0], Double.valueOf(line[column]));
+            stateMap.get(headers[column - 1]).put(line[0], line[column]);
          }
       }
       reader.close();
@@ -144,7 +140,7 @@ public class InitialConditionTable implements Inputter {
     *       initial value for the state
     * @throws Exception
     */
-   public double find(State state) throws Exception 
+   public String find(State state) throws Exception 
    {
       return find(
             state.getBehavior().getName() + "." + state.getName(), 
@@ -161,16 +157,9 @@ public class InitialConditionTable implements Inputter {
     *       initial value of the state
     * @throws Exception
     */
-   public double find(String stateName, String holonName) throws Exception
+   public String find(String stateName, String holonName) throws Exception
    {
       return stateMap.get(stateName).get(holonName);
    }
-
-   /**
-    * Close the table
-    */
-   @Override
-   public void close() throws Exception 
-   {}
 
 }

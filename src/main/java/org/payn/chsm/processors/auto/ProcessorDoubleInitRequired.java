@@ -1,5 +1,6 @@
 package org.payn.chsm.processors.auto;
 
+import org.payn.chsm.processors.ProcessorDoubleRequired;
 import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
 
 /**
