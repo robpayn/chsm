@@ -115,11 +115,11 @@ public abstract class BehaviorAbstract implements Behavior{
    }
 
    @Override
-   public void addProcessor(String name, 
+   public void addProcessor(String stateName, 
          Class<? extends Processor> processorClass, Class<? extends Value> valueClass)
    {
-      processorMap.put(name, processorClass);
-      registeredStateMap.put(name, valueClass);
+      processorMap.put(stateName, processorClass);
+      registeredStateMap.put(stateName, valueClass);
    }
 
    @Override
@@ -132,7 +132,7 @@ public abstract class BehaviorAbstract implements Behavior{
    @Override
    public void registerState(String name, Class<? extends Value> valueClass)
    {
-       registeredStateMap.put(name, valueClass);
+      registeredStateMap.put(name, valueClass);
    }
 
    @Override

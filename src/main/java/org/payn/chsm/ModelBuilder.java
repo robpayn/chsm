@@ -189,7 +189,7 @@ public abstract class ModelBuilder<HT extends Holon> {
     *       holon where the state variable to be initialized resides
     * @param behavior
     *       behavior for the state variable
-    * @param stateVarName
+    * @param stateName
     *       name of the state variable
     * @param stringValue
     *       string representation of the value for the variable
@@ -198,14 +198,14 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @throws Exception
     *       if error in setting initial value
     */
-   public void initializeValue(Holon holon, Behavior behavior, String stateVarName, 
+   public void initializeValue(Holon holon, Behavior behavior, String stateName, 
          String stringValue, String typeAlias) throws Exception 
    {
-      State stateVar = holon.getState(stateVarName);
+      State stateVar = holon.getState(stateName);
       if (stateVar == null)
       {
-         stateVar = new StateVariable(stateVarName, behavior, holon);
-         Value value = behavior.createValueForRegisteredState(stateVarName);
+         stateVar = new StateVariable(stateName, behavior, holon);
+         Value value = behavior.createValueForRegisteredState(stateName);
          if (typeAlias != null && !typeAlias.isEmpty())
          {
             Class<? extends Value> valueClass = SUPPORTED_INIT_VALTYPES.get(typeAlias);

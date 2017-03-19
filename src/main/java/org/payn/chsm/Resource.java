@@ -76,7 +76,7 @@ public interface Resource {
     * @throws Exception
     *       if error in getting behavior
     */
-   public abstract String getBehaviorClassPath(String behaviorName) throws Exception;
+   String getBehaviorClassPath(String behaviorName) throws Exception;
 
    /**
     * Add a behavior to the resource
@@ -86,11 +86,11 @@ public interface Resource {
     * @param classPath
     *       class path to the behavior package
     */
-   public abstract void addBehavior(String behaviorName, String classPath);
+   void addBehavior(String behaviorName, String classPath);
    
    /**
     * Add the behaviors for the resource
     */
-   public abstract void addBehaviors();
+   void addBehaviors();
 
 }
