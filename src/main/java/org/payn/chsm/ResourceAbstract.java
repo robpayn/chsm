@@ -60,21 +60,21 @@ public abstract class ResourceAbstract implements Resource {
    }
 
    @Override
-   public Behavior getBehavior(String fullBehaviorName) throws Exception
+   public Behavior getBehavior(String defaultBehaviorName) throws Exception
    {
-      Behavior behavior = behaviorMap.get(fullBehaviorName);
+       Behavior behavior = behaviorMap.get(defaultBehaviorName);
       if (behavior == null)
       {
-         String url = getBehaviorClassPath(fullBehaviorName);
+         String url = getBehaviorClassPath(defaultBehaviorName);
          if (url == null)
             throw new Exception(String.format(
                   "Behavior %s could not be found for resource %s.",
-                  fullBehaviorName,
+                  defaultBehaviorName,
                   name
                   ));
          behavior = (Behavior)loadClass(url).newInstance();
          behavior.setResource(this);
-         behavior.initialize(fullBehaviorName);
+         behavior.initialize(defaultBehaviorName);
          behaviorMap.put(behavior.getName(), behavior);
       }
       return behavior;

@@ -43,17 +43,17 @@ public interface Resource {
    public ClassLoader getClassLoader();
 
    /**
-    * Load and create an instance of the named behavior based on the full behavior name
+    * Load and create an instance of the named behavior based on the default behavior name
     * 
-    * @param fullBehaviorName
+    * @param defaultBehaviorName
     *       name of behavior
     * @return
     *       created behavior
     * @throws Exception
     *       if error in instantiating the behavior
     */
-   public abstract Behavior getBehavior(String fullBehaviorName) throws Exception;
-   
+   public abstract Behavior getBehavior(String defaultBehaviorName) throws Exception;
+
   /**
     * Load the class at the specified class path
     * 
