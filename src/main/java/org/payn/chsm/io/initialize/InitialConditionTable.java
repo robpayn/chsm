@@ -101,6 +101,11 @@ public class InitialConditionTable {
    private LinkedHashMap<String, HashMap<String, String>> stateMap;
 
    /**
+    * The file object with the initial value table
+    */
+   private File pathToFile;
+
+   /**
     * Construct a new instance for the provided path
     * 
     * @param pathToFile
@@ -109,6 +114,7 @@ public class InitialConditionTable {
     */
    private InitialConditionTable(File pathToFile, String delimiter) throws Exception
    {
+      this.pathToFile = pathToFile;
       BufferedReader reader = new BufferedReader(new FileReader(pathToFile));
       String[] line = reader.readLine().split(delimiter);
       stateMap = new LinkedHashMap<String, HashMap<String, String>>();
@@ -159,7 +165,18 @@ public class InitialConditionTable {
     */
    public String find(String stateName, String holonName) throws Exception
    {
-      return stateMap.get(stateName).get(holonName);
+      if (stateMap.containsKey(stateName))
+      {
+         return stateMap.get(stateName).get(holonName);
+      }
+      else
+      {
+         throw new Exception(String.format(
+               "Header for state %s cannot be found in file %s",
+               stateName,
+               pathToFile.getAbsolutePath()
+               ));
+      }
    }
 
 }
