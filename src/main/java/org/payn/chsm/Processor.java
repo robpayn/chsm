@@ -166,4 +166,34 @@ public interface Processor {
     */
    public abstract String getResourceName();
 
+   /**
+    * Get the state name for the resource for the processor 
+    * 
+    * @param stateName
+    * @return
+    *       state name
+    */
+   String getStateName(String stateName);
+
+   /**
+    * Get a state in the holon containing the processor
+    * 
+    * @param stateName
+    * @return
+    *       state
+    * @throws Exception 
+    */
+   State getState(String stateName) throws Exception;
+
+   /**
+    * Get a state in the provided holon
+    * 
+    * @param holon
+    * @param stateName
+    * @return
+    *       state
+    * @throws Exception 
+    */
+   State getState(Holon holon, String stateName) throws Exception;
+   
 }

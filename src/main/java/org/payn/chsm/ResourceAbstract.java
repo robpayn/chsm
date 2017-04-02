@@ -31,6 +31,11 @@ public abstract class ResourceAbstract implements Resource {
     */
    protected String name;
 
+   /**
+    * Map of alias names for default state names
+    */
+   private HashMap<String, String> aliasMap;
+
    @Override
    public String getName() 
    {
@@ -98,4 +103,25 @@ public abstract class ResourceAbstract implements Resource {
        behaviorClassMap.put(behaviorName, classPath);
    }
 
+   @Override
+   public String getStateName(String defaultStateName)
+   {
+      if (aliasMap == null)
+      {
+         return defaultStateName;
+      }
+      else
+      {
+         String alias = aliasMap.get(defaultStateName);
+         if (alias == null)
+         {
+            return defaultStateName;
+         }
+         else
+         {
+            return alias;
+         }
+      }
+   }
+   
 }

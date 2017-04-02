@@ -93,4 +93,13 @@ public interface Resource {
     */
    void addBehaviors();
 
+   /**
+    * Get the state name for the default state name
+    * 
+    * @param defaultStateName
+    * @return
+    *       the alias of the stateName if one exists
+    */
+   String getStateName(String defaultStateName);
+
 }

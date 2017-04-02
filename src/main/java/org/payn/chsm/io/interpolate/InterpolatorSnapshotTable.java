@@ -54,6 +54,22 @@ public class InterpolatorSnapshotTable implements Inputter {
     */
    public static Interpolator getInterpolatorInstance(ProcessorDouble processor) throws Exception 
    {
+      return getInterpolatorInstance(processor, processor.getState().toString());
+   }
+ 
+   /**
+    * Get an instance of an interpolator based on the processor
+    * and the given header in the interpolation file
+    * 
+    * @param processor
+    * @param header
+    * @return
+    *       interpolator
+    * @throws Exception
+    */
+   public static Interpolator getInterpolatorInstance(ProcessorDouble processor,
+         String header) throws Exception 
+   {
       ValueString pathName = (ValueString)processor.createDependencyOnValue(
             InterpolatorSnapshotTable.NAME_PATH
             );
@@ -71,11 +87,11 @@ public class InterpolatorSnapshotTable implements Inputter {
             new File(pathName.string), 
             time, 
             SnapshotTable.getDelimiter(delimiter.string), 
-            processor.getState().toString(), 
+            header, 
             type.toString()
             );
    }
- 
+
    /**
     * Get an instance of an interpolator for a behavior that has been abstracted
     * 
@@ -226,6 +242,13 @@ public class InterpolatorSnapshotTable implements Inputter {
          this.delimiter  = delimiter;
       }
       this.path = path;
+      if (!path.exists())
+      {
+         throw new Exception(String.format(
+               "Interpolation file %s does not exist.", 
+               path.getAbsolutePath()
+               ));
+      }
       reader = new BufferedReader(new FileReader(path));
       String[] header = readLine();
       columnMap = new HashMap<String, Integer>();

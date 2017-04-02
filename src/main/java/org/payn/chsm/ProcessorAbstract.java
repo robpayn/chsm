@@ -124,6 +124,12 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    }
 
    @Override
+   public State getState(String stateName) throws Exception 
+   {
+      return getState(state.getParentHolon(), stateName);
+   }
+
+   @Override
    public Value createDependencyOnValue(String stateName) throws Exception 
    {
       return createDependency(stateName).getValue();
@@ -138,8 +144,18 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    @Override
    public State createDependency(Holon holon, String stateName) throws Exception 
    {
-      State state = holon.getState(stateName);
-      if (state == null)
+      State neededState = getState(holon, stateName);
+      controller.createDependency(this, neededState);
+      return neededState;
+   }
+
+   @Override
+   public State getState(Holon holon, String stateName) throws Exception 
+   {
+      State neededState = holon.getState(
+            state.getBehavior().getResource().getStateName(stateName)
+            );
+      if (neededState == null)
       {
          throw new Exception(String.format("Processor %s requesting dependency on invalid " +
                   "state variable %s in holon %s.",
@@ -148,8 +164,7 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
                holon.getName()
                ));
       }
-      controller.createDependency(this, state);
-      return state;
+      return neededState;
    }
 
    @Override
@@ -161,18 +176,7 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    @Override
    public State createAbstractDependency(Holon holon, String stateName) throws Exception 
    {
-      State state = holon.getState(getResourceName() + stateName);
-      if (state == null)
-      {
-         throw new Exception(String.format("Processor %s requesting dependency on invalid " +
-                  "state variable %s in holon %s.",
-               toString(),
-               stateName,
-               holon.getName()
-               ));
-      }
-      controller.createDependency(this, state);
-      return state;
+      return createDependency(holon, getResourceName() + stateName);
    }
 
    /**
@@ -189,5 +193,11 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    {
       return getState().getBehavior().getResource().getName();
    }
-   
+
+   @Override
+   public String getStateName(String stateName) 
+   {
+      return state.getBehavior().getResource().getStateName(stateName);
+   }
+
 }
