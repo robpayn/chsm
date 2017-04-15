@@ -40,6 +40,11 @@ public class InterpolatorSnapshotTable implements Inputter {
    public static final String NAME_DELIMITER = "Delimiter";
 
    /**
+    * Name of the state for the header of the column to interpolate
+    */
+   public static final String DEFAULT_NAME_HEADER = "InterpolationHeader";
+
+   /**
     * Map of interpolators to ensure only one instance for each file
     */
    private static HashMap<File, InterpolatorSnapshotTable> interpolatorMap  = null;
@@ -54,7 +59,18 @@ public class InterpolatorSnapshotTable implements Inputter {
     */
    public static Interpolator getInterpolatorInstance(ProcessorDouble processor) throws Exception 
    {
-      return getInterpolatorInstance(processor, processor.getState().toString());
+      String header;
+      try
+      {
+         header = ((ValueString)processor.createDependency(
+               DEFAULT_NAME_HEADER
+               ).getValue()).string;
+      }
+      catch(Exception e)
+      {
+         header = processor.getState().toString();
+      }
+      return getInterpolatorInstance(processor, header);
    }
  
    /**
@@ -102,6 +118,33 @@ public class InterpolatorSnapshotTable implements Inputter {
     */
    public static Interpolator getInterpolatorInstanceAbstract(ProcessorDouble processor) throws Exception 
    {
+      String header;
+      try
+      {
+         header = ((ValueString)processor.createAbstractDependency(
+               DEFAULT_NAME_HEADER
+               ).getValue()).string;
+      }
+      catch(Exception e)
+      {
+         header = processor.getState().toString();
+      }
+      return getInterpolatorInstanceAbstract(processor, header);
+   }
+   
+   /**
+    * Get an instance of an interpolator based on the processor
+    * and the given header in the interpolation file
+    * 
+    * @param processor
+    * @param header
+    * @return
+    *       interpolator
+    * @throws Exception
+    */
+   public static Interpolator getInterpolatorInstanceAbstract(
+         ProcessorDouble processor, String header) throws Exception
+   {
       ValueString pathName = (ValueString)processor.createAbstractDependency(
             InterpolatorSnapshotTable.NAME_PATH
             ).getValue();
@@ -119,7 +162,7 @@ public class InterpolatorSnapshotTable implements Inputter {
             new File(pathName.string), 
             time, 
             delimiter.string, 
-            processor.getState().toString(), 
+            header, 
             type.toString()
             );
    }
