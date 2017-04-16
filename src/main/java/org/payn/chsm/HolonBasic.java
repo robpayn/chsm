@@ -13,7 +13,7 @@ import org.payn.chsm.values.ValueStateMap;
  * @author robpayn
  *
  */
-public abstract class HolonAbstract extends StateVariable implements Holon {
+public class HolonBasic extends StateVariable implements Holon {
 
    /**
     * Map of all behaviors tracked by the holon
@@ -40,7 +40,7 @@ public abstract class HolonAbstract extends StateVariable implements Holon {
     *       parent holon that is composed by the new holon
     * @throws Exception 
     */
-   public HolonAbstract(String name, Holon parentHolon) throws Exception 
+   public HolonBasic(String name, Holon parentHolon) throws Exception 
    {
       super(name);
       if (parentHolon != null)
@@ -124,5 +124,9 @@ public abstract class HolonAbstract extends StateVariable implements Holon {
    {
       return installedBehaviorMap.contains(behavior.getName());
    }
+
+   @Override
+   public void trackProcessor(State state) throws Exception 
+   {}
 
 }

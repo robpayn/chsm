@@ -21,7 +21,7 @@ public abstract class ControllerHolon extends ControllerAbstract<ValueStateMap> 
    /**
     * Builder for the matrix
     */
-   protected ModelBuilder<?> builder;
+   protected ModelBuilder builder;
    
    @Override
    public Holon getState()
@@ -34,7 +34,7 @@ public abstract class ControllerHolon extends ControllerAbstract<ValueStateMap> 
     * 
     * @param builder
     */
-   public void setBuilder(ModelBuilder<?> builder) 
+   public void setBuilder(ModelBuilder builder) 
    {
       this.builder = builder;
       this.classLoader = builder.getClass().getClassLoader();

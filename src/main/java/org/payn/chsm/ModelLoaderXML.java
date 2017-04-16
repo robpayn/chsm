@@ -201,14 +201,14 @@ public abstract class ModelLoaderXML extends ModelLoader {
    }
 
    @Override
-   protected ModelBuilder<?> loadBuilder() throws Exception 
+   protected ModelBuilder loadBuilder() throws Exception 
    {
       ElementBuilder builderElem = 
             documentConfig.getBuilderElement();
       String classPath = builderElem.getClassPath();
       if (!classPath.equals(""))
       {
-         return (ModelBuilder<?>)ModelLoader.createObjectInstance(
+         return (ModelBuilder)ModelLoader.createObjectInstance(
                getClass().getClassLoader(), 
                builderElem.getFile(pathRoot), 
                classPath,

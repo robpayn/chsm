@@ -11,10 +11,8 @@ import org.payn.chsm.values.ValueDouble;
  * 
  * @author v78h241
  * 
- * @param <HT> 
- *      Type of the model holon
  */
-public abstract class ModelBuilder<HT extends Holon> {
+public abstract class ModelBuilder {
 
    /**
     * Map of supported aliases for initial value types
@@ -34,7 +32,7 @@ public abstract class ModelBuilder<HT extends Holon> {
    /**
     * The holon containing the model
     */
-   protected HT holon;
+   protected Holon baseHolon;
    
    /**
     * Get the matrix being built
@@ -42,9 +40,9 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @return
     *       matrix
     */
-   public HT getHolon()
+   public Holon getHolon()
    {
-      return holon;
+      return baseHolon;
    }
 
    /**
@@ -310,14 +308,6 @@ public abstract class ModelBuilder<HT extends Holon> {
     * @throws Exception
     *       if error in model creation
     */
-   public abstract HT buildModel() throws Exception;
-
-   /**
-    * Build the model
-    * 
-    * @throws Exception
-    *       if error in building the model
-    */
-   public abstract void installStates() throws Exception;
+   public abstract Holon buildModel() throws Exception;
 
 }

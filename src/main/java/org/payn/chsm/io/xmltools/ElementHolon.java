@@ -142,4 +142,40 @@ public class ElementHolon extends ElementHelper {
       }
    }
 
+   /**
+    * Get the holon children of this holon
+    * 
+    * @return
+    *       list of holon children
+    */
+   public ArrayList<ElementHolon> getHolonChildren() 
+   {
+      return getHolonChildren("holon");
+   }
+   
+   /**
+    * Get holon children with the specified tag name
+    * 
+    * @param tagName
+    * @return
+    *       list of holons
+    */
+   public ArrayList<ElementHolon> getHolonChildren(String tagName)
+   {
+      ArrayList<ElementHolon> list = new ArrayList<ElementHolon>();
+      for(
+            Node child = getElement().getFirstChild(); 
+            child != null; 
+            child = child.getNextSibling()
+            )
+      {
+         if (child.getNodeType() == Node.ELEMENT_NODE && 
+               ((Element)child).getTagName().equals(tagName))
+         {
+            list.add(new ElementHolon((Element)child));
+         }
+      }
+      return list;
+   }
+
 }

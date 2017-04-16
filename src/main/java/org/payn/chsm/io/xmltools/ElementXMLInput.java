@@ -45,7 +45,6 @@ public class ElementXMLInput extends ElementHelper {
     */
    public boolean isFromWorkingDir() 
    {
-      
       return Boolean.valueOf(getAttribute("fromWorkingDir"));
    }
 
@@ -70,6 +69,19 @@ public class ElementXMLInput extends ElementHelper {
       {
          throw new Exception("RawXML source must be a directory.");
       }
+   }
+
+   /**
+    * Get the XML file with the holon configuration
+    * 
+    * @return
+    *       XML file
+    */
+   public File getHolonFile() 
+   {
+      return new File(
+            inputDirectory.getAbsolutePath() + File.separator + this.getAttribute("holonFile")
+            );
    }
 
 }

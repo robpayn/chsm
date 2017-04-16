@@ -28,6 +28,105 @@ public abstract class ModelLoader {
    public static final Object ARG_CLASS_PATH = "loaderClassPath";
 
    /**
+    * Static method to load the builder for the model,
+    * as configured by command line arguments.
+    * 
+    * <p>Command line arguments must be formated by space-delimited
+    * &ltkey&gt=&ltvalue&gt format</p>
+    * 
+    * 
+    * @param args
+    *       command line arguments
+    * @param workingDir
+    *       working directory for the model
+    * @return
+    *       the builder
+    * @throws Exception
+    *       if error in creating cell network
+    */
+   public static ModelBuilder loadBuilder(File workingDir, String[] args) 
+         throws Exception
+   {
+      HashMap<String,String> argMap = ModelLoader.createArgMap(args);
+      return loadBuilder(workingDir, argMap, null);
+   }
+   
+   /**
+    * Static method to load the builder for the model,
+    * as configured by key-value pairings in command line 
+    * arguments.
+    * 
+    * @param workingDir
+    *       working directory
+    * @param argMap
+    *       map of command line arguments
+    * @param modelLoader
+    *       loader object to use for loading.  If null,
+    *       loader specified in command line will be
+    *       loaded and executed
+    * @return
+    *       model builder object
+    * @throws Exception
+    *       if error in loading
+    */
+   public static ModelBuilder loadBuilder(File workingDir, 
+         HashMap<String, String> argMap, ModelLoader modelLoader) 
+         throws Exception 
+   {
+      // Check for valid working directory
+      if (!workingDir.exists()) 
+      {
+         throw new Exception(String.format(
+               "Specified working directory does not exist.",
+               workingDir.getAbsolutePath()
+               ));
+      }
+      else if (workingDir.isFile()) 
+      {
+         throw new Exception(String.format(
+               "Working directory %s cannot be a file.",
+               workingDir.getAbsolutePath()
+               ));
+      }
+      
+      // Load the loader
+      // If the provided loader is null, attempt to load the loader
+      // specified in command line arguments
+      System.out.println();
+      ModelLoader loader = modelLoader;
+      if (loader == null || 
+            (argMap.containsKey(ModelLoader.ARG_FILE_PATH) && 
+                  argMap.containsKey(ModelLoader.ARG_CLASS_PATH))
+            )
+      {
+         loader = (ModelLoader)ModelLoader.createObjectInstance(
+               ModelLoader.class.getClassLoader(),
+               new File(argMap.get(ModelLoader.ARG_FILE_PATH)),
+               argMap.get(ModelLoader.ARG_CLASS_PATH),
+               "Model loader"
+               );
+      }
+      System.out.println(String.format(
+            "Loading with %s ...",
+            modelLoader.getClass().getCanonicalName()
+            ));
+      
+      // Load all model components and return a reference to the builder
+      // Throw an error if the builder is not a MatrixBuilder type
+      try
+      {
+         return loader.load(workingDir, argMap);
+      }
+      catch (Exception e)
+      {
+         throw new Exception(String.format(
+               "Loader class %s cannot load a model builder",
+               loader.getClass().getCanonicalName()
+               ), e);
+      }
+   }
+
+   /**
     * Create a hashmap of key value pairs from the command line arguments.
     * Delimiter between the key and value is expected to be an equals sign.
     * 
@@ -151,7 +250,7 @@ public abstract class ModelLoader {
     * @throws Exception
     *       if errors in loading the builder, processor, reporters, or matrix
     */
-   public ModelBuilder<?> load(File workingDir, HashMap<String, String> argMap) 
+   public ModelBuilder load(File workingDir, HashMap<String, String> argMap) 
          throws Exception
    {
       this.argMap = argMap;
@@ -175,7 +274,7 @@ public abstract class ModelLoader {
       }
 
       loggerManager.statusUpdate("Loading the model builder...");
-      ModelBuilder<?> builder = loadBuilder();
+      ModelBuilder builder = loadBuilder();
       loggerManager.statusUpdate(String.format(
             "   Loaded the model builder %s...",
             builder.getClass().getCanonicalName()
@@ -253,7 +352,7 @@ public abstract class ModelLoader {
     * 
     * @throws Exception
     */
-   protected abstract ModelBuilder<?> loadBuilder() throws Exception;
+   protected abstract ModelBuilder loadBuilder() throws Exception;
    
    /**
     * Get the list of reporter factories

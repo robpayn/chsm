@@ -22,6 +22,22 @@ public class DocumentHolon extends XMLDocument {
    private Element defaultBehaviorElement = null;
    
    /**
+    * The holon element for the root
+    */
+   private ElementHolon rootHolonElement;
+   
+   /**
+    * Get the root holon element
+    * 
+    * @return
+    *       root holon element
+    */
+   public ElementHolon getRootHolonElement()
+   {
+      return rootHolonElement;
+   }
+   
+   /**
     * Construct a new instance based on the provided file name and root element
     * tag name
     * 
@@ -32,6 +48,7 @@ public class DocumentHolon extends XMLDocument {
    public DocumentHolon(String fileName, String rootElementTag) throws Exception 
    {
       super(fileName, rootElementTag);
+      rootHolonElement = new ElementHolon(this.getRootElement());
    }
 
    /**
@@ -43,6 +60,18 @@ public class DocumentHolon extends XMLDocument {
    public DocumentHolon(File file) throws Exception 
    {
       super(file);
+      rootHolonElement = new ElementHolon(this.getRootElement());
+   }
+
+   /**
+    * Construct a new instance based on the provided file name
+    * 
+    * @param fileName
+    * @throws Exception
+    */
+   public DocumentHolon(String fileName) throws Exception 
+   {
+      this(fileName, "holon");
    }
 
    /**
