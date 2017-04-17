@@ -87,14 +87,14 @@ public interface Behavior {
    /**
     * Add a processor class to the processor map
     * 
-    * @param name
+    * @param stateName
     *       name of processor
     * @param processorClass
     *       class of the processor
     * @param valueClass
     *       class of the value
     */
-   public abstract void addProcessor(String name, 
+   public abstract void addProcessor(String stateName, 
          Class<? extends Processor> processorClass, Class<? extends Value> valueClass);
 
    /**
@@ -102,26 +102,26 @@ public interface Behavior {
     * 
     * Resource name will be appended to name
     * 
-    * @param name
+    * @param stateName
     *       name of processor
     * @param processorClass
     *       class of the processor
     * @param valueClass
     *       class of the value
     */
-   public abstract void addProcessorAbstract(String name,
+   public abstract void addProcessorAbstract(String stateName,
          Class<? extends Processor> processorClass, Class<? extends Value> valueClass);
    
    /**
     * Register a state that may (or may not) be added as part of this
     * behavior without a processor
     * 
-    * @param name
+    * @param stateName
     *       name of state
     * @param valueClass
     *       value class for the state
     */
-   public void registerState(String name, Class<? extends Value> valueClass);
+   public void registerState(String stateName, Class<? extends Value> valueClass);
 
    /**
     * Register an abstracted state

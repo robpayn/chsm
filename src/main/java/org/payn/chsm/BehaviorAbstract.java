@@ -123,16 +123,16 @@ public abstract class BehaviorAbstract implements Behavior{
    }
 
    @Override
-   public void addProcessorAbstract(String name,
+   public void addProcessorAbstract(String stateName,
          Class<? extends Processor> processorClass, Class<? extends Value> valueClass) 
    {
-      addProcessor(resource.getName() + name, processorClass, valueClass);
+      addProcessor(resource.getName() + stateName, processorClass, valueClass);
    }
 
    @Override
-   public void registerState(String name, Class<? extends Value> valueClass)
+   public void registerState(String stateName, Class<? extends Value> valueClass)
    {
-      registeredStateMap.put(name, valueClass);
+      registeredStateMap.put(stateName, valueClass);
    }
 
    @Override

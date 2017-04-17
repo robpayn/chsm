@@ -233,7 +233,7 @@ public abstract class ModelBuilder {
          {
             throw new Exception(String.format(
                   "State variable %s in holon %s cannot be created from an initial value " +
-                        "because it is not required by behavior %s.",
+                        "because type is not registered by behavior %s.",
                   stateVar.getName(),
                   holon.getName(),
                   behavior.getName()
