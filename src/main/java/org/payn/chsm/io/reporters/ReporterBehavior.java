@@ -102,15 +102,15 @@ public class ReporterBehavior extends ReporterSingleThread {
     */
    private void recurseHolons(Holon holon) throws Exception 
    {
-      for (State currentStateVar: holon.getValue().getMap().values())
+      for (State currentState: holon.getValue().getMap().values())
       {
-         if (Holon.class.isInstance(currentStateVar))
+         if (Holon.class.isInstance(currentState))
          {
-            recurseHolons((Holon)currentStateVar);
+            recurseHolons((Holon)currentState);
          }
          else
          {
-            String behaviorName = currentStateVar.getBehavior().getName();
+            String behaviorName = currentState.getBehavior().getName();
             
             // Check for filter status
             HashMap<String, String> filterStateList = null;
@@ -131,55 +131,7 @@ public class ReporterBehavior extends ReporterSingleThread {
                // Prepare the update snapshot if the behavior is in the filter
                if (isBehaviorFiltered)
                {
-                  // Create the update snapshot for the behavior if it has not been created
-                  // (create the file in "overwrite" mode)
-                  if (updateSnapshot == null)
-                  {
-                     if (filenameMap.containsKey(behaviorName))
-                     {
-                        String filename = filenameMap.get(behaviorName);
-                        if (snapshotTableMap.containsKey(filename))
-                        {
-                           behaviorMap.put(behaviorName, snapshotTableMap.get(filename));
-                        }
-                        else
-                        {
-                           File updateFile = new File(
-                                 outputDir.getAbsolutePath() + File.separator + 
-                                    filename
-                                 );
-                           updateSnapshot = new SnapshotTable(updateFile, false, delimiter);
-                           behaviorMap.put(behaviorName, updateSnapshot);
-                           snapshotTableMap.put(filename, updateSnapshot);
-                        }
-                     }
-                     else
-                     {
-                        String filename = behaviorName.replaceAll("\\.", "_") + ".txt";
-                        File updateFile = new File(
-                              outputDir.getAbsolutePath() + File.separator + filename
-                              );
-                        updateSnapshot = new SnapshotTable(updateFile, false, delimiter);
-                        behaviorMap.put(behaviorName, updateSnapshot);
-                        snapshotTableMap.put(filename, updateSnapshot);
-                     }
-                  }
-                  
-                  // Add the dynamic state to the snapshot if it is in the filter or a filter is not specified for the behavior
-                  if (currentStateVar.isDynamic() && 
-                        (filterStateList == null || filterStateList.containsKey(currentStateVar.toString())))
-                  {
-                     String header = null;
-                     if (filterStateList == null)
-                     {
-                        header = currentStateVar.toString();
-                     }
-                     else
-                     {
-                        header = filterStateList.get(currentStateVar.toString());
-                     }
-                     updateSnapshot.addStateVariable(currentStateVar, header);
-                  }
+                  configureUpdateSnapshot(updateSnapshot, behaviorName, filterStateList, currentState, false);
                }
                
                // Get the init snapshot for the behavior if it has already been created
@@ -201,63 +153,86 @@ public class ReporterBehavior extends ReporterSingleThread {
                   }
                   
                   // Add the state to the init snapshot
-                  initSnapshot.addStateVariable(currentStateVar, currentStateVar.getName());
+                  initSnapshot.addStateVariable(currentState, currentState.getName());
                }
             }
             
             // Prepare the update snapshot if model is in execution and the behavior is in the filter
             else if (isBehaviorFiltered)
             {
-               // Create the update snapshot for the behavior if it has not been created
-               // (create the file in "append" mode)
-               if (updateSnapshot == null)
-               {
-                  if (filenameMap.containsKey(behaviorName))
-                  {
-                     String filename = filenameMap.get(behaviorName);
-                     if (snapshotTableMap.containsKey(filename))
-                     {
-                        behaviorMap.put(behaviorName, snapshotTableMap.get(filename));
-                     }
-                     else
-                     {
-                        File updateFile = new File(
-                              outputDir.getAbsolutePath() + File.separator + 
-                                 filename
-                              );
-                        updateSnapshot = new SnapshotTable(updateFile, true, delimiter);
-                        behaviorMap.put(behaviorName, updateSnapshot);
-                        snapshotTableMap.put(filename, updateSnapshot);
-                     }
-                  }
-                  else
-                  {
-                     String filename = behaviorName.replaceAll("\\.", "_") + ".txt";
-                     File updateFile = new File(
-                           outputDir.getAbsolutePath() + File.separator + filename                              
-                           );
-                     updateSnapshot = new SnapshotTable(updateFile, true, delimiter);
-                     behaviorMap.put(behaviorName, updateSnapshot);
-                     snapshotTableMap.put(filename, updateSnapshot);
-                  }
-               }
-               // Add the state to the snapshot if it is in the filter or a filter is not specified for the behavior
-               if (currentStateVar.isDynamic() &&
-                     (filterStateList == null || filterStateList.containsKey(currentStateVar.toString())))
-               {
-                  String header = null;
-                  if (filterStateList == null)
-                  {
-                     header = currentStateVar.toString();
-                  }
-                  else
-                  {
-                     header = filterStateList.get(currentStateVar.toString());
-                  }
-                  updateSnapshot.addStateVariable(currentStateVar, header);
-               }
+               configureUpdateSnapshot(updateSnapshot, behaviorName, filterStateList, currentState, true);
             }
          }
+      }
+   }
+
+   /**
+    * Configure a snapshot table for the update output
+    * 
+    * @param updateSnapshot
+    *       update snapshot table
+    * @param behaviorName
+    *       name of the behavior for the state
+    * @param filterStateList
+    *       list of state filters
+    * @param state
+    *       state to be added to output
+    * @param append
+    *       true to append data to the table (if it exists), false to overwrite
+    */
+   private void configureUpdateSnapshot(SnapshotTable updateSnapshot,
+         String behaviorName, HashMap<String, String> filterStateList,
+         State state, boolean append) 
+   {
+      // Create the update snapshot for the behavior if it has not been created
+      // (create the file in "overwrite" mode)
+      if (updateSnapshot == null)
+      {
+         if (filenameMap.containsKey(behaviorName))
+         {
+            String filename = filenameMap.get(behaviorName);
+            if (snapshotTableMap.containsKey(filename))
+            {
+               updateSnapshot = snapshotTableMap.get(filename);
+               behaviorMap.put(behaviorName, updateSnapshot);
+            }
+            else
+            {
+               File updateFile = new File(
+                     outputDir.getAbsolutePath() + File.separator + 
+                        filename
+                     );
+               updateSnapshot = new SnapshotTable(updateFile, append, delimiter);
+               behaviorMap.put(behaviorName, updateSnapshot);
+               snapshotTableMap.put(filename, updateSnapshot);
+            }
+         }
+         else
+         {
+            String filename = behaviorName.replaceAll("\\.", "_") + ".txt";
+            File updateFile = new File(
+                  outputDir.getAbsolutePath() + File.separator + filename
+                  );
+            updateSnapshot = new SnapshotTable(updateFile, append, delimiter);
+            behaviorMap.put(behaviorName, updateSnapshot);
+            snapshotTableMap.put(filename, updateSnapshot);
+         }
+      }
+      
+      // Add the dynamic state to the snapshot if it is in the filter or a filter is not specified for the behavior
+      if (state.isDynamic() && 
+            (filterStateList == null || filterStateList.containsKey(state.toString())))
+      {
+         String header = null;
+         if (filterStateList == null)
+         {
+            header = state.toString();
+         }
+         else
+         {
+            header = filterStateList.get(state.toString());
+         }
+         updateSnapshot.addStateVariable(state, header);
       }
    }
 
