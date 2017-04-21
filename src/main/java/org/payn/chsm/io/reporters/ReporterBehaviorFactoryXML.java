@@ -1,7 +1,6 @@
 package org.payn.chsm.io.reporters;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.payn.chsm.ReporterFactoryXML;
@@ -44,17 +43,34 @@ public class ReporterBehaviorFactoryXML extends ReporterFactoryXML<ReporterBehav
          for(int behaviorCount = 0; behaviorCount < behaviorList.getLength(); behaviorCount++)
          {
             Element behaviorElement = (Element)behaviorList.item(behaviorCount);
+            String behaviorName = behaviorElement.getAttribute("name");
+            String fileName = behaviorElement.getAttribute("fileName");
+            if (!fileName.equals(""))
+            {
+               reporter.addBehaviorFilename(behaviorName, fileName);
+            }
+                  
             NodeList stateList = behaviorElement.getElementsByTagName("state");
-            ArrayList<String> stateFilterList = null;
+            HashMap<String, String> stateFilterList = null;
             if (stateList.getLength() > 0)
             {
-               stateFilterList = new ArrayList<String>();
+               stateFilterList = new HashMap<String, String>();
                for(int stateCount = 0; stateCount < stateList.getLength(); stateCount++)
                {
-                  stateFilterList.add(((Element)stateList.item(stateCount)).getAttribute("name"));
+                  Element stateElement = (Element)stateList.item(stateCount);
+                  String stateName = stateElement.getAttribute("name");
+                  String headerName = stateElement.getAttribute("headerName");
+                  if (!headerName.equals(""))
+                  {
+                     stateFilterList.put(stateName, headerName);
+                  }
+                  else
+                  {
+                     stateFilterList.put(stateName, stateName);
+                  }
                }
             }
-            reporter.addBehaviorFilter(behaviorElement.getAttribute("name"), stateFilterList);
+            reporter.addBehaviorFilter(behaviorName, stateFilterList);
          }
       }
    }

@@ -60,6 +60,11 @@ public class SnapshotTable {
    private LinkedHashMap<State, Integer> columns;
    
    /**
+    * Map of the headers for the columns
+    */
+   private LinkedHashMap<State, String> headers;
+   
+   /**
     * Number of columns
     */
    private int columnCount = 0;
@@ -101,6 +106,7 @@ public class SnapshotTable {
    public SnapshotTable()
    {
       columns = new LinkedHashMap<State, Integer>();
+      headers = new LinkedHashMap<State, String>();
    }
    
    /**
@@ -140,13 +146,16 @@ public class SnapshotTable {
     * 
     * @param stateVar
     *       state variable to be outputted
+    * @param header 
+    *       name of the column header for the state
     */
-   public void addStateVariable(State stateVar)
+   public void addStateVariable(State stateVar, String header)
    {
       if (!columns.containsKey(stateVar))
       {
          columns.put(stateVar, columnCount);
          columnCount++;
+         headers.put(stateVar, header);
       }
    }
 
@@ -168,7 +177,7 @@ public class SnapshotTable {
                ));
          for (State stateVar: columns.keySet())
          {
-            writer.write(stateVar.toString() + delimiter);
+            writer.write(headers.get(stateVar) + delimiter);
          }
          writer.newLine();
       }

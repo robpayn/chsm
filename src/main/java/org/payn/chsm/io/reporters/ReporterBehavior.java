@@ -1,13 +1,12 @@
 package org.payn.chsm.io.reporters;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.State;
 import org.payn.chsm.io.SnapshotTable;
-import org.payn.chsm.io.SnapshotTableUpdate;
 
 /**
  * File system outputter that generates one file for each behavior.
@@ -27,6 +26,11 @@ public class ReporterBehavior extends ReporterSingleThread {
     */
    private HashMap<String,SnapshotTable> behaviorMap;
    
+   /**
+    * Map of the snapshot table indexed by file name
+    */
+   private LinkedHashMap<String,SnapshotTable> snapshotTableMap;
+
    /**
     * Delimiter for text files
     */
@@ -48,12 +52,17 @@ public class ReporterBehavior extends ReporterSingleThread {
     * 
     * Hashmap keyed by behavior name and with values that are array lists of states
     */
-   private HashMap<String, ArrayList<String>> filterMap = null;
+   private LinkedHashMap<String, HashMap<String, String>> filterMap = null;
 
    /**
     * Flag for tracking if initialization output is active
     */
    private boolean isInitActive;
+
+   /**
+    * Map of filenames for filtered behaviors
+    */
+   private LinkedHashMap<String, String> filenameMap;
    
    /**
     * Construct a new instance with the provided working directory and
@@ -65,6 +74,7 @@ public class ReporterBehavior extends ReporterSingleThread {
    public ReporterBehavior(File workingDir, HashMap<String, String> argMap) 
    {
       super(workingDir, argMap);
+      filenameMap = new LinkedHashMap<String, String>();
    }
 
    /**
@@ -73,7 +83,8 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void openLocation() throws Exception 
    {
-      behaviorMap = new HashMap<String,SnapshotTable>();
+      behaviorMap = new HashMap<String, SnapshotTable>();
+      snapshotTableMap = new LinkedHashMap<String, SnapshotTable>();
       recurseHolons(source);
       for (SnapshotTable snapshot: behaviorMap.values())
       {
@@ -102,7 +113,7 @@ public class ReporterBehavior extends ReporterSingleThread {
             String behaviorName = currentStateVar.getBehavior().getName();
             
             // Check for filter status
-            ArrayList<String> filterStateList = null;
+            HashMap<String, String> filterStateList = null;
             boolean isBehaviorFiltered = true;
             if (filterMap != null)
             {
@@ -117,25 +128,57 @@ public class ReporterBehavior extends ReporterSingleThread {
             // Prepare both update and init snapshots if model is in initialization
             if (iterationValue.n == 0)
             {
-               // Prepare the upate snapshot if the behavior is in the filter
+               // Prepare the update snapshot if the behavior is in the filter
                if (isBehaviorFiltered)
                {
                   // Create the update snapshot for the behavior if it has not been created
                   // (create the file in "overwrite" mode)
                   if (updateSnapshot == null)
                   {
-                     File updateFile = new File(
-                           outputDir.getAbsolutePath() + File.separator + 
-                              behaviorName.replaceAll("\\.", "_") + ".txt"
-                           );
-                     updateSnapshot = new SnapshotTableUpdate(updateFile, false, delimiter);
-                     behaviorMap.put(behaviorName, updateSnapshot);
+                     if (filenameMap.containsKey(behaviorName))
+                     {
+                        String filename = filenameMap.get(behaviorName);
+                        if (snapshotTableMap.containsKey(filename))
+                        {
+                           behaviorMap.put(behaviorName, snapshotTableMap.get(filename));
+                        }
+                        else
+                        {
+                           File updateFile = new File(
+                                 outputDir.getAbsolutePath() + File.separator + 
+                                    filename
+                                 );
+                           updateSnapshot = new SnapshotTable(updateFile, false, delimiter);
+                           behaviorMap.put(behaviorName, updateSnapshot);
+                           snapshotTableMap.put(filename, updateSnapshot);
+                        }
+                     }
+                     else
+                     {
+                        String filename = behaviorName.replaceAll("\\.", "_") + ".txt";
+                        File updateFile = new File(
+                              outputDir.getAbsolutePath() + File.separator + filename
+                              );
+                        updateSnapshot = new SnapshotTable(updateFile, false, delimiter);
+                        behaviorMap.put(behaviorName, updateSnapshot);
+                        snapshotTableMap.put(filename, updateSnapshot);
+                     }
                   }
                   
-                  // Add the state to the snapshot if it is in the filter or a filter is not specified for the behavior
-                  if (filterStateList == null || filterStateList.contains(currentStateVar.toString()))
+                  // Add the dynamic state to the snapshot if it is in the filter or a filter is not specified for the behavior
+                  if (currentStateVar.isDynamic() && 
+                        (filterStateList == null || filterStateList.containsKey(currentStateVar.toString())))
                   {
-                     updateSnapshot.addStateVariable(currentStateVar);
+                     String header = null;
+                     if (filterStateList == null)
+                     {
+                        header = currentStateVar.toString();
+                     }
+                     else
+                     {
+                        header = filterStateList.get(currentStateVar.toString());
+                     }
+                     updateSnapshot.addStateVariable(currentStateVar, header);
                   }
                }
                
@@ -148,16 +191,17 @@ public class ReporterBehavior extends ReporterSingleThread {
                   // Create the init snapshot for the behavior if it has not been created
                   if (initSnapshot == null)
                   {
+                     String filename = behaviorName.replaceAll("\\.", "_") + "_init" + ".txt";
                      File file = new File(
-                           outputDir.getAbsolutePath() + File.separator + 
-                              behaviorName.replaceAll("\\.", "_") + "_init" + ".txt"
+                           outputDir.getAbsolutePath() + File.separator + filename
                            );
                      initSnapshot = new SnapshotTable(file, false, delimiter);
                      behaviorMap.put(behaviorName + "_init", initSnapshot);
+                     snapshotTableMap.put(filename, initSnapshot);
                   }
                   
                   // Add the state to the init snapshot
-                  initSnapshot.addStateVariable(currentStateVar);
+                  initSnapshot.addStateVariable(currentStateVar, currentStateVar.getName());
                }
             }
             
@@ -168,17 +212,49 @@ public class ReporterBehavior extends ReporterSingleThread {
                // (create the file in "append" mode)
                if (updateSnapshot == null)
                {
-                  File updateFile = new File(
-                        outputDir.getAbsolutePath() + File.separator + 
-                           behaviorName.replaceAll("\\.", "_") + ".txt"
-                        );
-                  updateSnapshot = new SnapshotTableUpdate(updateFile, true, delimiter);
-                  behaviorMap.put(behaviorName, updateSnapshot);
+                  if (filenameMap.containsKey(behaviorName))
+                  {
+                     String filename = filenameMap.get(behaviorName);
+                     if (snapshotTableMap.containsKey(filename))
+                     {
+                        behaviorMap.put(behaviorName, snapshotTableMap.get(filename));
+                     }
+                     else
+                     {
+                        File updateFile = new File(
+                              outputDir.getAbsolutePath() + File.separator + 
+                                 filename
+                              );
+                        updateSnapshot = new SnapshotTable(updateFile, true, delimiter);
+                        behaviorMap.put(behaviorName, updateSnapshot);
+                        snapshotTableMap.put(filename, updateSnapshot);
+                     }
+                  }
+                  else
+                  {
+                     String filename = behaviorName.replaceAll("\\.", "_") + ".txt";
+                     File updateFile = new File(
+                           outputDir.getAbsolutePath() + File.separator + filename                              
+                           );
+                     updateSnapshot = new SnapshotTable(updateFile, true, delimiter);
+                     behaviorMap.put(behaviorName, updateSnapshot);
+                     snapshotTableMap.put(filename, updateSnapshot);
+                  }
                }
                // Add the state to the snapshot if it is in the filter or a filter is not specified for the behavior
-               if (filterStateList == null || filterStateList.contains(currentStateVar.toString()))
+               if (currentStateVar.isDynamic() &&
+                     (filterStateList == null || filterStateList.containsKey(currentStateVar.toString())))
                {
-                  updateSnapshot.addStateVariable(currentStateVar);
+                  String header = null;
+                  if (filterStateList == null)
+                  {
+                     header = currentStateVar.toString();
+                  }
+                  else
+                  {
+                     header = filterStateList.get(currentStateVar.toString());
+                  }
+                  updateSnapshot.addStateVariable(currentStateVar, header);
                }
             }
          }
@@ -191,7 +267,7 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void bufferOutput() throws Exception 
    {
-      for (SnapshotTable snapshot: behaviorMap.values())
+      for (SnapshotTable snapshot: snapshotTableMap.values())
       {
          snapshot.bufferOutput(iterationValue, timeValue);
       }
@@ -203,7 +279,7 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void backgroundWrite() throws Exception 
    {
-      for (SnapshotTable snapshot: behaviorMap.values())
+      for (SnapshotTable snapshot: snapshotTableMap.values())
       {
          snapshot.write();
       }
@@ -215,7 +291,7 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void closeWhenFinished() throws Exception 
    {
-      for (SnapshotTable snapshot: behaviorMap.values())
+      for (SnapshotTable snapshot: snapshotTableMap.values())
       {
          snapshot.closeLocationWriter();
       }
@@ -226,16 +302,16 @@ public class ReporterBehavior extends ReporterSingleThread {
     * 
     * @param behaviorName
     *       name of behavior to filter
-    * @param stateList
+    * @param stateMap
     *       list of specific states to filter (can be null to include all states for behavior)
     */
-   public void addBehaviorFilter(String behaviorName, ArrayList<String> stateList)
+   public void addBehaviorFilter(String behaviorName, HashMap<String, String> stateMap)
    {
       if (filterMap == null)
       {
-         filterMap = new HashMap<String, ArrayList<String>>();
+         filterMap = new LinkedHashMap<String, HashMap<String, String>>();
       }
-      filterMap.put(behaviorName, stateList);
+      filterMap.put(behaviorName, stateMap);
    }
 
    /**
@@ -247,6 +323,19 @@ public class ReporterBehavior extends ReporterSingleThread {
    public void setInitActive(boolean isInitActive) 
    {
       this.isInitActive = isInitActive;
+   }
+
+   /**
+    * Add a filename for a behavior
+    * 
+    * @param behaviorName
+    *       name of the behavior
+    * @param fileName
+    *       name of the file for the behavior output
+    */
+   public void addBehaviorFilename(String behaviorName, String fileName) 
+   {
+      filenameMap.put(behaviorName, fileName);
    }
 
 }
