@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import org.payn.chsm.processors.ControllerHolon;
+import org.payn.chsm.processors.auto.UpdaterState;
 import org.payn.chsm.resources.statespace.ResourceStateSpace;
 import org.payn.chsm.values.ValueStateMap;
 
@@ -32,6 +33,11 @@ public class HolonBasic extends StateVariable implements Holon {
    protected HashSet<String> installedBehaviorMap;
    
    /**
+    * Storage state variables associated with the cell
+    */
+   protected HashMap<Resource, State> rootStateMap;
+   
+   /**
     * Create a new holon with the provided name and parent holon
     * 
     * @param name
@@ -54,6 +60,7 @@ public class HolonBasic extends StateVariable implements Holon {
       }
       this.behaviorMap = new HashMap<String, Behavior>();
       this.installedBehaviorMap = new HashSet<String>();
+      this.rootStateMap = new HashMap<Resource, State>();
    }
    
    @Override
@@ -127,6 +134,25 @@ public class HolonBasic extends StateVariable implements Holon {
 
    @Override
    public void trackProcessor(State state) throws Exception 
-   {}
+   {
+      if (UpdaterState.class.isInstance(state.getProcessor()))
+      {
+         rootStateMap.put(state.getBehavior().getResource(), state);
+      }
+   }
 
+   /**
+    * Get the root state associated with the provided resource
+    * 
+    * @param resource
+    *       resource
+    * @return
+    *       storage associated with the resource
+    */
+   @Override
+   public State getRootState(Resource resource) 
+   {
+      return rootStateMap.get(resource);
+   }
+   
 }
