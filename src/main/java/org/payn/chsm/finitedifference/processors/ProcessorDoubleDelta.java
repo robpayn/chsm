@@ -1,6 +1,8 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.finitedifference.processors;
 
 import org.payn.chsm.State;
+import org.payn.chsm.finitedifference.Holon;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterDelta;
 import org.payn.chsm.processors.ProcessorDouble;
 
 /**
@@ -15,16 +17,16 @@ implements UpdaterDelta {
    /**
     * The storage processor to increment with this load
     */
-   protected ProcessorDoubleState rootStateProcessor;
+   protected ProcessorDoubleBaseState rootStateProcessor;
 
    @Override
    public void setUpdateDependencies() throws Exception
    {
       setUpdateDependenciesDelta();
-      State storage = state.getParentHolon().getRootState(
+      State storage = ((Holon)state.getParentHolon()).getBaseState(
             state.getBehavior().getResource()
             );
-      rootStateProcessor = (ProcessorDoubleState)storage.getProcessor();
+      rootStateProcessor = (ProcessorDoubleBaseState)storage.getProcessor();
    }
    
    @Override

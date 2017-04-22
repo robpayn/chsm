@@ -1,4 +1,7 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.finitedifference.processors;
+
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterInfo;
+import org.payn.chsm.processors.ProcessorDoubleSimple;
 
 /**
  * Abstract processor for the state phase

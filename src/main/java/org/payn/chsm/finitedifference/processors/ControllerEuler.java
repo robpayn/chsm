@@ -1,4 +1,4 @@
-package org.payn.chsm.processors;
+package org.payn.chsm.finitedifference.processors;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,6 @@
-package org.payn.chsm.processors.interfaces;
+package org.payn.chsm.finitedifference.processors.interfaces;
+
+import org.payn.chsm.processors.interfaces.UpdaterMemory;
 
 /**
  * Updater for a Crank Nicolson estimate

@@ -1,4 +1,4 @@
-package org.payn.chsm.processors.interfaces;
+package org.payn.chsm.finitedifference.processors.interfaces;
 
 /**
  * Interface for a tolerance updater

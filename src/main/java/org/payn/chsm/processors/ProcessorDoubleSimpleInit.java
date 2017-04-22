@@ -1,4 +1,4 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.processors;
 
 import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
 

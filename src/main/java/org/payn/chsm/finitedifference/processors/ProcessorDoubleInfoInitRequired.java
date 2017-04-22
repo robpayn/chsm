@@ -1,4 +1,4 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.finitedifference.processors;
 
 /**
  * A processor for the state phase that requires initialization

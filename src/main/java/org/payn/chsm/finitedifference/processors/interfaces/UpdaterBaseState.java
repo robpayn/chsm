@@ -1,4 +1,4 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.finitedifference.processors.interfaces;
 
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
@@ -8,6 +8,6 @@ import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
  * @author v78h241
  *
  */
-public interface UpdaterState extends UpdaterSimpleAuto {
+public interface UpdaterBaseState extends UpdaterSimpleAuto {
 
 }

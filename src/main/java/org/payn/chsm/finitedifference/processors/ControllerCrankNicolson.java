@@ -1,11 +1,10 @@
-package org.payn.chsm.processors;
+package org.payn.chsm.finitedifference.processors;
 
 import java.util.ArrayList;
 
 import org.payn.chsm.Processor;
-import org.payn.chsm.processors.auto.ProcessorDoubleDelta;
-import org.payn.chsm.processors.auto.UpdaterDelta;
-import org.payn.chsm.processors.interfaces.UpdaterCrankNicolson;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterCrankNicolson;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterDelta;
 
 /**
  * NEO controller that used a Crank Nicolson solver based on fixed point iteration

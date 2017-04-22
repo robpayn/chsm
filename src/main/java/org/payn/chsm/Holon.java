@@ -12,7 +12,7 @@ import org.payn.chsm.values.ValueStateMap;
  *
  */
 public interface Holon extends State {
-   
+
    /**
     * Add a state to the holon composition
     * 
@@ -57,7 +57,7 @@ public interface Holon extends State {
     *       true if behavior is installed, false otherwise
     */
    boolean isBehahiorInstalled(Behavior behavior);
-
+   
    /**
     * Track the processor for a given state
     * 
@@ -65,16 +65,6 @@ public interface Holon extends State {
     * @throws Exception
     */
    void trackProcessor(State state) throws Exception;
-
-   /**
-    * Get the root state for the provided resource
-    * 
-    * @param resource
-    * 
-    * @return
-    *       root state
-    */
-   State getRootState(Resource resource);
 
    @Override
    ValueStateMap getValue();

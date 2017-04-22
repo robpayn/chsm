@@ -1,7 +1,7 @@
-package org.payn.chsm.processors;
+package org.payn.chsm.finitedifference.processors;
 
-import org.payn.chsm.processors.auto.ProcessorDoubleDelta;
-import org.payn.chsm.processors.interfaces.UpdaterCrankNicolson;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterCrankNicolson;
+import org.payn.chsm.processors.UpdaterMemoryHelper;
 
 /**
  * Helper for a processor for performing Crank Nicolson updates

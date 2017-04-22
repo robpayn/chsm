@@ -1,13 +1,13 @@
-package org.payn.chsm.processors;
+package org.payn.chsm.finitedifference.processors;
 
 import java.util.ArrayList;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.Processor;
-import org.payn.chsm.processors.auto.ProcessorDoubleInfo;
-import org.payn.chsm.processors.auto.ProcessorDoubleState;
-import org.payn.chsm.processors.auto.UpdaterInfo;
-import org.payn.chsm.processors.auto.UpdaterState;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterBaseState;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterInfo;
+import org.payn.chsm.processors.ProcessorDouble;
+import org.payn.chsm.processors.UpdaterMemoryHelper;
 import org.payn.chsm.processors.interfaces.UpdaterMemory;
 import org.payn.chsm.resources.time.BehaviorTime;
 import org.payn.chsm.values.ValueDouble;
@@ -132,12 +132,12 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
     */
    protected void addStoreMemoryUpdater(Processor processor) 
    {
-      if ((UpdaterState.class.isInstance(processor) || UpdaterInfo.class.isInstance(processor)) 
+      if ((UpdaterBaseState.class.isInstance(processor) || UpdaterInfo.class.isInstance(processor)) 
             && UpdaterMemory.class.isInstance(processor))
       {
          storeProcessorMemoryUpdaters.add((UpdaterMemory)processor);
       }
-      else if (ProcessorDoubleState.class.isInstance(processor) || 
+      else if (ProcessorDoubleBaseState.class.isInstance(processor) || 
             ProcessorDoubleInfo.class.isInstance(processor))
       {
          storeProcessorMemoryUpdaters.add(

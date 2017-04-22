@@ -1,11 +1,10 @@
-package org.payn.chsm.processors;
+package org.payn.chsm.finitedifference.processors;
 
 import java.util.ArrayList;
 
 import org.payn.chsm.Processor;
-import org.payn.chsm.processors.auto.ProcessorDoubleState;
-import org.payn.chsm.processors.auto.UpdaterState;
-import org.payn.chsm.processors.interfaces.UpdaterTolerance;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterBaseState;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterTolerance;
 
 /**
  * A controller for a basic backwards Euler implicit solver, based on fixed point iteration
@@ -214,13 +213,13 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
     */
    protected void addStateToleranceUpdater(Processor proc) 
    {
-      if (UpdaterState.class.isInstance(proc) && UpdaterTolerance.class.isInstance(proc))
+      if (UpdaterBaseState.class.isInstance(proc) && UpdaterTolerance.class.isInstance(proc))
       {
          stateProcessorToleranceUpdaters.add((UpdaterTolerance)proc);
       }
-      else if (ProcessorDoubleState.class.isInstance(proc))
+      else if (ProcessorDoubleBaseState.class.isInstance(proc))
       {
-         stateProcessorToleranceUpdaters.add(new UpdaterToleranceHelper((ProcessorDoubleState)proc));
+         stateProcessorToleranceUpdaters.add(new UpdaterToleranceHelper((ProcessorDoubleBaseState)proc));
       }
    }
 

@@ -1,4 +1,4 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.finitedifference.processors;
 
 import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
 
@@ -8,7 +8,7 @@ import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
  * @author v78h241
  *
  */
-public abstract class ProcessorDoubleStateInit extends ProcessorDoubleState 
+public abstract class ProcessorDoubleBaseStateInit extends ProcessorDoubleBaseState 
 implements InitializerSimpleAuto {
 
 }

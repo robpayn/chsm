@@ -1,12 +1,13 @@
-package org.payn.chsm.processors;
+package org.payn.chsm.finitedifference.processors;
 
 import java.util.ArrayList;
 
 import org.payn.chsm.Processor;
-import org.payn.chsm.processors.auto.UpdaterChange;
-import org.payn.chsm.processors.auto.UpdaterDelta;
-import org.payn.chsm.processors.auto.UpdaterInfo;
-import org.payn.chsm.processors.auto.UpdaterState;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterBaseState;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterChange;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterDelta;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterInfo;
+import org.payn.chsm.processors.ControllerTimeStep;
 import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
@@ -138,9 +139,9 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
       {
          deltaUpdaters.add((UpdaterDelta)processor);
       }
-      else if (UpdaterState.class.isInstance(processor))
+      else if (UpdaterBaseState.class.isInstance(processor))
       {
-         stateUpdaters.add((UpdaterState)processor);
+         stateUpdaters.add((UpdaterBaseState)processor);
       }
       else if (UpdaterInfo.class.isInstance(processor))
       {

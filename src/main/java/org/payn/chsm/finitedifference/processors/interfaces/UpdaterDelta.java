@@ -1,4 +1,4 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.finitedifference.processors.interfaces;
 
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 

@@ -3,7 +3,7 @@ package org.payn.chsm.sorters;
 import java.util.ArrayList;
 
 import org.payn.chsm.Processor;
-import org.payn.chsm.processors.auto.UpdaterState;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterBaseState;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
 /**
@@ -31,9 +31,9 @@ public class SorterUpdateState extends SorterUpdate {
    @Override
    public void addUpdateDependency(Processor processor, Processor neededProcessor) 
    {
-      if (UpdaterState.class.isInstance(neededProcessor))
+      if (UpdaterBaseState.class.isInstance(neededProcessor))
       {
-         addToGraph((UpdaterState)processor, (UpdaterState)neededProcessor);
+         addToGraph((UpdaterBaseState)processor, (UpdaterBaseState)neededProcessor);
       }
    }
 

@@ -3,7 +3,7 @@ package org.payn.chsm.sorters;
 import java.util.ArrayList;
 
 import org.payn.chsm.Processor;
-import org.payn.chsm.processors.auto.UpdaterInfo;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterInfo;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
 /**

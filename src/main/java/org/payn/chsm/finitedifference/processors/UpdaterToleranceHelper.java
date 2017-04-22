@@ -1,7 +1,6 @@
-package org.payn.chsm.processors;
+package org.payn.chsm.finitedifference.processors;
 
-import org.payn.chsm.processors.auto.ProcessorDoubleState;
-import org.payn.chsm.processors.interfaces.UpdaterTolerance;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterTolerance;
 import org.payn.chsm.values.ValueDouble;
 
 /**
@@ -30,7 +29,7 @@ public class UpdaterToleranceHelper implements UpdaterTolerance {
    /**
     * Decorated processor
     */
-   protected ProcessorDoubleState proc;
+   protected ProcessorDoubleBaseState proc;
 
    /**
     * Construct a new instance decorating the provided processor
@@ -38,7 +37,7 @@ public class UpdaterToleranceHelper implements UpdaterTolerance {
     * @param proc
     *       processor to be decorated
     */
-   public UpdaterToleranceHelper(ProcessorDoubleState proc) 
+   public UpdaterToleranceHelper(ProcessorDoubleBaseState proc) 
    {
       this.proc = proc;
       value = proc.getValue();

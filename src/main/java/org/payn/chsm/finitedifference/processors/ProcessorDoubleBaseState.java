@@ -1,6 +1,7 @@
-package org.payn.chsm.processors.auto;
+package org.payn.chsm.finitedifference.processors;
 
 import org.payn.chsm.Holon;
+import org.payn.chsm.finitedifference.processors.interfaces.UpdaterBaseState;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.resources.time.BehaviorTime;
 import org.payn.chsm.values.ValueDouble;
@@ -12,7 +13,7 @@ import org.payn.chsm.values.ValueDouble;
  * @author v78h241
  *
  */
-public class ProcessorDoubleState extends ProcessorDouble implements UpdaterState {
+public class ProcessorDoubleBaseState extends ProcessorDouble implements UpdaterBaseState {
    
    /**
     * Time interval of the model
@@ -27,7 +28,7 @@ public class ProcessorDoubleState extends ProcessorDouble implements UpdaterStat
    /**
     * Raw constructor
     */
-   public ProcessorDoubleState()
+   public ProcessorDoubleBaseState()
    {
       netChange = 0.0;
    }
