@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import org.payn.chsm.processors.ControllerHolon;
+import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.resources.statespace.ResourceStateSpace;
 import org.payn.chsm.values.ValueStateMap;
 

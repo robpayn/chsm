@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.payn.chsm.State;
-import org.payn.chsm.ValueAbstract;
 
 /**
  * State variable that controls a hash map collection of states

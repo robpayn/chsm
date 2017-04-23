@@ -1,5 +1,9 @@
 package org.payn.chsm;
 
+import org.payn.chsm.processors.Processor;
+import org.payn.chsm.resources.Behavior;
+import org.payn.chsm.values.Value;
+
 /**
  * Simple implementation of a variable state, 
  * an atomic data unit for a continuous hierarchical state machine

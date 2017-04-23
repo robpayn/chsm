@@ -1,7 +1,7 @@
 package org.payn.chsm;
 
-import org.payn.chsm.Behavior;
 import org.payn.chsm.finitedifference.Holon;
+import org.payn.chsm.resources.Behavior;
 
 public class Agent extends Holon {
 

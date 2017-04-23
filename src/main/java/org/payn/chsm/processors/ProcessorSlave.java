@@ -1,11 +1,9 @@
 package org.payn.chsm.processors;
 
 import org.payn.chsm.Holon;
-import org.payn.chsm.Processor;
-import org.payn.chsm.ProcessorAbstract;
 import org.payn.chsm.State;
-import org.payn.chsm.Value;
 import org.payn.chsm.processors.interfaces.UpdaterSlave;
+import org.payn.chsm.values.Value;
 
 /**
  * A processor that is a slave to another processor.  

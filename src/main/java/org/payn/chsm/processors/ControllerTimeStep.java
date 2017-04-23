@@ -1,9 +1,9 @@
 package org.payn.chsm.processors;
 
 import org.payn.chsm.Holon;
-import org.payn.chsm.Inputter;
-import org.payn.chsm.Reporter;
 import org.payn.chsm.State;
+import org.payn.chsm.io.inputters.Inputter;
+import org.payn.chsm.io.reporters.Reporter;
 import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 import org.payn.chsm.resources.time.BehaviorTime;

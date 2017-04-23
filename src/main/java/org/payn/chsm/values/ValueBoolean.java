@@ -1,7 +1,5 @@
 package org.payn.chsm.values;
 
-import org.payn.chsm.ValueAbstract;
-
 /**
  * Controls a boolean value
  * 

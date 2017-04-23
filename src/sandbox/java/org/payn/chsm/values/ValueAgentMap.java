@@ -3,8 +3,6 @@ package org.payn.chsm.values;
 import java.util.HashMap;
 
 import org.payn.chsm.Agent;
-import org.payn.chsm.Value;
-import org.payn.chsm.ValueAbstract;
 
 public class ValueAgentMap extends ValueAbstract {
 

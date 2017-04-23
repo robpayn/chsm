@@ -1,7 +1,5 @@
 package org.payn.chsm.io.logger;
 
-import org.payn.chsm.Logger;
-
 /**
  * Interface for a status update listener
  * 

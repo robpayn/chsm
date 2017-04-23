@@ -1,7 +1,6 @@
 package org.payn.chsm.processors;
 
-import org.payn.chsm.ProcessorAbstract;
-import org.payn.chsm.Value;
+import org.payn.chsm.values.Value;
 import org.payn.chsm.values.ValueDouble;
 
 /**

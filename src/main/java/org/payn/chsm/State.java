@@ -1,5 +1,9 @@
 package org.payn.chsm;
 
+import org.payn.chsm.processors.Processor;
+import org.payn.chsm.resources.Behavior;
+import org.payn.chsm.values.Value;
+
 /**
  * Interface for a state in a composite hierarchy state machine
  * 

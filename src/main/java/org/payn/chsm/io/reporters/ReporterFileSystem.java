@@ -3,8 +3,6 @@ package org.payn.chsm.io.reporters;
 import java.io.File;
 import java.util.HashMap;
 
-import org.payn.chsm.ReporterAbstract;
-
 /**
  * Reporter that writes reports to a directory in a file system
  * 

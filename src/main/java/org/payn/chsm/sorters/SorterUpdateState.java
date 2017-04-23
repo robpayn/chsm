@@ -2,8 +2,8 @@ package org.payn.chsm.sorters;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.Processor;
-import org.payn.chsm.finitedifference.processors.interfaces.UpdaterBaseState;
+import org.payn.chsm.processors.Processor;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterBaseState;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
 /**

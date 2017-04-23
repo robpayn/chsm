@@ -1,6 +1,6 @@
 package org.payn.chsm.resources.time;
 
-import org.payn.chsm.ResourceAbstract;
+import org.payn.chsm.resources.ResourceAbstract;
 
 /**
  * Time resource

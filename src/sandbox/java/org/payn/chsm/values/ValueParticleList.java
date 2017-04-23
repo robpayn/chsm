@@ -2,8 +2,6 @@ package org.payn.chsm.values;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.ValueAbstract;
-
 import resources.particle.Particle;
 
 public class ValueParticleList extends ValueAbstract {

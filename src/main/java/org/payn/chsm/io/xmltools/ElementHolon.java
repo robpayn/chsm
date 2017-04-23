@@ -2,9 +2,10 @@ package org.payn.chsm.io.xmltools;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.payn.chsm.Behavior;
+
 import org.payn.chsm.Holon;
 import org.payn.chsm.State;
+import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.resources.statespace.BehaviorHierarchy;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

@@ -1,6 +1,6 @@
 package org.payn.chsm.resources.time;
 
-import org.payn.chsm.BehaviorAbstract;
+import org.payn.chsm.resources.BehaviorAbstract;
 import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueLong;
 

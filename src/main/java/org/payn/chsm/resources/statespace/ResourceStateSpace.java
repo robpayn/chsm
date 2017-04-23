@@ -1,7 +1,7 @@
 package org.payn.chsm.resources.statespace;
 
-import org.payn.chsm.Behavior;
-import org.payn.chsm.ResourceAbstract;
+import org.payn.chsm.resources.Behavior;
+import org.payn.chsm.resources.ResourceAbstract;
 
 /**
  * State space resource

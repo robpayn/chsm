@@ -3,7 +3,7 @@ package org.payn.chsm.io.xmltools;
 import java.io.File;
 import java.util.HashMap;
 
-import org.payn.chsm.Behavior;
+import org.payn.chsm.resources.Behavior;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

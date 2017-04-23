@@ -3,7 +3,6 @@ package org.payn.chsm.io.reporters;
 import java.io.File;
 import java.util.HashMap;
 
-import org.payn.chsm.ReporterFactoryXML;
 import org.payn.chsm.io.xmltools.ElementReporter;
 import org.w3c.dom.Element;
 

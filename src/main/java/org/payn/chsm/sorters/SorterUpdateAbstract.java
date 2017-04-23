@@ -2,8 +2,7 @@ package org.payn.chsm.sorters;
 
 import java.util.ArrayList;
 
-import org.payn.chsm.SorterAbstract;
-import org.payn.chsm.Processor;
+import org.payn.chsm.processors.Processor;
 import org.payn.chsm.processors.interfaces.UpdaterAuto;
 import org.payn.chsm.processors.interfaces.UpdaterSlave;
 

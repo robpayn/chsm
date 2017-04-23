@@ -1,6 +1,6 @@
 package org.payn.chsm.processors.interfaces;
 
-import org.payn.chsm.Processor;
+import org.payn.chsm.processors.Processor;
 
 /**
  * A slave processor that updates a value based on

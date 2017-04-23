@@ -2,8 +2,6 @@ package org.payn.chsm.values;
 
 import java.text.DecimalFormat;
 
-import org.payn.chsm.ValueAbstract;
-
 /**
  * A double precision floating point value
  * 
