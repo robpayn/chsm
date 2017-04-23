@@ -1,6 +1,8 @@
 package org.payn.chsm.finitedifference;
 
 import java.util.HashMap;
+
+import org.payn.chsm.Holon;
 import org.payn.chsm.HolonBasic;
 import org.payn.chsm.Resource;
 import org.payn.chsm.State;
@@ -13,7 +15,7 @@ import org.payn.chsm.finitedifference.processors.interfaces.UpdaterBaseState;
  * @author robpayn
  *
  */
-public class HolonFiniteDifference extends HolonBasic implements Holon {
+public class HolonFiniteDiff extends HolonBasic implements Holon {
 
    /**
     * Storage state variables associated with the cell
@@ -28,7 +30,7 @@ public class HolonFiniteDifference extends HolonBasic implements Holon {
     * @param parentHolon
     * @throws Exception
     */
-   public HolonFiniteDifference(String name, org.payn.chsm.Holon parentHolon)
+   public HolonFiniteDiff(String name, org.payn.chsm.Holon parentHolon)
          throws Exception 
    {
       super(name, parentHolon);
@@ -43,7 +45,6 @@ public class HolonFiniteDifference extends HolonBasic implements Holon {
     * @return
     *       base state associated with the resource
     */
-   @Override
    public State getBaseState(Resource resource) 
    {
       return baseStateMap.get(resource);

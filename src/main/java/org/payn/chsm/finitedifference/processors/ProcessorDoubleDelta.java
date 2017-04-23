@@ -1,7 +1,7 @@
 package org.payn.chsm.finitedifference.processors;
 
 import org.payn.chsm.State;
-import org.payn.chsm.finitedifference.Holon;
+import org.payn.chsm.finitedifference.HolonFiniteDiff;
 import org.payn.chsm.finitedifference.processors.interfaces.UpdaterDelta;
 import org.payn.chsm.processors.ProcessorDouble;
 
@@ -23,7 +23,7 @@ implements UpdaterDelta {
    public void setUpdateDependencies() throws Exception
    {
       setUpdateDependenciesDelta();
-      State storage = ((Holon)state.getParentHolon()).getBaseState(
+      State storage = ((HolonFiniteDiff)state.getParentHolon()).getBaseState(
             state.getBehavior().getResource()
             );
       rootStateProcessor = (ProcessorDoubleBaseState)storage.getProcessor();
