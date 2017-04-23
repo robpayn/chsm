@@ -1,10 +1,11 @@
-package org.payn.chsm.sorters;
+package org.payn.chsm.sorters.finitedifference;
 
 import java.util.ArrayList;
 
 import org.payn.chsm.processors.Processor;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
+import org.payn.chsm.sorters.SorterUpdate;
 
 /**
  * Sorter for ordering calls to trade phase updating processors

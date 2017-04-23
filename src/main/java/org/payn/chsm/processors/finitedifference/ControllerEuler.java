@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 import org.payn.chsm.sorters.SorterInitialize;
-import org.payn.chsm.sorters.SorterUpdateChange;
-import org.payn.chsm.sorters.SorterUpdateDelta;
-import org.payn.chsm.sorters.SorterUpdateInfo;
-import org.payn.chsm.sorters.SorterUpdateState;
+import org.payn.chsm.sorters.finitedifference.SorterUpdateChange;
+import org.payn.chsm.sorters.finitedifference.SorterUpdateDelta;
+import org.payn.chsm.sorters.finitedifference.SorterUpdateInfo;
+import org.payn.chsm.sorters.finitedifference.SorterUpdateState;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 
 /**
