@@ -17,7 +17,9 @@ import org.payn.chsm.values.Value;
  * @param <VT> 
  *      Type for value
  */
-public abstract class ControllerAbstract<VT extends Value> extends ProcessorAbstract<VT> implements Controller {
+public abstract class ControllerAbstract<VT extends Value> 
+extends ProcessorAbstract<VT> 
+implements Controller {
    
    /**
     * List of reporters that generate output
