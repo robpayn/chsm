@@ -28,7 +28,7 @@ implements UpdaterCrankNicolson {
    {
       processor.updateDelta();
       value.n = 0.5 * (value.n + savedValue);
-      processor.updateRootStateProcessor();
+      processor.updateStoreProcessor();
    }
 
 }

@@ -64,7 +64,7 @@ public class ControllerCrankNicolson extends ControllerBackEuler {
       saveDeltas();
       
       // get a first estimate of the state at the end of the time step (forward Euler)
-      update(stateUpdaters);
+      update(storeUpdaters);
       update(infoUpdaters);
       
       // check for convergence (only converges if new state does not change)
@@ -86,7 +86,7 @@ public class ControllerCrankNicolson extends ControllerBackEuler {
             restoreState();
             
             // get new state estimate
-            update(stateUpdaters);
+            update(storeUpdaters);
             update(infoUpdaters);
             
             // check if converged on a consistent estimate of state

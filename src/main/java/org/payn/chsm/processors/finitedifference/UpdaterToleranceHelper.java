@@ -29,7 +29,7 @@ public class UpdaterToleranceHelper implements UpdaterTolerance {
    /**
     * Decorated processor
     */
-   protected ProcessorDoubleBaseState proc;
+   protected ProcessorDoubleStore proc;
 
    /**
     * Construct a new instance decorating the provided processor
@@ -37,7 +37,7 @@ public class UpdaterToleranceHelper implements UpdaterTolerance {
     * @param proc
     *       processor to be decorated
     */
-   public UpdaterToleranceHelper(ProcessorDoubleBaseState proc) 
+   public UpdaterToleranceHelper(ProcessorDoubleStore proc) 
    {
       this.proc = proc;
       value = proc.getValue();

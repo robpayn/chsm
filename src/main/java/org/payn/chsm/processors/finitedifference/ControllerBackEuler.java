@@ -3,7 +3,7 @@ package org.payn.chsm.processors.finitedifference;
 import java.util.ArrayList;
 
 import org.payn.chsm.processors.Processor;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterBaseState;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterTolerance;
 
 /**
@@ -134,7 +134,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
          restoreState();
          
          // calculate storage and state based on new estimate of loads
-         update(stateUpdaters);
+         update(storeUpdaters);
          update(infoUpdaters);
          
          // check if new estimates of storages has converged
@@ -213,13 +213,13 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
     */
    protected void addStateToleranceUpdater(Processor proc) 
    {
-      if (UpdaterBaseState.class.isInstance(proc) && UpdaterTolerance.class.isInstance(proc))
+      if (UpdaterStore.class.isInstance(proc) && UpdaterTolerance.class.isInstance(proc))
       {
          stateProcessorToleranceUpdaters.add((UpdaterTolerance)proc);
       }
-      else if (ProcessorDoubleBaseState.class.isInstance(proc))
+      else if (ProcessorDoubleStore.class.isInstance(proc))
       {
-         stateProcessorToleranceUpdaters.add(new UpdaterToleranceHelper((ProcessorDoubleBaseState)proc));
+         stateProcessorToleranceUpdaters.add(new UpdaterToleranceHelper((ProcessorDoubleStore)proc));
       }
    }
 

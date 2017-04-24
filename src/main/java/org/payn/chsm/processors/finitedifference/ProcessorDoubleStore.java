@@ -2,7 +2,7 @@ package org.payn.chsm.processors.finitedifference;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.processors.ProcessorDouble;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterBaseState;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
 import org.payn.chsm.resources.time.BehaviorTime;
 import org.payn.chsm.values.ValueDouble;
 
@@ -13,7 +13,7 @@ import org.payn.chsm.values.ValueDouble;
  * @author v78h241
  *
  */
-public class ProcessorDoubleBaseState extends ProcessorDouble implements UpdaterBaseState {
+public class ProcessorDoubleStore extends ProcessorDouble implements UpdaterStore {
    
    /**
     * Time interval of the model
@@ -28,7 +28,7 @@ public class ProcessorDoubleBaseState extends ProcessorDouble implements Updater
    /**
     * Raw constructor
     */
-   public ProcessorDoubleBaseState()
+   public ProcessorDoubleStore()
    {
       netChange = 0.0;
    }

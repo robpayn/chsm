@@ -8,6 +8,6 @@ import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
  * @author v78h241
  *
  */
-public interface UpdaterBaseState extends UpdaterSimpleAuto {
+public interface UpdaterStore extends UpdaterSimpleAuto {
 
 }

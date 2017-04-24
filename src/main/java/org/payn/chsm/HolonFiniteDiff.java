@@ -2,7 +2,7 @@ package org.payn.chsm;
 
 import java.util.HashMap;
 
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterBaseState;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
 import org.payn.chsm.resources.Resource;
 
 /**
@@ -17,7 +17,7 @@ public class HolonFiniteDiff extends HolonBasic implements Holon {
    /**
     * Storage state variables associated with the cell
     */
-   protected HashMap<Resource, State> baseStateMap;
+   protected HashMap<Resource, State> storeMap;
    
    /**
     * Constructs a new instance wtih the provided name and
@@ -31,7 +31,7 @@ public class HolonFiniteDiff extends HolonBasic implements Holon {
          throws Exception 
    {
       super(name, parentHolon);
-      this.baseStateMap = new HashMap<Resource, State>();
+      this.storeMap = new HashMap<Resource, State>();
    }
 
    /**
@@ -42,27 +42,27 @@ public class HolonFiniteDiff extends HolonBasic implements Holon {
     * @return
     *       base state associated with the resource
     */
-   public State getBaseState(Resource resource) 
+   public State getStore(Resource resource) 
    {
-      return baseStateMap.get(resource);
+      return storeMap.get(resource);
    }
    
    @Override
    public void trackProcessor(State state) throws Exception 
    {
-      if (UpdaterBaseState.class.isInstance(state.getProcessor()))
+      if (UpdaterStore.class.isInstance(state.getProcessor()))
       {
          Resource resource = state.getBehavior().getResource();
-         if (baseStateMap.containsKey(resource))
+         if (storeMap.containsKey(resource))
          {
             throw new Exception(String.format(
                   "Cannot add base state %s: base state %s already configured for holon %s.",
                   state.toString(),
-                  baseStateMap.get(resource).toString(),
+                  storeMap.get(resource).toString(),
                   toString()
                   ));
          }
-         baseStateMap.put(resource, state);
+         storeMap.put(resource, state);
       }
    }
 

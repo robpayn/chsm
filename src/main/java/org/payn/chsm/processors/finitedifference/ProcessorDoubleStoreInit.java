@@ -8,7 +8,7 @@ import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
  * @author v78h241
  *
  */
-public abstract class ProcessorDoubleBaseStateInit extends ProcessorDoubleBaseState 
+public abstract class ProcessorDoubleStoreInit extends ProcessorDoubleStore 
 implements InitializerSimpleAuto {
 
 }

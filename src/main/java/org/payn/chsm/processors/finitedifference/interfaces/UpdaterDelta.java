@@ -29,6 +29,6 @@ public interface UpdaterDelta extends UpdaterSimpleAuto {
     * 
     * @throws Exception
     */
-   void updateRootStateProcessor() throws Exception;
+   void updateStoreProcessor() throws Exception;
 
 }

@@ -8,7 +8,7 @@ import org.payn.chsm.sorters.SorterInitialize;
 import org.payn.chsm.sorters.finitedifference.SorterUpdateChange;
 import org.payn.chsm.sorters.finitedifference.SorterUpdateDelta;
 import org.payn.chsm.sorters.finitedifference.SorterUpdateInfo;
-import org.payn.chsm.sorters.finitedifference.SorterUpdateState;
+import org.payn.chsm.sorters.finitedifference.SorterUpdateStore;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 
 /**
@@ -50,7 +50,7 @@ public class ControllerEuler extends ControllerFiniteDiff {
    {
       SorterUpdateChange sorterChange = new SorterUpdateChange(changeUpdaters);
       SorterUpdateDelta sorterDelta = new SorterUpdateDelta(deltaUpdaters);
-      SorterUpdateState sorterState = new SorterUpdateState(stateUpdaters);
+      SorterUpdateStore sorterStore = new SorterUpdateStore(storeUpdaters);
       SorterUpdateInfo sorterInfo = new SorterUpdateInfo(infoUpdaters);
       
       this.sorter = sorterChange;
@@ -59,8 +59,8 @@ public class ControllerEuler extends ControllerFiniteDiff {
       this.sorter = sorterDelta;
       deltaUpdaters = sorterDelta.getSortedProcessors();
       
-      this.sorter = sorterState;
-      stateUpdaters = sorterState.getSortedProcessors();
+      this.sorter = sorterStore;
+      storeUpdaters = sorterStore.getSortedProcessors();
       
       this.sorter = sorterInfo;
       infoUpdaters = sorterInfo.getSortedProcessors();
@@ -85,7 +85,7 @@ public class ControllerEuler extends ControllerFiniteDiff {
    {
       update(changeUpdaters);
       update(deltaUpdaters);
-      update(stateUpdaters);
+      update(storeUpdaters);
       update(infoUpdaters);
    }
 

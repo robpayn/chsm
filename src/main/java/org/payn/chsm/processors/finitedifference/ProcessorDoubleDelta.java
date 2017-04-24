@@ -17,23 +17,23 @@ implements UpdaterDelta {
    /**
     * The storage processor to increment with this load
     */
-   protected ProcessorDoubleBaseState rootStateProcessor;
+   protected ProcessorDoubleStore storeProcessor;
 
    @Override
    public void setUpdateDependencies() throws Exception
    {
       setUpdateDependenciesDelta();
-      State storage = ((HolonFiniteDiff)state.getParentHolon()).getBaseState(
+      State storage = ((HolonFiniteDiff)state.getParentHolon()).getStore(
             state.getBehavior().getResource()
             );
-      rootStateProcessor = (ProcessorDoubleBaseState)storage.getProcessor();
+      storeProcessor = (ProcessorDoubleStore)storage.getProcessor();
    }
    
    @Override
    public void update() throws Exception
    {
       updateDelta();
-      updateRootStateProcessor();
+      updateStoreProcessor();
    }
 
    /**
@@ -42,9 +42,9 @@ implements UpdaterDelta {
     * @throws Exception
     */
    @Override
-   public void updateRootStateProcessor() throws Exception 
+   public void updateStoreProcessor() throws Exception 
    {
-      rootStateProcessor.incrementNetChange(value.n);
+      storeProcessor.incrementNetChange(value.n);
    }
 
 }

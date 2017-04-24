@@ -3,7 +3,7 @@ package org.payn.chsm.sorters.finitedifference;
 import java.util.ArrayList;
 
 import org.payn.chsm.processors.Processor;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterBaseState;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 import org.payn.chsm.sorters.SorterUpdate;
 
@@ -13,7 +13,7 @@ import org.payn.chsm.sorters.SorterUpdate;
  * @author robpayn
  *
  */
-public class SorterUpdateState extends SorterUpdate {
+public class SorterUpdateStore extends SorterUpdate {
 
    /**
     * Create a new sorter based on a list of updaters
@@ -21,7 +21,7 @@ public class SorterUpdateState extends SorterUpdate {
     * @param updaters
     *       list of updaters
     */
-   public SorterUpdateState(ArrayList<UpdaterSimpleAuto> updaters) 
+   public SorterUpdateStore(ArrayList<UpdaterSimpleAuto> updaters) 
    {
       super(updaters);
    }
@@ -32,9 +32,9 @@ public class SorterUpdateState extends SorterUpdate {
    @Override
    public void addUpdateDependency(Processor processor, Processor neededProcessor) 
    {
-      if (UpdaterBaseState.class.isInstance(neededProcessor))
+      if (UpdaterStore.class.isInstance(neededProcessor))
       {
-         addToGraph((UpdaterBaseState)processor, (UpdaterBaseState)neededProcessor);
+         addToGraph((UpdaterStore)processor, (UpdaterStore)neededProcessor);
       }
    }
 

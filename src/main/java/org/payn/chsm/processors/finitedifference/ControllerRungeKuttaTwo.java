@@ -6,7 +6,7 @@ import org.payn.chsm.Holon;
 import org.payn.chsm.processors.Processor;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.processors.UpdaterMemoryHelper;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterBaseState;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
 import org.payn.chsm.processors.interfaces.UpdaterMemory;
 import org.payn.chsm.resources.time.BehaviorTime;
@@ -80,7 +80,7 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
       
       // Calculate store and trade values after half the time step
       timeIntervalValue.n = halfTimeInterval;
-      update(stateUpdaters);
+      update(storeUpdaters);
       update(infoUpdaters);
       
       update(changeUpdaters);
@@ -92,7 +92,7 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
       // Calculate the store values over the full time step
       // using the Runge Kutta estimates of the loads
       timeIntervalValue.n = fullTimeInterval;
-      update(stateUpdaters);
+      update(storeUpdaters);
       update(infoUpdaters);
    }
 
@@ -132,12 +132,12 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
     */
    protected void addStoreMemoryUpdater(Processor processor) 
    {
-      if ((UpdaterBaseState.class.isInstance(processor) || UpdaterInfo.class.isInstance(processor)) 
+      if ((UpdaterStore.class.isInstance(processor) || UpdaterInfo.class.isInstance(processor)) 
             && UpdaterMemory.class.isInstance(processor))
       {
          storeProcessorMemoryUpdaters.add((UpdaterMemory)processor);
       }
-      else if (ProcessorDoubleBaseState.class.isInstance(processor) || 
+      else if (ProcessorDoubleStore.class.isInstance(processor) || 
             ProcessorDoubleInfo.class.isInstance(processor))
       {
          storeProcessorMemoryUpdaters.add(

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.payn.chsm.processors.ControllerTimeStep;
 import org.payn.chsm.processors.Processor;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterBaseState;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterChange;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterDelta;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
@@ -70,7 +70,7 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
    /**
     * List of updaters for the storage phase
     */
-   protected ArrayList<UpdaterSimpleAuto> stateUpdaters;
+   protected ArrayList<UpdaterSimpleAuto> storeUpdaters;
 
    /**
     * Getter
@@ -80,7 +80,7 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
     */
    public ArrayList<UpdaterSimpleAuto> getStateUpdaters() 
    {
-      return stateUpdaters;
+      return storeUpdaters;
    }
 
    /**
@@ -107,7 +107,7 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
       initializers = new ArrayList<InitializerSimpleAuto>();
       changeUpdaters = new ArrayList<UpdaterSimpleAuto>();
       deltaUpdaters = new ArrayList<UpdaterSimpleAuto>();
-      stateUpdaters = new ArrayList<UpdaterSimpleAuto>();
+      storeUpdaters = new ArrayList<UpdaterSimpleAuto>();
       infoUpdaters = new ArrayList<UpdaterSimpleAuto>();
    }
    
@@ -139,9 +139,9 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
       {
          deltaUpdaters.add((UpdaterDelta)processor);
       }
-      else if (UpdaterBaseState.class.isInstance(processor))
+      else if (UpdaterStore.class.isInstance(processor))
       {
-         stateUpdaters.add((UpdaterBaseState)processor);
+         storeUpdaters.add((UpdaterStore)processor);
       }
       else if (UpdaterInfo.class.isInstance(processor))
       {
