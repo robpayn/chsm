@@ -57,27 +57,21 @@ public abstract class ResourceAbstract implements Resource {
       this.name = name;
       addBehaviors();
    }
-
-   @Override
-   public ClassLoader getClassLoader() 
-   {
-      return getClass().getClassLoader();
-   }
-
+   
    @Override
    public Behavior getBehavior(String defaultBehaviorName) throws Exception
    {
        Behavior behavior = behaviorMap.get(defaultBehaviorName);
       if (behavior == null)
       {
-         String url = getBehaviorClassPath(defaultBehaviorName);
-         if (url == null)
+         String classpath = getBehaviorClassPath(defaultBehaviorName);
+         if (classpath == null)
             throw new Exception(String.format(
                   "Behavior %s could not be found for resource %s.",
                   defaultBehaviorName,
                   name
                   ));
-         behavior = (Behavior)loadClass(url).newInstance();
+         behavior = (Behavior)loadClass(classpath).newInstance();
          behavior.setResource(this);
          behavior.initialize(defaultBehaviorName);
          behaviorMap.put(behavior.getName(), behavior);
@@ -88,7 +82,8 @@ public abstract class ResourceAbstract implements Resource {
    @Override
    public Class<?> loadClass(String classpath) throws Exception 
    {
-      return getClassLoader().loadClass(classpath);
+      ClassLoader cl = getClass().getClassLoader();
+      return Class.forName(classpath, false, cl);
    }
 
    @Override

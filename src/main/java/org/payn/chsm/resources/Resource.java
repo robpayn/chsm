@@ -34,14 +34,6 @@ public interface Resource {
     */
    public abstract String getName();
 
-    /**
-    * Getter for the class loader
-    * 
-    * @return
-    *       class loader
-    */
-   public ClassLoader getClassLoader();
-
    /**
     * Load and create an instance of the named behavior based on the default behavior name
     * 

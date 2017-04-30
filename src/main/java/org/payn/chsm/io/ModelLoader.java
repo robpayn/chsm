@@ -105,7 +105,6 @@ public abstract class ModelLoader {
             )
       {
          loader = (ModelLoader)ModelLoader.createObjectInstance(
-               ModelLoader.class.getClassLoader(),
                new File(argMap.get(ModelLoader.ARG_FILE_PATH)),
                argMap.get(ModelLoader.ARG_CLASS_PATH),
                "Model loader"
@@ -113,7 +112,7 @@ public abstract class ModelLoader {
       }
       System.out.println(String.format(
             "Loading with %s ...",
-            modelLoader.getClass().getCanonicalName()
+            loader.getClass().getCanonicalName()
             ));
       
       // Load all model components and return a reference to the builder
@@ -177,7 +176,7 @@ public abstract class ModelLoader {
     * @throws Exception
     *       if error in loading object
     */
-   public static Object createObjectInstance(ClassLoader classLoader, File path, 
+   public static Object createObjectInstance(File path, 
          String classPath, String errorMessage) throws Exception
    {
       if (!path.exists())
@@ -188,8 +187,8 @@ public abstract class ModelLoader {
                path.getAbsolutePath()
                ));
       }
-      Object object = loadClass(classLoader, path, classPath).newInstance();
-      return object;
+      Class<?> loadedClass = loadClass(path, classPath);
+      return loadedClass.newInstance();
    }
    
    /**
@@ -202,14 +201,13 @@ public abstract class ModelLoader {
     *       loaded class
     * @throws Exception
     */
-   public static Class<?> loadClass(ClassLoader classLoader, File path, String classPath) throws Exception
+   public static Class<?> loadClass(File path, String classPath) throws Exception
    {
       URLClassLoader outCL = new URLClassLoader(
             new URL[] {path.toURI().toURL()},
-            classLoader
+            ModelLoader.class.getClassLoader()
             );
-      Class<?> loadedClass = outCL.loadClass(classPath);
-      outCL.close();
+      Class<?> loadedClass = Class.forName(classPath, false, outCL);
       return loadedClass;
    }
 

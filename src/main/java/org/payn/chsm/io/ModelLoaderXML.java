@@ -20,7 +20,7 @@ import org.payn.chsm.resources.Resource;
  * 
  * @author robpayn
  */
-public abstract class ModelLoaderXML extends ModelLoader {
+public class ModelLoaderXML extends ModelLoader {
 
    /**
     * XML document with configuration information
@@ -82,7 +82,8 @@ public abstract class ModelLoaderXML extends ModelLoader {
             File loggerFile = loggerElem.getFile(pathRoot);
             String classPath = loggerElem.getClassPath();
             loggerList.add(ModelLoader.loadClass(
-                  getClass().getClassLoader(), loggerFile, classPath
+                  loggerFile, 
+                  classPath
                   ));
          }
       }
@@ -98,7 +99,6 @@ public abstract class ModelLoaderXML extends ModelLoader {
          if (!classPath.equals(""))
          {
             return (ControllerHolon)ModelLoader.createObjectInstance(
-                  getClass().getClassLoader(), 
                   procElem.getFile(pathRoot), 
                   classPath,
                   String.format("Controller %s", classPath)
@@ -126,7 +126,6 @@ public abstract class ModelLoaderXML extends ModelLoader {
                      resourceElem.getName()
                      ));
             }
-            resource.initialize(resourceElem.getName());
             list.add(resource);
          }
       }
@@ -145,12 +144,13 @@ public abstract class ModelLoaderXML extends ModelLoader {
       String classPath = resourceElem.getClassPath();
       if (!classPath.equals(""))
       {
-         return (Resource)ModelLoader.createObjectInstance(
-               getClass().getClassLoader(), 
+         Resource resource = (Resource)ModelLoader.createObjectInstance(
                resourceElem.getFile(pathRoot), 
                classPath, 
                String.format("Resource %s", classPath)
                );
+         resource.initialize(resourceElem.getName());
+         return resource;
       }
       else
       {
@@ -191,7 +191,6 @@ public abstract class ModelLoaderXML extends ModelLoader {
       if (!classPath.equals(""))
       {
          return (ReporterFactoryXML<?>)createObjectInstance(
-            getClass().getClassLoader(), 
             outputElem.getFile(pathRoot), 
             classPath, 
             String.format("Reporter factory %s", classPath)
@@ -212,7 +211,6 @@ public abstract class ModelLoaderXML extends ModelLoader {
       if (!classPath.equals(""))
       {
          return (ModelBuilder)ModelLoader.createObjectInstance(
-               getClass().getClassLoader(), 
                builderElem.getFile(pathRoot), 
                classPath,
                String.format("Builder %s", classPath)

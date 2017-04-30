@@ -134,7 +134,8 @@ public class ModelBuilderXML extends ModelBuilder {
    {
       for (ElementBehavior elementBehavior: element.getBehaviorList())
       {
-         Behavior behavior = resourceMap.get(elementBehavior.getResourceName())
+         String resourceName = elementBehavior.getResourceName();
+         Behavior behavior = resourceMap.get(resourceName)
                .getBehavior(elementBehavior.getName());
          if (elementBehavior.isInstalled())
          {
