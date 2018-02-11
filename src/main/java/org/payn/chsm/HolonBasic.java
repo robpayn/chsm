@@ -95,7 +95,7 @@ public class HolonBasic extends StateVariable implements Holon {
          behaviorMap.put(behavior.getName(), behavior);
       }
       
-      if (state.isDynamic())
+      if (!state.isStatic())
       {
          trackProcessor(state);
       }

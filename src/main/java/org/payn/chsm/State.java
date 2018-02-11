@@ -5,7 +5,13 @@ import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.values.Value;
 
 /**
- * Interface for a state in a composite hierarchy state machine
+ * <p>Interface for a state in a composite hierarchy state machine.</p>
+ * 
+ * <p>A state is a named unit of information in the state machine.
+ * This unit of information is considered atomic at its respective
+ * hierarchical tier, as defined by its parent holon.</p>
+ * 
+ * @see org.payn.chsm.Holon
  * 
  * @author robpayn
  *
@@ -13,7 +19,7 @@ import org.payn.chsm.values.Value;
 public interface State {
 
    /**
-    * Get the behavior tracked by this state
+    * Get the behavior characterized by this state
     * 
     * @return
     *       behavior object
@@ -29,7 +35,7 @@ public interface State {
    public abstract String getName();
 
    /**
-    * Set the parent holon that is composed by this state
+    * Set the parent holon that is composed by this state.
     * 
     * @param parentHolon
     *       parent holon object
@@ -37,7 +43,7 @@ public interface State {
    public abstract void setParentHolon(Holon parentHolon);
    
    /**
-    * Get the parent holon for this state
+    * Get the parent holon that is composed by this state.
     * 
     * @return
     *       parent holon
@@ -45,7 +51,7 @@ public interface State {
    public abstract Holon getParentHolon();
 
    /**
-    * Set the processor that alters this state
+    * Set the processor that alters this state during run time
     * 
     * @param processor 
     *       processor object
@@ -56,7 +62,7 @@ public interface State {
    public abstract void setProcessor(Processor processor) throws Exception;
    
    /**
-    * Get the processor that alters this state
+    * Get the processor that alters this state during run time
     * 
     * @return 
     *       processor object, null if state is not dynamic
@@ -64,7 +70,7 @@ public interface State {
    public abstract Processor getProcessor();
 
    /**
-    * Set the value for this state
+    * Set the value containing data for this state
     * 
     * @param value
     *       value object
@@ -72,7 +78,7 @@ public interface State {
    public abstract void setValue(Value value);
 
    /**
-    * Get the value of this state
+    * Get the value containing data for this state
     * 
     * @return
     *       value object
@@ -80,19 +86,20 @@ public interface State {
    public abstract Value getValue();
 
    /**
-    * Determines if this state is required by the behavior
+    * Determines if this state is registered by the behavior.
     * 
     * @return 
-    *       true if required, false otherwise
+    *       true if registered, false otherwise
     */
    public abstract boolean isRegistered();
    
    /**
-    * Determines if the state is dynamic during run time
+    * Determines if the state has potential to be
+    * dynamic during run time.
     * 
     * @return
     *       true if dynamic; false otherwise
     */
-   public abstract boolean isDynamic();
+   public abstract boolean isStatic();
 
 }

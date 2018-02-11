@@ -5,8 +5,13 @@ import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.values.Value;
 
 /**
- * Simple implementation of a variable state, 
- * an atomic data unit for a continuous hierarchical state machine
+ * <p>Implementation of a state in a composite hierarchy state machine.</p>
+ * 
+ * <p>A state is a named unit of information in the state machine.
+ * This unit of information is considered atomic at its respective
+ * hierarchical tier, as defined by its parent holon.</p>
+ * 
+ * @see org.payn.chsm.Holon
  * 
  * @author robpayn
  *
@@ -36,7 +41,7 @@ public class StateVariable implements State {
    }
 
    /**
-    * Value of the state
+    * Value containing the data for the state
     */
    protected Value value = null;
    
@@ -70,10 +75,10 @@ public class StateVariable implements State {
    }
    
    /**
-    * Processor that changes the value of the state 
-    * (null if state is not dynamic)
+    * Processor that has potential to change the value of the state 
+    * (null if state is not dynamic after initialization)
     */
-   protected Processor processor;
+   protected Processor processor = null;
    
    @Override
    public void setProcessor(Processor processor) throws Exception
@@ -130,8 +135,7 @@ public class StateVariable implements State {
     */
    public StateVariable(String name, Behavior behavior, Holon holon) throws Exception
    {
-      this(name, behavior);
-      holon.addState(this);
+      this(name, behavior, null, holon);
    }
    
    /**
@@ -178,29 +182,16 @@ public class StateVariable implements State {
    @Override
    public String toString()
    {
-      return createUniqueName();
-   }
-
-   /**
-    * Creates a period-delimited string representation of the composition hierarchy 
-    * 
-    * @return 
-    *       name string
-    */
-   private String createUniqueName() 
-   {
-      String uniqueName = null;
       if (parentHolon != null)
       {
-         uniqueName = parentHolon.toString() + "." + name;
+         return parentHolon.toString() + "." + name;
       }
       else
       {
-         uniqueName = name;
+         return name;
       }
-      return uniqueName;
    }
-   
+
    @Override
    public boolean isRegistered()
    {
@@ -208,9 +199,9 @@ public class StateVariable implements State {
    }
    
    @Override
-   public boolean isDynamic()
+   public boolean isStatic()
    {
-      return processor != null;
+      return processor == null;
    }
 
 }

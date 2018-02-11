@@ -220,7 +220,7 @@ public class ReporterBehavior extends ReporterSingleThread {
       }
       
       // Add the dynamic state to the snapshot if it is in the filter or a filter is not specified for the behavior
-      if (state.isDynamic() && 
+      if (!state.isStatic() && 
             (filterStateList == null || filterStateList.containsKey(state.toString())))
       {
          String header = null;

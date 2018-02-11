@@ -100,7 +100,7 @@ implements Controller {
    @Override
    public void createDependency(Processor processor, State state) throws Exception 
    {
-      if (state.isDynamic())
+      if (!state.isStatic())
       {
          Processor neededProc = state.getProcessor();
          sorter.addDependency(processor, neededProc);

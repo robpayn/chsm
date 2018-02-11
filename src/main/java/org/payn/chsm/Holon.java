@@ -2,6 +2,7 @@ package org.payn.chsm;
 
 import java.util.HashMap;
 
+import org.payn.chsm.processors.ControllerHolon;
 import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.values.ValueStateMap;
 
@@ -69,5 +70,8 @@ public interface Holon extends State {
 
    @Override
    ValueStateMap getValue();
+   
+   @Override
+   public ControllerHolon getProcessor();
 
 }

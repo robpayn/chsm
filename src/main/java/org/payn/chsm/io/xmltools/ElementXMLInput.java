@@ -80,7 +80,9 @@ public class ElementXMLInput extends ElementHelper {
    public File getHolonFile() 
    {
       return new File(
-            inputDirectory.getAbsolutePath() + File.separator + this.getAttribute("holonFile")
+            inputDirectory.getAbsolutePath() 
+            	+ File.separator 
+            	+ this.getAttribute("holonFile")
             );
    }
 

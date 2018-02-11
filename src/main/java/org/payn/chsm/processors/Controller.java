@@ -60,5 +60,5 @@ public interface Controller extends Processor {
     *       inputter to be added
     */
    public abstract void addInputter(Inputter inputter);
-
+   
 }

@@ -52,4 +52,20 @@ public abstract class ControllerHolon extends ControllerAbstract<ValueStateMap> 
       setValue((ValueStateMap)state.getValue());
    }
    
+   /**
+    * Initialize the controller
+    * 
+    * @throws Exception
+    *       if error in initialization
+    */
+   public abstract void initializeController() throws Exception;
+   
+   /**
+    * Execute the controller
+    * 
+    * @ throws Exception
+    *       if error in execution
+    */
+   public abstract void executeController() throws Exception;
+
 }
