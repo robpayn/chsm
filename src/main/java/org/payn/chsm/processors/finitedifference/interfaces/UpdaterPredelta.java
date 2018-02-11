@@ -3,11 +3,11 @@ package org.payn.chsm.processors.finitedifference.interfaces;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
 /**
- * Updater for the state phase
+ * An updater for the trade phase
  * 
- * @author robpayn
+ * @author rob payn
  *
  */
-public interface UpdaterInfo extends UpdaterSimpleAuto {
+public interface UpdaterPredelta extends UpdaterSimpleAuto {
 
 }

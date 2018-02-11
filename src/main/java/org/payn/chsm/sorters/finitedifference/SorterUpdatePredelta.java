@@ -3,17 +3,17 @@ package org.payn.chsm.sorters.finitedifference;
 import java.util.ArrayList;
 
 import org.payn.chsm.processors.Processor;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterPredelta;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 import org.payn.chsm.sorters.SorterUpdate;
 
 /**
- * Sorter for ordering calls to trade phase updating processors
+ * Sorter for the "predelta" phase of calculation.
  * 
  * @author robpayn
  *
  */
-public class SorterUpdateInfo extends SorterUpdate {
+public class SorterUpdatePredelta extends SorterUpdate {
 
    /**
     * Create a new instance based on a list of updaters
@@ -21,7 +21,7 @@ public class SorterUpdateInfo extends SorterUpdate {
     * @param updaters
     *       list of updaters
     */
-   public SorterUpdateInfo(ArrayList<UpdaterSimpleAuto> updaters) 
+   public SorterUpdatePredelta(ArrayList<UpdaterSimpleAuto> updaters) 
    {
       super(updaters);
    }
@@ -32,9 +32,9 @@ public class SorterUpdateInfo extends SorterUpdate {
    @Override
    public void addUpdateDependency(Processor processor, Processor neededProcessor) 
    {
-      if (UpdaterInfo.class.isInstance(neededProcessor))
+      if (UpdaterPredelta.class.isInstance(neededProcessor))
       {
-         addToGraph((UpdaterInfo)processor, (UpdaterInfo)neededProcessor);
+         addToGraph((UpdaterPredelta)processor, (UpdaterPredelta)neededProcessor);
       }
    }
 

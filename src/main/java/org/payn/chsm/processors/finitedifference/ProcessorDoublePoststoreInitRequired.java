@@ -6,7 +6,7 @@ package org.payn.chsm.processors.finitedifference;
  * @author v78h241
  *
  */
-public abstract class ProcessorDoubleInfoInitRequired extends ProcessorDoubleInfoInit {
+public abstract class ProcessorDoublePoststoreInitRequired extends ProcessorDoublePoststoreInit {
 
    @Override
    public void setInitDependencies() throws Exception 

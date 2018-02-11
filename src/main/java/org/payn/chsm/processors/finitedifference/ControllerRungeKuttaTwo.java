@@ -7,7 +7,7 @@ import org.payn.chsm.processors.Processor;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.processors.UpdaterMemoryHelper;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterPoststore;
 import org.payn.chsm.processors.interfaces.UpdaterMemory;
 import org.payn.chsm.resources.time.BehaviorTime;
 import org.payn.chsm.values.ValueDouble;
@@ -75,15 +75,15 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
       saveRootState();
       
       // Calculate trade values at beginning of time step
-      update(changeUpdaters);
+      update(predeltaUpdaters);
       update(deltaUpdaters);
       
       // Calculate store and trade values after half the time step
       timeIntervalValue.n = halfTimeInterval;
       update(storeUpdaters);
-      update(infoUpdaters);
+      update(poststoreUpdaters);
       
-      update(changeUpdaters);
+      update(predeltaUpdaters);
       update(deltaUpdaters);
       
       // Restore original store values
@@ -93,7 +93,7 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
       // using the Runge Kutta estimates of the loads
       timeIntervalValue.n = fullTimeInterval;
       update(storeUpdaters);
-      update(infoUpdaters);
+      update(poststoreUpdaters);
    }
 
    /**
@@ -132,13 +132,13 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
     */
    protected void addStoreMemoryUpdater(Processor processor) 
    {
-      if ((UpdaterStore.class.isInstance(processor) || UpdaterInfo.class.isInstance(processor)) 
+      if ((UpdaterStore.class.isInstance(processor) || UpdaterPoststore.class.isInstance(processor)) 
             && UpdaterMemory.class.isInstance(processor))
       {
          storeProcessorMemoryUpdaters.add((UpdaterMemory)processor);
       }
       else if (ProcessorDoubleStore.class.isInstance(processor) || 
-            ProcessorDoubleInfo.class.isInstance(processor))
+            ProcessorDoublePoststore.class.isInstance(processor))
       {
          storeProcessorMemoryUpdaters.add(
                new UpdaterMemoryHelper<ProcessorDouble>((ProcessorDouble)processor)

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 import org.payn.chsm.sorters.SorterInitialize;
-import org.payn.chsm.sorters.finitedifference.SorterUpdateChange;
+import org.payn.chsm.sorters.finitedifference.SorterUpdatePredelta;
 import org.payn.chsm.sorters.finitedifference.SorterUpdateDelta;
-import org.payn.chsm.sorters.finitedifference.SorterUpdateInfo;
+import org.payn.chsm.sorters.finitedifference.SorterUpdatePoststore;
 import org.payn.chsm.sorters.finitedifference.SorterUpdateStore;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
 
@@ -48,13 +48,17 @@ public class ControllerEuler extends ControllerFiniteDiff {
    @Override
    public void handleExecutionDependencies() throws Exception 
    {
-      SorterUpdateChange sorterChange = new SorterUpdateChange(changeUpdaters);
+      // Create sorters for each phase
+      SorterUpdatePredelta sorterPredelta = new SorterUpdatePredelta(predeltaUpdaters);
       SorterUpdateDelta sorterDelta = new SorterUpdateDelta(deltaUpdaters);
       SorterUpdateStore sorterStore = new SorterUpdateStore(storeUpdaters);
-      SorterUpdateInfo sorterInfo = new SorterUpdateInfo(infoUpdaters);
+      SorterUpdatePoststore sorterPoststore = new SorterUpdatePoststore(poststoreUpdaters);
       
-      this.sorter = sorterChange;
-      changeUpdaters = sorterChange.getSortedProcessors();
+      // For each phase, set the sorter to the appropriate phase.
+      // Then collect the dependency information and sort for that phase.
+      
+      this.sorter = sorterPredelta;
+      predeltaUpdaters = sorterPredelta.getSortedProcessors();
       
       this.sorter = sorterDelta;
       deltaUpdaters = sorterDelta.getSortedProcessors();
@@ -62,8 +66,8 @@ public class ControllerEuler extends ControllerFiniteDiff {
       this.sorter = sorterStore;
       storeUpdaters = sorterStore.getSortedProcessors();
       
-      this.sorter = sorterInfo;
-      infoUpdaters = sorterInfo.getSortedProcessors();
+      this.sorter = sorterPoststore;
+      poststoreUpdaters = sorterPoststore.getSortedProcessors();
    }
 
    /**
@@ -83,10 +87,10 @@ public class ControllerEuler extends ControllerFiniteDiff {
     */
    protected void solve() throws Exception 
    {
-      update(changeUpdaters);
+      update(predeltaUpdaters);
       update(deltaUpdaters);
       update(storeUpdaters);
-      update(infoUpdaters);
+      update(poststoreUpdaters);
    }
 
    /**

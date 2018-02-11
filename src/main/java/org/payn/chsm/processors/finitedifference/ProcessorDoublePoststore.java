@@ -1,7 +1,7 @@
 package org.payn.chsm.processors.finitedifference;
 
 import org.payn.chsm.processors.ProcessorDoubleSimple;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterPoststore;
 
 /**
  * Abstract processor for the state phase
@@ -9,6 +9,6 @@ import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
  * @author robpayn
  *
  */
-public abstract class ProcessorDoubleInfo extends ProcessorDoubleSimple implements UpdaterInfo {
+public abstract class ProcessorDoublePoststore extends ProcessorDoubleSimple implements UpdaterPoststore {
 
 }

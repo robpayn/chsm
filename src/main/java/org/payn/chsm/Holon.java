@@ -54,7 +54,7 @@ public interface Holon extends State {
     * Determine if the behavior is installed in the holon
     * 
     * @param behavior 
-    *       beavhior to check for installation
+    *       behavior to check for installation
     * @return
     *       true if behavior is installed, false otherwise
     */
@@ -72,6 +72,6 @@ public interface Holon extends State {
    ValueStateMap getValue();
    
    @Override
-   public ControllerHolon getProcessor();
+   ControllerHolon getProcessor();
 
 }

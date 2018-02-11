@@ -127,7 +127,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
          converged = true;
          
          // calculate new estimates of loads
-         update(changeUpdaters);
+         update(predeltaUpdaters);
          update(deltaUpdaters);
          
          // restore to the original initial state
@@ -135,7 +135,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
          
          // calculate storage and state based on new estimate of loads
          update(storeUpdaters);
-         update(infoUpdaters);
+         update(poststoreUpdaters);
          
          // check if new estimates of storages has converged
          checkTolerances();

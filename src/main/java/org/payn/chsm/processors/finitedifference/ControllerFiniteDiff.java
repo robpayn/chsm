@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.payn.chsm.processors.ControllerTimeStep;
 import org.payn.chsm.processors.Processor;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterChange;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterPredelta;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterDelta;
-import org.payn.chsm.processors.finitedifference.interfaces.UpdaterInfo;
+import org.payn.chsm.processors.finitedifference.interfaces.UpdaterPoststore;
 import org.payn.chsm.processors.interfaces.InitializerSimpleAuto;
 import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 
@@ -38,7 +38,7 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
    /**
     * List of updaters for the trade phase
     */
-   protected ArrayList<UpdaterSimpleAuto> changeUpdaters;
+   protected ArrayList<UpdaterSimpleAuto> predeltaUpdaters;
    
    /**
     * Getter
@@ -46,9 +46,9 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
     * @return
     *       list of trade updaters
     */
-   public ArrayList<UpdaterSimpleAuto> getChangeUpdaters() 
+   public ArrayList<UpdaterSimpleAuto> getPredeltaUpdaters() 
    {
-      return changeUpdaters;
+      return predeltaUpdaters;
    }
 
    /**
@@ -78,7 +78,7 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
     * @return
     *       list of storage updaters
     */
-   public ArrayList<UpdaterSimpleAuto> getStateUpdaters() 
+   public ArrayList<UpdaterSimpleAuto> getStoreUpdaters() 
    {
       return storeUpdaters;
    }
@@ -86,7 +86,7 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
    /**
     * List of updaters for the update phase
     */
-   protected ArrayList<UpdaterSimpleAuto> infoUpdaters;
+   protected ArrayList<UpdaterSimpleAuto> poststoreUpdaters;
    
    /**
     * Getter
@@ -94,9 +94,9 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
     * @return
     *       list of storage updaters
     */
-   public ArrayList<UpdaterSimpleAuto> getInfoUpdaters() 
+   public ArrayList<UpdaterSimpleAuto> getPoststoreUpdaters() 
    {
-      return infoUpdaters;
+      return poststoreUpdaters;
    }
 
    /**
@@ -105,10 +105,10 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
    public ControllerFiniteDiff()
    {
       initializers = new ArrayList<InitializerSimpleAuto>();
-      changeUpdaters = new ArrayList<UpdaterSimpleAuto>();
+      predeltaUpdaters = new ArrayList<UpdaterSimpleAuto>();
       deltaUpdaters = new ArrayList<UpdaterSimpleAuto>();
       storeUpdaters = new ArrayList<UpdaterSimpleAuto>();
-      infoUpdaters = new ArrayList<UpdaterSimpleAuto>();
+      poststoreUpdaters = new ArrayList<UpdaterSimpleAuto>();
    }
    
    /**
@@ -131,9 +131,9 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
          initializers.add((InitializerSimpleAuto)processor);
       }
       
-      if (UpdaterChange.class.isInstance(processor))
+      if (UpdaterPredelta.class.isInstance(processor))
       {
-         changeUpdaters.add((UpdaterChange)processor);
+         predeltaUpdaters.add((UpdaterPredelta)processor);
       }
       else if (UpdaterDelta.class.isInstance(processor))
       {
@@ -143,9 +143,9 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
       {
          storeUpdaters.add((UpdaterStore)processor);
       }
-      else if (UpdaterInfo.class.isInstance(processor))
+      else if (UpdaterPoststore.class.isInstance(processor))
       {
-         infoUpdaters.add((UpdaterSimpleAuto)processor);
+         poststoreUpdaters.add((UpdaterSimpleAuto)processor);
       }
    }
    
