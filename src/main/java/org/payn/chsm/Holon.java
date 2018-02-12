@@ -7,8 +7,9 @@ import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.values.ValueStateMap;
 
 /**
- * A collection of states representing an compositional layer
- * of a hierarchical state machine
+ * Interface to a holon, which is a state with a value 
+ * composed of states at a lower tier in the hierarchy.  
+ * This relationship provides the foundation of the composition hierarchy.
  * 
  * @author robpayn
  *

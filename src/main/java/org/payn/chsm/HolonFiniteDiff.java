@@ -2,32 +2,35 @@ package org.payn.chsm;
 
 import java.util.HashMap;
 
+import org.payn.chsm.io.exceptions.ExceptionStorageCollision;
 import org.payn.chsm.processors.finitedifference.interfaces.UpdaterStore;
 import org.payn.chsm.resources.Resource;
 
 /**
- * Implementation of the Holon interface for finite difference
- * state machines
+ * Extension of a basic Holon for finite difference
+ * state machines.  Provides additional function to 
+ * track how the fundamental state of the holon is
+ * stored.
  * 
  * @author robpayn
  *
  */
-public class HolonFiniteDiff extends HolonBasic implements Holon {
+public class HolonFiniteDiff extends HolonBasic {
 
    /**
-    * Storage state variables associated with the cell
+    * Map of state variables that store the state of the cell
     */
    protected HashMap<Resource, State> storeMap;
    
    /**
-    * Constructs a new instance wtih the provided name and
+    * Constructs a new instance with the provided name and
     * parent holon
     * 
     * @param name
     * @param parentHolon
     * @throws Exception
     */
-   public HolonFiniteDiff(String name, org.payn.chsm.Holon parentHolon)
+   public HolonFiniteDiff(String name, Holon parentHolon)
          throws Exception 
    {
       super(name, parentHolon);
@@ -35,12 +38,12 @@ public class HolonFiniteDiff extends HolonBasic implements Holon {
    }
 
    /**
-    * Get the base state associated with the provided resource
+    * Get the storage state associated with the provided resource
     * 
     * @param resource
-    *       resource
+    *       the resource described by the state
     * @return
-    *       base state associated with the resource
+    *       storage state associated with the resource
     */
    public State getStore(Resource resource) 
    {
@@ -55,12 +58,8 @@ public class HolonFiniteDiff extends HolonBasic implements Holon {
          Resource resource = state.getBehavior().getResource();
          if (storeMap.containsKey(resource))
          {
-            throw new Exception(String.format(
-                  "Cannot add base state %s: base state %s already configured for holon %s.",
-                  state.toString(),
-                  storeMap.get(resource).toString(),
-                  toString()
-                  ));
+            throw new ExceptionStorageCollision(
+                  state, this, resource);
          }
          storeMap.put(resource, state);
       }

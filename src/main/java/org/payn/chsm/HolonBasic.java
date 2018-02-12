@@ -3,13 +3,16 @@ package org.payn.chsm;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.payn.chsm.io.exceptions.ExceptionStateCollision;
 import org.payn.chsm.processors.ControllerHolon;
 import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.resources.statespace.ResourceStateSpace;
 import org.payn.chsm.values.ValueStateMap;
 
 /**
- * Basic implementation of the Holon interface 
+ * Basic implementation of a holon, which is a state variable with a value 
+ * composed of states at a lower tier in the hierarchy.  
+ * This relationship provides the foundation of the composition hierarchy.
  * 
  * @author robpayn
  *
@@ -78,13 +81,7 @@ public class HolonBasic extends StateVariable implements Holon {
       }
       if (getValue().hasStateName(state.getName()))
       {
-         throw new Exception(String.format(
-               "State name collision for %s in holon %s between behaviors %s and %s.", 
-               state.getName(), 
-               name,
-               getValue().getState(state.getName()).getBehavior().getName(),
-               state.getBehavior().getName()
-               ));
+         throw new ExceptionStateCollision(state, this);
       }
       getValue().addState(state);
       state.setParentHolon(this);

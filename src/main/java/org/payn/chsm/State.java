@@ -7,7 +7,7 @@ import org.payn.chsm.values.Value;
 /**
  * <p>Interface for a state in a composite hierarchy state machine.</p>
  * 
- * <p>A state is a named unit of information in the state machine.
+ * <p>A state is a fundamental named unit of information in the state machine.
  * This unit of information is considered atomic at its respective
  * hierarchical tier, as defined by its parent holon.</p>
  * 
