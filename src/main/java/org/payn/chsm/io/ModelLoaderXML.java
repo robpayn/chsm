@@ -44,6 +44,21 @@ public class ModelLoaderXML extends ModelLoader {
     */
    protected String pathRoot = null;
    
+   /**
+    * Load the components of the model based on the provided model configuration
+    * XML document
+    * 
+    * @param workingDir
+    *       working directory for the model
+    * @param argMap
+    *       command line argument map for the model
+    * @param documentConfig
+    *       XML document with model configuration
+    * @return
+    *       the model builder for the loaded model
+    * @throws Exception
+    *       if error in loading model components
+    */
    public ModelBuilder load(File workingDir, HashMap<String, String> argMap, DocumentModelConfig documentConfig) 
          throws Exception
    {
@@ -147,6 +162,7 @@ public class ModelLoaderXML extends ModelLoader {
     * 
     * @param resourceElem
     * @return
+    *       resource object
     * @throws Exception
     */
    protected Resource getResource(ElementResource resourceElem) throws Exception 
@@ -193,6 +209,7 @@ public class ModelLoaderXML extends ModelLoader {
     * 
     * @param outputElem
     * @return
+    *       reporter factory object
     * @throws Exception
     */
    protected ReporterFactoryXML<?> getReporterFactory(ElementReporter outputElem) throws Exception 

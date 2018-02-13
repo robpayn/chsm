@@ -296,6 +296,7 @@ public class ElementBehavior extends ElementHelperLoader {
     * Get the element for the initial condition table configuration
     * 
     * @return
+    *       initial condition table element
     */
    private ElementHelper getInitTableElement() 
    {

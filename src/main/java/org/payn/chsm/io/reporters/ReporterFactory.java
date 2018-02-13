@@ -104,6 +104,10 @@ public abstract class ReporterFactory<CT, HT extends Reporter> {
    /**
     * Create a new reporter of the appropriate type for this factory
     * 
+    * @param workingDir 
+    *       working directory for the reporter
+    * @param argMap 
+    *       command line argument map
     * @return
     *       reference to reporter
     * @throws Exception

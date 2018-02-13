@@ -177,12 +177,14 @@ public class ModelBuilderXML extends ModelBuilder {
    }
 
    /**
-    * Create a basic base holon for the model.
+    * Create a basic holon for the model.
     * 
     * Should be overridden for more specific model types
     * 
     * @param name
+    * @param parentHolon 
     * @return
+    *       holon
     * @throws Exception
     */
    protected Holon createHolon(String name, Holon parentHolon) throws Exception 
@@ -199,6 +201,10 @@ public class ModelBuilderXML extends ModelBuilder {
     *       behavior for the states in which initial values are loaded
     * @param element
     *       behavior element with initial value information
+    * @param defaultElement
+    *       a behavior element that may contain an initial value
+    * @param initialConditionTable 
+    *       an initial condition table that contains an initial value
     * @throws Exception
     *       if error in loading initial values
     */
@@ -264,6 +270,12 @@ public class ModelBuilderXML extends ModelBuilder {
     *       holon in which to load the behavior
     * @param element
     *       XML element containing information about the behavior
+    * @param defaultElement 
+    *       A default behavior element that may contain initial values
+    * @param initialConditionTable 
+    *       An initial condition table that contains initial values
+    * @return
+    *       the loaded behavior
     * @throws Exception
     *       if error in loading behavior
     */

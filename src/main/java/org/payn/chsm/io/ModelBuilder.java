@@ -272,6 +272,7 @@ public abstract class ModelBuilder {
     * @param resourceName
     * @param behaviorName
     * @return
+    *       behavior
     * @throws Exception
     */
    protected Behavior getBehaviorFromResource(String resourceName, String behaviorName) throws Exception 

@@ -2,11 +2,8 @@ package org.payn.chsm.io.xmltools;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -15,7 +12,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 /**
  * An XML document
@@ -83,9 +79,7 @@ public class XMLDocument {
     * Populate from a file
     * 
     * @param file
-    * @throws SAXException
-    * @throws IOException
-    * @throws ParserConfigurationException
+    * @throws Exception
     */
    protected void populate(File file) throws Exception
    {
@@ -99,7 +93,7 @@ public class XMLDocument {
     * 
     * @param fileName
     * @param rootElement
-    * @throws ParserConfigurationException
+    * @throws Exception
     */
    protected void populate(String fileName, String rootElement) throws Exception
    {

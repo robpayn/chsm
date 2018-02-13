@@ -319,6 +319,7 @@ public class InterpolatorSnapshotTable implements Inputter {
     * @param interpolationType
     * @param time
     * @return
+    *       interpolator object
     * @throws Exception 
     */
    private Interpolator createInterpolator(String header, String interpolationType,

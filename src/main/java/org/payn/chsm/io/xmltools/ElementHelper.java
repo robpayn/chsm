@@ -273,6 +273,13 @@ public class ElementHelper {
       }
    }
 
+   /**
+    * Get an attribute of the boolean type ("true" or "false" values)
+    * 
+    * @param key
+    * @return
+    *       Java Boolean object representing the attribute value
+    */
    public Boolean getAttributeBoolean(String key) 
    {
       String value = getAttribute(key);

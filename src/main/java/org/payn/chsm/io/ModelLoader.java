@@ -306,6 +306,8 @@ public abstract class ModelLoader {
    /**
     * Get the appropriate loaded builder class
     * 
+    * @return 
+    *       builder
     * @throws Exception
     */
    protected abstract ModelBuilder loadBuilder() throws Exception;
@@ -314,6 +316,7 @@ public abstract class ModelLoader {
     * Get the list of reporter factories
     * 
     * @return
+    *       Array list of reporter factories
     * @throws Exception 
     */
    protected abstract ArrayList<ReporterFactory<?,?>> loadReporterFactories() throws Exception;

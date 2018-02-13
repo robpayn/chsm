@@ -95,6 +95,7 @@ public class ElementHolon extends ElementHelper {
     * 
     * @param element
     * @return
+    *       behavior element object
     */
    protected ElementBehavior newBehaviorInstance(Element element) 
    {

@@ -63,7 +63,7 @@ public abstract class ControllerHolon extends ControllerAbstract<ValueStateMap> 
    /**
     * Execute the controller
     * 
-    * @ throws Exception
+    * @throws Exception
     *       if error in execution
     */
    public abstract void executeController() throws Exception;
