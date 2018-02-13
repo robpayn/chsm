@@ -272,4 +272,17 @@ public class ElementHelper {
          return Double.valueOf(value);
       }
    }
+
+   public Boolean getAttributeBoolean(String key) 
+   {
+      String value = getAttribute(key);
+      if (value.equals(""))
+      {
+         return null;
+      }
+      else
+      {
+         return Boolean.valueOf(value);
+      }
+   }
 }

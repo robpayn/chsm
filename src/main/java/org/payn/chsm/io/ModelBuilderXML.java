@@ -12,7 +12,7 @@ import org.payn.chsm.io.xmltools.ElementBuilder;
 import org.payn.chsm.io.xmltools.ElementHolon;
 import org.payn.chsm.io.xmltools.ElementInitValue;
 import org.payn.chsm.io.xmltools.ElementXMLInput;
-import org.payn.chsm.io.xmltools.XMLDocumentModelConfig;
+import org.payn.chsm.io.xmltools.DocumentModelConfig;
 import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.resources.Resource;
 import org.payn.chsm.resources.time.BehaviorTime;
@@ -61,22 +61,42 @@ public class ModelBuilderXML extends ModelBuilder {
       }
       
       // Parse the XML configuration file
-      XMLDocumentModelConfig document = new XMLDocumentModelConfig(configFile);
-      ElementBuilder element = document.getBuilderElement();
+      DocumentModelConfig configDoc = new DocumentModelConfig(configFile);
+      ElementBuilder builderElement = configDoc.getBuilderElement();
 
       ElementXMLInput inputElem = new ElementXMLInput(
-            element.getXMLInputElement(), 
+            builderElement.getXMLInputElement(), 
             workingDir
             );
       DocumentHolon holonDoc = new DocumentHolon(inputElem.getHolonFile());
+      
+      return buildModel(configDoc, holonDoc);
+   }
+   
+   /**
+    * Build a model based on the provided configuration and holon
+    * XML documents
+    * 
+    * @param configDoc
+    *       model configuration document
+    * @param holonDoc
+    *       holon configuration document
+    * @return
+    *       the base holon of the model
+    * @throws Exception
+    *       if error in building the model
+    */
+   public Holon buildModel(DocumentModelConfig configDoc, DocumentHolon holonDoc) 
+		   throws Exception
+   {
       ElementHolon rootHolonElement = holonDoc.getRootHolonElement();
 
-      // Create the matrix 
+      // Create the holon hierarchy 
       loggerManager.statusUpdate("Installing model holons...");
       baseHolon = createHolon(holonDoc.getRootElementHelper().getName(), null);
       installHolons(rootHolonElement, baseHolon);
 
-      // Install the behaviors in the matrix
+      // Install the behaviors in the holon hierarchy
       loggerManager.statusUpdate("Installing model behaviors...");
       defaultBehaviorMap = holonDoc.getDefaultBehaviorMap();
       behaviorTableMap = new HashMap<String, InitialConditionTable>();
@@ -103,8 +123,8 @@ public class ModelBuilderXML extends ModelBuilder {
             ));
       loggerManager.statusUpdate("");
       
-      return baseHolon;
-   }
+      return baseHolon;   
+  }
    
    /**
     * Recursively install holons

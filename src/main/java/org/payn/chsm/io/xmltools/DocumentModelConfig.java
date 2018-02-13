@@ -14,7 +14,7 @@ import org.w3c.dom.NodeList;
  * @author robpayn
  *
  */
-public class XMLDocumentModelConfig extends XMLDocument {
+public class DocumentModelConfig extends XMLDocument {
 
    /**
     * Element containing the base holon information
@@ -70,7 +70,7 @@ public class XMLDocumentModelConfig extends XMLDocument {
     * @param file
     * @throws Exception
     */
-   public XMLDocumentModelConfig(File file) throws Exception 
+   public DocumentModelConfig(File file) throws Exception 
    {
       super(file);
       builderElem = new ElementBuilder(rootElementHelper.getFirstChildElement(ElementBuilder.TAG_NAME));

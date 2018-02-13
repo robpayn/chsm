@@ -2,6 +2,7 @@ package org.payn.chsm.io;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.payn.chsm.io.reporters.ReporterFactory;
@@ -11,7 +12,7 @@ import org.payn.chsm.io.xmltools.ElementLogger;
 import org.payn.chsm.io.xmltools.ElementProcessor;
 import org.payn.chsm.io.xmltools.ElementReporter;
 import org.payn.chsm.io.xmltools.ElementResource;
-import org.payn.chsm.io.xmltools.XMLDocumentModelConfig;
+import org.payn.chsm.io.xmltools.DocumentModelConfig;
 import org.payn.chsm.processors.ControllerHolon;
 import org.payn.chsm.resources.Resource;
 
@@ -25,7 +26,7 @@ public class ModelLoaderXML extends ModelLoader {
    /**
     * XML document with configuration information
     */
-   protected XMLDocumentModelConfig documentConfig;
+   protected DocumentModelConfig documentConfig = null;
 
    /**
     * Get the XML configuration document
@@ -33,7 +34,7 @@ public class ModelLoaderXML extends ModelLoader {
     * @return
     *       XML document
     */
-   public XMLDocumentModelConfig getDocument() 
+   public DocumentModelConfig getDocument() 
    {
       return documentConfig;
    }
@@ -41,32 +42,41 @@ public class ModelLoaderXML extends ModelLoader {
    /**
     * Root path for loading
     */
-   protected String pathRoot;
-
+   protected String pathRoot = null;
+   
+   public ModelBuilder load(File workingDir, HashMap<String, String> argMap, DocumentModelConfig documentConfig) 
+         throws Exception
+   {
+      this.documentConfig = documentConfig;
+      return super.load(workingDir, argMap);
+   }
+   
    @Override
    protected void loadConfiguration() throws Exception
    {
-      // Check for configuration file in file system
-      if (!argMap.containsKey("config"))
+      // Parse the XML configuration file if not provided
+      if (documentConfig == null)
       {
-         throw new Exception(
-               "Must provide an argument for configuration file relative to working directory " +
-                     "(e.g. 'config=./config/config.xml')"
+         // Check for configuration file in file system
+         if (!argMap.containsKey("config"))
+         {
+            throw new Exception(
+                  "Must provide an argument for configuration file relative to working directory " +
+                        "(e.g. 'config=./config/config.xml')"
+                  );
+         }
+         File configFile = new File(
+               workingDir.getAbsolutePath() + argMap.get("config")
                );
+         if (!configFile.exists() || configFile.isDirectory()) 
+         {
+            throw new Exception(String.format(
+                  "%s is an invalid configuration file.", 
+                  configFile.getAbsolutePath()
+                  ));
+         }
+         documentConfig = new DocumentModelConfig(configFile);
       }
-      File configFile = new File(
-            workingDir.getAbsolutePath() + argMap.get("config")
-            );
-      if (!configFile.exists() || configFile.isDirectory()) 
-      {
-         throw new Exception(String.format(
-               "%s is an invalid configuration file.", 
-               configFile.getAbsolutePath()
-               ));
-      }
-      
-      // Parse the XML configuration file
-      documentConfig = new XMLDocumentModelConfig(configFile);
       pathRoot = documentConfig.getPathRoot();
    }
 
