@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.State;
-import org.payn.chsm.StateVariable;
+import org.payn.chsm.StateValue;
 import org.payn.chsm.processors.Controller;
 import org.payn.chsm.processors.Processor;
 import org.payn.chsm.values.Value;
@@ -182,7 +182,7 @@ public abstract class BehaviorAbstract implements Behavior{
       State state = holon.getState(stateName);
       if (state == null)
       {
-         new StateVariable(stateName, this, processor, holon);
+         new StateValue(stateName, this, processor, holon);
       }
       else
       {

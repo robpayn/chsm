@@ -153,7 +153,7 @@ public class ReporterBehavior extends ReporterSingleThread {
                   }
                   
                   // Add the state to the init snapshot
-                  initSnapshot.addStateVariable(currentState, currentState.getName());
+                  initSnapshot.addState(currentState, currentState.getName());
                }
             }
             
@@ -232,7 +232,7 @@ public class ReporterBehavior extends ReporterSingleThread {
          {
             header = filterStateList.get(state.toString());
          }
-         updateSnapshot.addStateVariable(state, header);
+         updateSnapshot.addState(state, header);
       }
    }
 

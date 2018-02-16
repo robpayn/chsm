@@ -3,7 +3,7 @@ package org.payn.chsm.resources.statespace;
 import org.payn.chsm.resources.BehaviorAbstract;
 
 /**
- * Behavior for hierarchical (holon) state variables
+ * Behavior for hierarchical (holonic) states
  * 
  * @author robpayn
  *

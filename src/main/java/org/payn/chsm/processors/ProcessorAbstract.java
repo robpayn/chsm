@@ -15,15 +15,15 @@ import org.payn.chsm.values.Value;
 public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    
    /**
-    * State variable containing the value to be changed
+    * State containing the value to be changed
     */
    protected State state;
    
    /**
-    * Set the state variable associated with this processor
+    * Set the state associated with this processor
     * 
     * @param state
-    *       state variable composed 
+    *       state associated with this processor 
     * @throws Exception 
     */
    @Override
@@ -43,10 +43,10 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    }
    
    /**
-    * Get the state variable associated with this processor
+    * Get the state associated with this processor
     * 
     * @return
-    *       state variable
+    *       state
     */
    @Override
    public State getState()
@@ -112,14 +112,14 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    }
    
    /**
-    * Create a dependency on a state variable in the same holon
+    * Create a dependency on a state in the same holon
     * 
     * @param stateName
-    *       name of the needed state variable
+    *       name of the needed state
     * @return
-    *       reference to the needed state variable
+    *       reference to the needed state
     * @throws Exception
-    *       if error in locating state variable
+    *       if error in locating state
     */
    @Override
    public State createDependency(String stateName) throws Exception 
@@ -162,7 +162,7 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
       if (neededState == null)
       {
          throw new Exception(String.format("Processor %s requesting dependency on invalid " +
-                  "state variable %s in holon %s.",
+                  "state %s in holon %s.",
                toString(),
                stateName,
                holon.getName()
@@ -184,7 +184,7 @@ public abstract class ProcessorAbstract<VT extends Value> implements Processor {
    }
 
    /**
-    * Get the processor name, based on the associated state variable name
+    * Get the processor name, based on the associated state name
     */
    @Override
    public String toString()

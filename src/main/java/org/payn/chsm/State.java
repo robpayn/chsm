@@ -102,4 +102,15 @@ public interface State {
     */
    public abstract boolean isStatic();
 
+   /**
+    * Determines of the processor is the type provided
+    * 
+    * @param type
+    *       class to compare to the processor type
+    * @return
+    *       true if the processor is the type of the class provided, 
+    *       false otherwise
+    */
+   public abstract boolean isProcessorType(Class<?> type);
+
 }

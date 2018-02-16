@@ -3,7 +3,7 @@ package org.payn.chsm.values;
 import org.payn.chsm.State;
 
 /**
- * Interface for a value of a state variable
+ * Interface for a value of a state
  * 
  * @author robert.payn
  * 

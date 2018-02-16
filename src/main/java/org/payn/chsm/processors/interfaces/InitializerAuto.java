@@ -9,10 +9,10 @@ package org.payn.chsm.processors.interfaces;
 public interface InitializerAuto extends Initializer {
 
    /**
-    * Define the state variables needed to initialize
+    * Define the states needed to initialize
     * 
     * @throws Exception
-    *       if error in finding state variables
+    *       if error in finding states
     */
    public abstract void setInitDependencies() throws Exception;
    

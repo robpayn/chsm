@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import org.payn.chsm.State;
 
 /**
- * State variable that controls a hash map collection of states
+ * State that controls a hash map collection of states
  * 
  * @author robpayn
  *
@@ -14,7 +14,7 @@ import org.payn.chsm.State;
 public class ValueStateMap extends ValueAbstract {
 
    /**
-    * Map of state variables
+    * Map of states
     */
    private HashMap<String, State> stateMap;
    
@@ -58,23 +58,23 @@ public class ValueStateMap extends ValueAbstract {
    }
 
    /**
-    * Add a state variable to the map
+    * Add a state to the map
     * 
-    * @param stateVariable
-    *       state variable to be added
+    * @param state
+    *       state to be added
     */
-   public void addState(State stateVariable) 
+   public void addState(State state) 
    {
-      stateMap.put(stateVariable.getName(), stateVariable);
+      stateMap.put(state.getName(), state);
    }
 
    /**
-    * Get a state variable from the map
+    * Get a state from the map
     * 
     * @param stateName
-    *       name of the state variable to retrieve
+    *       name of the state to retrieve
     * @return
-    *       reference to the named state variable
+    *       reference to the named state
     */
    public State getState(String stateName) 
    {

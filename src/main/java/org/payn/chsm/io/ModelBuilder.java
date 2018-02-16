@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.State;
-import org.payn.chsm.StateVariable;
+import org.payn.chsm.StateValue;
 import org.payn.chsm.io.logger.LoggerManager;
 import org.payn.chsm.processors.ControllerHolon;
 import org.payn.chsm.resources.Behavior;
@@ -191,13 +191,13 @@ public abstract class ModelBuilder {
     * Initialize a value
     * 
     * @param holon
-    *       holon where the state variable to be initialized resides
+    *       holon where the state to be initialized resides
     * @param behavior
-    *       behavior for the state variable
+    *       behavior for the state
     * @param stateName
-    *       name of the state variable
+    *       name of the state
     * @param stringValue
-    *       string representation of the value for the variable
+    *       string representation of the value
     * @param typeAlias 
     *       alias for the type to be added
     * @throws Exception
@@ -206,10 +206,10 @@ public abstract class ModelBuilder {
    public void initializeValue(Holon holon, Behavior behavior, String stateName, 
          String stringValue, String typeAlias) throws Exception 
    {
-      State stateVar = holon.getState(stateName);
-      if (stateVar == null)
+      State stateValue = holon.getState(stateName);
+      if (stateValue == null)
       {
-         stateVar = new StateVariable(stateName, behavior, holon);
+         stateValue = new StateValue(stateName, behavior, holon);
          Value value = behavior.createValueForRegisteredState(stateName);
          if (typeAlias != null && !typeAlias.isEmpty())
          {
@@ -225,9 +225,9 @@ public abstract class ModelBuilder {
                   if (!value.getClass().equals(valueClass))
                   {
                      throw new Exception(String.format(
-                           "State variable %s in holon %s cannot be created from an initial value " +
+                           "State %s in holon %s cannot be created from an initial value " +
                                  "because type %s in configuration does not match %s requred by behavior.",
-                           stateVar.getName(),
+                           stateValue.getName(),
                            holon.getName(),
                            value.getClass().getSimpleName(),
                            valueClass.getSimpleName()
@@ -239,16 +239,16 @@ public abstract class ModelBuilder {
          if (value == null)
          {
             throw new Exception(String.format(
-                  "State variable %s in holon %s cannot be created from an initial value " +
+                  "State %s in holon %s cannot be created from an initial value " +
                         "because type is not registered by behavior %s.",
-                  stateVar.getName(),
+                  stateValue.getName(),
                   holon.getName(),
                   behavior.getName()
                   ));
          }
-         stateVar.setValue(value);
+         stateValue.setValue(value);
       }
-      stateVar.getValue().setToValueOf(stringValue);
+      stateValue.getValue().setToValueOf(stringValue);
    }
 
    /**

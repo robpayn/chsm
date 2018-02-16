@@ -26,13 +26,13 @@ public interface Holon extends State {
    void addState(State state) throws Exception;
 
    /**
-    * Get a reference to the state variable with the provided name
+    * Get a reference to the state with the provided name
     * 
     * @param stateName
-    *       name of the state variable to find
+    *       name of the state to find
     * @return
-    *       state variable with the provided name, 
-    *       null if state variable with provided name does not exist in holon
+    *       state with the provided name, 
+    *       null if state with provided name does not exist in holon
     */
    State getState(String stateName);
    

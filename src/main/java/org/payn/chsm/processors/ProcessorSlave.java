@@ -41,16 +41,16 @@ public abstract class ProcessorSlave<VT extends Value> extends ProcessorAbstract
    }
 
    /**
-    * Create a dependency on a state variable in the specified holon
+    * Create a dependency on a state in the specified holon
     * 
     * @param holon
-    *       holon containing the needed state variable
+    *       holon containing the needed state
     * @param stateName
-    *       name of the needed state variable
+    *       name of the needed state
     * @return
-    *       reference to the needed state variable
+    *       reference to the needed state
     * @throws Exception
-    *       if error in finding state variable
+    *       if error in finding state
     */
    @Override
    public State createDependency(Holon holon, String stateName) throws Exception 

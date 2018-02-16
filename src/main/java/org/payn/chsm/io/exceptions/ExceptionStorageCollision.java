@@ -1,7 +1,7 @@
 package org.payn.chsm.io.exceptions;
 
-import org.payn.chsm.HolonFiniteDiff;
 import org.payn.chsm.State;
+import org.payn.chsm.finitediff.HolonFiniteDiff;
 import org.payn.chsm.resources.Resource;
 
 /**
@@ -37,7 +37,7 @@ public class ExceptionStorageCollision extends Exception {
       super(String.format(
             MESSAGE, 
             state.getName(), 
-            holon.getStore(resource).toString(), 
+            holon.getCore(resource).toString(), 
             resource.getName(), 
             holon.getName()
             ));

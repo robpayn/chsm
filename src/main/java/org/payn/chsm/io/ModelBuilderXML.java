@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.payn.chsm.Holon;
-import org.payn.chsm.HolonBasic;
+import org.payn.chsm.HolonStateValue;
 import org.payn.chsm.io.xmltools.DocumentHolon;
 import org.payn.chsm.io.xmltools.ElementBehavior;
 import org.payn.chsm.io.xmltools.ElementBuilder;
@@ -189,7 +189,7 @@ public class ModelBuilderXML extends ModelBuilder {
     */
    protected Holon createHolon(String name, Holon parentHolon) throws Exception 
    {
-      return new HolonBasic(name, parentHolon);
+      return new HolonStateValue(name, parentHolon);
    }
    
    /**
@@ -225,9 +225,9 @@ public class ModelBuilderXML extends ModelBuilder {
                initializeValue(
                      targetHolon,
                      behavior,
-                     elementInitValue.getStateVariableName(),
+                     elementInitValue.getStateName(),
                      initialConditionTable.find(
-                           behavior.getName() + "." + elementInitValue.getStateVariableName(),
+                           behavior.getName() + "." + elementInitValue.getStateName(),
                            targetHolon.toString()
                            ),
                      elementInitValue.getTypeAlias()
@@ -244,7 +244,7 @@ public class ModelBuilderXML extends ModelBuilder {
                initializeValue(
                      targetHolon,
                      behavior,
-                     elementInitValue.getStateVariableName(),
+                     elementInitValue.getStateName(),
                      elementInitValue.getValue(),
                      elementInitValue.getTypeAlias()
                      );
@@ -256,7 +256,7 @@ public class ModelBuilderXML extends ModelBuilder {
          initializeValue(
                targetHolon,
                behavior,
-               elementInitValue.getStateVariableName(),
+               elementInitValue.getStateName(),
                elementInitValue.getValue(),
                elementInitValue.getTypeAlias()
                );

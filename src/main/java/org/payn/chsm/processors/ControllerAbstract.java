@@ -10,7 +10,7 @@ import org.payn.chsm.sorters.Sorter;
 import org.payn.chsm.values.Value;
 
 /**
- * A processor that controls other processors in a state variable map
+ * A processor that controls other processors in a state map
  * 
  * @author robpayn
  * 
@@ -91,11 +91,11 @@ implements Controller {
     * @param processor
     *       dependent processor
     * @param holon
-    *       holon containing the needed state variable
+    *       holon containing the needed state
     * @param stateName
-    *       name of the needed state variable
+    *       name of the needed state
     * @throws Exception
-    *       if error in finding needed state variable
+    *       if error in finding needed state
     */
    @Override
    public void createDependency(Processor processor, State state) throws Exception 

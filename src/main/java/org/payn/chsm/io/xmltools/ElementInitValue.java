@@ -17,6 +17,16 @@ public class ElementInitValue extends ElementHelper {
    public static final String TAG_NAME = "initval";
    
    /**
+    * Name for the state attribute
+    */
+   public static final String ATTR_NAME_STATE = "state";
+   
+   /**
+    * Name for the type alias attribute
+    */
+   public static final String ATTR_NAME_TYPE_ALIAS = "typealias";
+   
+   /**
     * Create a new initial value element based on the provided XML element
     * 
     * @param element
@@ -28,25 +38,25 @@ public class ElementInitValue extends ElementHelper {
    }
 
    /**
-    * Get the name of the state variable for the initial value
+    * Get the name of the state for the initial value
     * 
     * @return
-    *       state variable name
+    *       state name
     */
-   public String getStateVariableName() 
+   public String getStateName() 
    {
-      return element.getAttribute("statevar");
+      return element.getAttribute(ATTR_NAME_STATE);
    }
 
    /**
-    * Set the name of the state variable
+    * Set the name of the state
     * 
-    * @param stateVariableName
-    *       name of state variable
+    * @param stateName
+    *       name of state
     */
-   public void setStateVariableName(String stateVariableName) 
+   public void setStateName(String stateName) 
    {
-      setAttribute("statevar", stateVariableName);
+      setAttribute(ATTR_NAME_STATE, stateName);
    }
 
    /** 
@@ -57,7 +67,7 @@ public class ElementInitValue extends ElementHelper {
     */
    public String getTypeAlias() 
    {
-      return element.getAttribute("typealias");
+      return element.getAttribute(ATTR_NAME_TYPE_ALIAS);
    }
 
    /**
@@ -68,7 +78,7 @@ public class ElementInitValue extends ElementHelper {
     */
    public void setTypeAlias(String typeAlias) 
    {
-      setAttribute("typealias", typeAlias);
+      setAttribute(ATTR_NAME_TYPE_ALIAS, typeAlias);
    }
 
    /** 

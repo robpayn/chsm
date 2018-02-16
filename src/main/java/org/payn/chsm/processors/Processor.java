@@ -15,19 +15,19 @@ import org.payn.chsm.values.Value;
 public interface Processor {
 
    /**
-    * Set the state variable containing the value to be changed
+    * Set the state containing the value to be changed
     * 
     * @param state
-    *       state variable with the value to be changed
+    *       state with the value to be changed
     * @throws Exception 
     */
    public abstract void setState(State state) throws Exception;
 
    /**
-    * Get the state variable with the value to be changed
+    * Get the state with the value to be changed
     * 
     * @return
-    *       reference to the state variable
+    *       reference to the state
     */
    public abstract State getState();
 
@@ -73,10 +73,10 @@ public interface Processor {
    public abstract String toString();
 
    /**
-    * Create a dependency on the processor associated with the named state variable
+    * Create a dependency on the processor associated with the named state
     * 
     * @param stateName
-    *       name of the state variable on which this processor is dependent
+    *       name of the state on which this processor is dependent
     * @return
     *       reference to the needed state 
     * @throws Exception
@@ -85,10 +85,10 @@ public interface Processor {
    State createDependency(String stateName) throws Exception;
 
    /**
-    * Create a dependency on the processor associated with the named state variable
+    * Create a dependency on the processor associated with the named state
     * 
     * @param stateName
-    *       name of the state variable on which this processor is dependent
+    *       name of the state on which this processor is dependent
     * @return
     *       reference to the value of the needed state 
     * @throws Exception
@@ -102,54 +102,54 @@ public interface Processor {
     * @param stateName
     *       name of state upon which this processor is dependent
     * @return
-    *       reference to the needed state variable
+    *       reference to the needed state
     * @throws Exception 
     *       if error in finding the needed state
     */
    public abstract State createAbstractDependency(String stateName) throws Exception;
 
    /**
-    * Create a dependency on the processor associated with the named state variable in the named holon
+    * Create a dependency on the processor associated with the named state in the named holon
     * 
     * @param holon 
     *       holon containing the needed processor
     * @param stateName
-    *       name of the state variable on which this processor is dependent
+    *       name of the state on which this processor is dependent
     * @return
-    *       reference to the needed state variable
+    *       reference to the needed state
     * @throws Exception
-    *       if error in finding the state variable
+    *       if error in finding the state
     */
    State createDependency(Holon holon, String stateName)
          throws Exception;
 
    /**
-    * Create a dependency on the processor associated with the named state variable in the named holon
+    * Create a dependency on the processor associated with the named state in the named holon
     * 
     * @param holon 
     *       holon containing the needed processor
     * @param stateName
-    *       name of the state variable on which this processor is dependent
+    *       name of the state on which this processor is dependent
     * @return
-    *       reference to the value of the needed state variable
+    *       reference to the value of the needed state
     * @throws Exception
-    *       if error in finding the state variable
+    *       if error in finding the state
     */
    Value createDependencyOnValue(Holon holon, String stateName)
          throws Exception;
 
    /**
-    * Create a dependency on the named state variable in the same resource
+    * Create a dependency on the named state in the same resource
     * and in the named holon
     * 
     * @param holon 
     *       holon containing the needed processor
     * @param stateName
-    *       name of the state variable on which this processor is dependent
+    *       name of the state on which this processor is dependent
     * @return
-    *       reference to the needed state variable
+    *       reference to the needed state
     * @throws Exception
-    *       if error in finding the state variable
+    *       if error in finding the state
     */
    public abstract State createAbstractDependency(Holon holon, String stateName)
          throws Exception;

@@ -34,9 +34,9 @@ public interface Sorter<PT extends Processor> {
    ArrayList<PT> getSortedProcessors() throws Exception;
    
    /**
-    * Add a single dependency from a processor to another state variable's processor
+    * Add a single dependency from a processor to another state's processor
     * 
-    * (processor for needed state variable must be executed before the dependent processor)
+    * (processor for needed state must be executed before the dependent processor)
     * 
     * @param processor
     *       dependent processor

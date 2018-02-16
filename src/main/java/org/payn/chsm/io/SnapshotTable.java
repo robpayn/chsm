@@ -11,7 +11,7 @@ import org.payn.chsm.values.ValueDouble;
 import org.payn.chsm.values.ValueLong;
 
 /**
- * A file outputter that tracks the values of a provided set of state variables in their
+ * A file outputter that tracks the values of a provided set of states in their
  * respective holons over time.
  * 
  * @author v78h241
@@ -142,14 +142,14 @@ public class SnapshotTable {
    }
 
    /**
-    * Add a state variable to the table
+    * Add a state to the table
     * 
     * @param stateVar
-    *       state variable to be outputted
+    *       state to be reported
     * @param header 
     *       name of the column header for the state
     */
-   public void addStateVariable(State stateVar, String header)
+   public void addState(State stateVar, String header)
    {
       if (!columns.containsKey(stateVar))
       {

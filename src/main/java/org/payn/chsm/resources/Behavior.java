@@ -6,7 +6,7 @@ import org.payn.chsm.processors.Processor;
 import org.payn.chsm.values.Value;
 
 /**
- * A collection of state variables that controls a behavior within a holon
+ * A collection of states that controls a behavior within a holon
  * 
  * @author robpayn
  *
@@ -78,7 +78,7 @@ public interface Behavior {
    public abstract void initialize(String name);
    
    /**
-    * Get the value for a state variable registered with the behavior
+    * Get the value for a states registered with the behavior
     * 
     * @param stateName
     *       name of the registered state 

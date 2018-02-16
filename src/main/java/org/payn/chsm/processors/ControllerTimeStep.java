@@ -38,7 +38,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
     * Initialize the time fields
     * 
     * @throws Exception
-    *       if error in finding time state variables
+    *       if error in finding time states
     */
    @Override
    public void initializeController() throws Exception

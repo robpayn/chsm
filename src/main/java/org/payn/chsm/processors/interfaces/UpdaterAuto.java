@@ -9,10 +9,10 @@ package org.payn.chsm.processors.interfaces;
 public interface UpdaterAuto extends Updater {
 
    /**
-    * Define the state variables needed to update
+    * Define the states needed to update
     * 
     * @throws Exception
-    *       if error in finding state variables
+    *       if error in finding states
     */
    public abstract void setUpdateDependencies() throws Exception;
    

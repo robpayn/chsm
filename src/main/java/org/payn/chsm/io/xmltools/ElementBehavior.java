@@ -71,7 +71,7 @@ public class ElementBehavior extends ElementHelperLoader {
       ElementInitValue initValElem = new ElementInitValue(
             element.getOwnerDocument().createElement(ElementInitValue.TAG_NAME)
             );
-      initValElem.setStateVariableName(state.getName());
+      initValElem.setStateName(state.getName());
       initValElem.setValue(state.getValue().toString());
       initValElem.setParentElement(element);
       if (!state.isRegistered())
@@ -98,7 +98,7 @@ public class ElementBehavior extends ElementHelperLoader {
       ElementInitValue initValElem = new ElementInitValue(
             element.getOwnerDocument().createElement(ElementInitValue.TAG_NAME)
             );
-      initValElem.setStateVariableName(stateName);
+      initValElem.setStateName(stateName);
       initValElem.setValue(value);
       initValElem.setParentElement(element);
       if (valueType != null)
