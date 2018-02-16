@@ -5,33 +5,33 @@ import org.payn.chsm.finitediff.HolonFiniteDiff;
 import org.payn.chsm.resources.Resource;
 
 /**
- * Exception for a collision of more than one storage being applied
+ * Exception for a collision of more than one core state being applied
  * for a given resource in a given holon
  * 
  * @author v78h241
  *
  */
 @SuppressWarnings("serial")
-public class ExceptionStorageCollision extends Exception {
+public class ExceptionCoreCollision extends Exception {
    
    /**
     * Error message
     */
-   public static String MESSAGE = "Cannot add storage state %s:"
-         + " storage state %s for resource %s"
+   public static String MESSAGE = "Cannot add core state %s:"
+         + " core state %s for resource %s"
          + " already configured for holon %s.";
    
    /**
-    * Create a new storage collision exception
+    * Create a new core state collision exception
     * 
     * @param state
     *       state creating the collision
     * @param holon
-    *       holon in which the collision is occuring
+    *       holon in which the collision is occurring
     * @param resource
     *       resource creating the collision
     */
-   public ExceptionStorageCollision(State state,  
+   public ExceptionCoreCollision(State state,  
          HolonFiniteDiff holon, Resource resource)
    {
       super(String.format(

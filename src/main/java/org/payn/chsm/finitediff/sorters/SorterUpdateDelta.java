@@ -8,7 +8,7 @@ import org.payn.chsm.processors.interfaces.UpdaterSimpleAuto;
 import org.payn.chsm.sorters.SorterUpdate;
 
 /**
- * Sorter for ordering calls to storage phase updaters
+ * Sorter for ordering calls to delta phase updaters
  * 
  * @author robpayn
  *
@@ -27,7 +27,7 @@ public class SorterUpdateDelta extends SorterUpdate {
    }
 
    /**
-    * Add a dependency if the needed processor is a storage phase updaters
+    * Add a dependency if the needed processor is a delta phase updater
     */
    @Override
    public void addUpdateDependency(Processor processor, Processor neededProcessor) 

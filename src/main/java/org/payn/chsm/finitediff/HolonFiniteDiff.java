@@ -6,7 +6,7 @@ import org.payn.chsm.Holon;
 import org.payn.chsm.HolonStateValue;
 import org.payn.chsm.State;
 import org.payn.chsm.finitediff.processors.interfaces.UpdaterCore;
-import org.payn.chsm.io.exceptions.ExceptionStorageCollision;
+import org.payn.chsm.io.exceptions.ExceptionCoreCollision;
 import org.payn.chsm.resources.Resource;
 
 /**
@@ -46,7 +46,7 @@ public class HolonFiniteDiff extends HolonStateValue {
     * @param resource
     *       the resource described by the state
     * @return
-    *       storage state associated with the resource
+    *       core state associated with the resource
     */
    public State getCore(Resource resource) 
    {
@@ -57,20 +57,20 @@ public class HolonFiniteDiff extends HolonStateValue {
     * A finite difference holon needs to track any core states
     * being installed for a resource
     * 
-    * @throws ExceptionStorageCollision
+    * @throws ExceptionCoreCollision
     *       if a core state is installed for a resource for which 
     *       there is already a core state installed
     */
    @Override
    public void trackProcessor(State state) 
-         throws ExceptionStorageCollision 
+         throws ExceptionCoreCollision 
    {
       if (state.isProcessorType(UpdaterCore.class))
       {
          Resource resource = state.getBehavior().getResource();
          if (coreMap.containsKey(resource))
          {
-            throw new ExceptionStorageCollision(
+            throw new ExceptionCoreCollision(
                   state, this, resource);
          }
          coreMap.put(resource, state);

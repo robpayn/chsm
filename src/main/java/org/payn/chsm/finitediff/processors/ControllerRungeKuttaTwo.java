@@ -90,7 +90,7 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
       restoreState();
       
       // Calculate the core values over the full time step
-      // using the Runge Kutta estimates of the loads
+      // using the Runge Kutta estimates of the deltas
       timeIntervalValue.n = fullTimeInterval;
       update(coreUpdaters);
       update(postauxiliaryUpdaters);

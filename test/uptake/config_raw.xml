@@ -1,0 +1,45 @@
+<document pathroot="C:/mount/boxsync/repositories/git">
+
+   <builder path="/neoch/bin" classpath="org.payn.neoch.io.MatrixBuilderXML">
+      <xmlinput fromWorkingDir="true" holonFile="./input/matrix.xml" />
+   </builder>
+   
+   <loggers>
+      <logger path="/chsm/bin" classpath="org.payn.chsm.io.logger.LoggerSystemOut" />
+   </loggers>
+   
+   <processor path="/chsm/bin" classpath="org.payn.chsm.finitediff.processors.ControllerRungeKuttaTwo" />
+
+   <resources>
+      <resource name="conserve" active="true" path="/resources/bin" classpath="org.payn.resources.solute.concentration.ResourceSoluteConcentration"/>
+      <resource name="active" active="true" path="/resources/bin" classpath="org.payn.resources.solute.concentration.ResourceSoluteConcentration"/>
+   </resources>
+   
+   <reporters>
+      <reporter name="behavior" active="true" path="/chsm/bin" classpath="org.payn.chsm.io.reporters.ReporterBehaviorFactoryXML">
+         <file fromworkingDir="true" outputpath="./output" />
+         <interval interval="15" />
+         <delimiter value="space" />
+         <init active="false" />
+         <filter active="true">
+            <behavior name="conserve.storage">
+               <state name="matrix.cell018.conserveConc" headerName="conc090" />
+               <state name="matrix.cell038.conserveConc" headerName="conc190" />
+               <state name="matrix.cell058.conserveConc" headerName="conc290" />
+               <state name="matrix.cell078.conserveConc" headerName="conc390" />
+               <state name="matrix.cell098.conserveConc" headerName="conc490" />
+               <state name="matrix.cell118.conserveConc" headerName="conc590" />
+            </behavior>
+            <behavior name="active.storage">
+               <state name="matrix.cell018.activeConc" headerName="conc090" />
+               <state name="matrix.cell038.activeConc" headerName="conc190" />
+               <state name="matrix.cell058.activeConc" headerName="conc290" />
+               <state name="matrix.cell078.activeConc" headerName="conc390" />
+               <state name="matrix.cell098.activeConc" headerName="conc490" />
+               <state name="matrix.cell118.activeConc" headerName="conc590" />
+            </behavior>
+         </filter>
+      </reporter>
+   </reporters>
+
+</document>

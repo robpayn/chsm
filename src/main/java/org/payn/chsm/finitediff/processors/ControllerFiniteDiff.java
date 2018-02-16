@@ -68,7 +68,7 @@ public abstract class ControllerFiniteDiff extends ControllerTimeStep {
    }
 
    /**
-    * List of updaters for the storage phase
+    * List of updaters for the core phase
     */
    protected ArrayList<UpdaterSimpleAuto> coreUpdaters;
 

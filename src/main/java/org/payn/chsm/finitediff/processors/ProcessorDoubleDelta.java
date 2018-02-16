@@ -15,7 +15,7 @@ public abstract class ProcessorDoubleDelta extends ProcessorDouble
 implements UpdaterDelta {
    
    /**
-    * The storage processor to increment with this load
+    * The core processor to increment with this delta
     */
    protected ProcessorDoubleCore coreProcessor;
 

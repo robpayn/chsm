@@ -61,7 +61,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
    protected int countMaxIterationsReached;
 
    /**
-    * List of storage processors for checking tolerance of convergence
+    * List of tolerance processors for checking tolerance of convergence
     */
    protected ArrayList<UpdaterTolerance> stateProcessorToleranceUpdaters;
 
@@ -118,7 +118,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
    {
       // save the original core states
       saveRootState();
-      // use the original state as the first storage estimate
+      // use the original state as the first estimate for tolerance updaters
       setLastStateEstimates();
       
       // Iterate until converged or until maximum iterations are met
@@ -133,11 +133,11 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
          // restore to the original initial state
          restoreState();
          
-         // calculate storage and state based on new estimate of loads
+         // calculate core states based on new estimate of deltas
          update(coreUpdaters);
          update(postauxiliaryUpdaters);
          
-         // check if new estimates of storages has converged
+         // check if new estimates of tolerance updaters has converged
          checkTolerances();
          if (converged || iterCount == maxIterations)
          {
@@ -155,7 +155,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
 
 
    /**
-    * Call the store updaters and check tolerances on storages
+    * Call the store updaters and check tolerances on core states
     * 
     * @throws Exception
     */
@@ -169,7 +169,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
    }
 
    /**
-    * Set the last estimates for all storages
+    * Set the last estimates for all tolerance updaters
     */
    protected void setLastStateEstimates() 
    {
@@ -207,7 +207,7 @@ public class ControllerBackEuler extends ControllerRungeKuttaTwo {
    }
 
    /**
-    * Add to the list of storage tolerance updaters if the appropriate type
+    * Add to the list of tolerance updaters if the appropriate type
     * 
     * @param proc
     */

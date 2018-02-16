@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+
+   <streamsimulator build = "true" writeMatrixFile = "true">
+   
+      <time timeInterval="1" lastIteration="22000" />
+      <modelstructure numCells="130" cellName="cell" boundaryName="bound" />
+      <channelgeometry length="650">
+         <activechannel averageWidth="1.34" />
+      </channelgeometry>
+      <flow initialDepth="0.3" initialFlow="0.137">
+         <dispersion coefficient="1.2" />
+      </flow>
+      <solute name="conservative" bkgConc="0">
+         <interpolate path="./input/upstream.txt" type="step" delimiter="space" />
+      </solute>
+      <solute name="active" active="true" bkgConc="2">
+         <interpolate path="./input/upstream.txt" type="step" delimiter="space" />
+         <hyperbolic uptakeMax="1.72e-2" concHalfSat="24" />
+      </solute>
+      
+   </streamsimulator>
+   
+   <reporters>
+      <reporter name="behavior" active="true">
+         <file fromworkingDir="true" outputpath="./output" />
+         <interval interval="15" />
+         <delimiter value="space" />
+         <init active="false" />
+         <filter active="true">
+            <behavior name="conserve.storage">
+               <state name="matrix.cell018.conserveConc" headerName="conc090" />
+               <state name="matrix.cell038.conserveConc" headerName="conc190" />
+               <state name="matrix.cell058.conserveConc" headerName="conc290" />
+               <state name="matrix.cell078.conserveConc" headerName="conc390" />
+               <state name="matrix.cell098.conserveConc" headerName="conc490" />
+               <state name="matrix.cell118.conserveConc" headerName="conc590" />
+            </behavior>
+            <behavior name="active.storage">
+               <state name="matrix.cell018.activeConc" headerName="conc090" />
+               <state name="matrix.cell038.activeConc" headerName="conc190" />
+               <state name="matrix.cell058.activeConc" headerName="conc290" />
+               <state name="matrix.cell078.activeConc" headerName="conc390" />
+               <state name="matrix.cell098.activeConc" headerName="conc490" />
+               <state name="matrix.cell118.activeConc" headerName="conc590" />
+            </behavior>
+         </filter>
+      </reporter>
+   </reporters>
+
+   <builder>
+      <xmlinput fromWorkingDir="true" holonFile=".\input\matrix.xml" />
+   </builder>
+
+</document>
