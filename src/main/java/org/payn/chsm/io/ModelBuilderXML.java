@@ -15,7 +15,7 @@ import org.payn.chsm.io.xmltools.ElementXMLInput;
 import org.payn.chsm.io.xmltools.DocumentModelConfig;
 import org.payn.chsm.resources.Behavior;
 import org.payn.chsm.resources.Resource;
-import org.payn.chsm.resources.time.BehaviorTime;
+import org.payn.chsm.resources.time.BehaviorTimeStepper;
 
 /**
  * Builds models based on information in an XML file
@@ -119,7 +119,7 @@ public class ModelBuilderXML extends ModelBuilder {
 
       loggerManager.statusUpdate(String.format(
             "Model build time = %s ...", 
-            BehaviorTime.parseTimeInMillis(System.currentTimeMillis() - previousTime)
+            BehaviorTimeStepper.parseTimeInMillis(System.currentTimeMillis() - previousTime)
             ));
       loggerManager.statusUpdate("");
       

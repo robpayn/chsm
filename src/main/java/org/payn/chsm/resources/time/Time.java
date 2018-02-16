@@ -25,7 +25,7 @@ public class Time extends ProcessorDouble implements InitializerSimple, UpdaterS
       {
          value.n = 0;
       }
-      interval = (ValueDouble)state.getParentHolon().getState(BehaviorTime.ITERATION_INTERVAL).getValue();
+      interval = (ValueDouble)state.getParentHolon().getState(BehaviorTimeStepper.ITERATION_INTERVAL).getValue();
    }
 
    /**

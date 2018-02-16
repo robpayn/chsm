@@ -25,7 +25,7 @@ public class ResourceTime extends ResourceAbstract {
    {
       addBehavior(
             BEHAVIOR_TIME,
-            BehaviorTime.class.getCanonicalName()
+            BehaviorTimeStepper.class.getCanonicalName()
             );
    }
 

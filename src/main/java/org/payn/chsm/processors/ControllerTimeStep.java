@@ -6,7 +6,7 @@ import org.payn.chsm.io.inputters.Inputter;
 import org.payn.chsm.io.reporters.Reporter;
 import org.payn.chsm.processors.interfaces.InitializerSimple;
 import org.payn.chsm.processors.interfaces.UpdaterSimple;
-import org.payn.chsm.resources.time.BehaviorTime;
+import org.payn.chsm.resources.time.BehaviorTimeStepper;
 import org.payn.chsm.resources.time.Iteration;
 import org.payn.chsm.resources.time.Time;
 import org.payn.chsm.values.ValueLong;
@@ -96,7 +96,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       loggerManager.statusUpdate("Sorting update dependencies...");
       handleExecutionDependencies();
       
-      ValueLong lastIter = (ValueLong)((Holon)state).getState(BehaviorTime.LAST_ITERATION).getValue();
+      ValueLong lastIter = (ValueLong)((Holon)state).getState(BehaviorTimeStepper.LAST_ITERATION).getValue();
       
       long startTime = System.currentTimeMillis();
       loggerManager.statusUpdate("Executing update loop...");
@@ -118,7 +118,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       long time = System.currentTimeMillis() - startTime;
       loggerManager.statusUpdate(String.format(
             "Execution loop time = %s...", 
-            BehaviorTime.parseTimeInMillis(time)
+            BehaviorTimeStepper.parseTimeInMillis(time)
             ));
       loggerManager.statusUpdate("");
       loggerManager.statusUpdate("Closing inputters...");

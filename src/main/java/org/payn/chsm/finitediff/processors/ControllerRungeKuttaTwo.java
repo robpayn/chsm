@@ -9,7 +9,7 @@ import org.payn.chsm.processors.Processor;
 import org.payn.chsm.processors.ProcessorDouble;
 import org.payn.chsm.processors.UpdaterMemoryHelper;
 import org.payn.chsm.processors.interfaces.UpdaterMemory;
-import org.payn.chsm.resources.time.BehaviorTime;
+import org.payn.chsm.resources.time.BehaviorTimeStepper;
 import org.payn.chsm.values.ValueDouble;
 
 /**
@@ -46,7 +46,7 @@ public class ControllerRungeKuttaTwo extends ControllerEuler {
    public void initialize() throws Exception 
    {
       timeIntervalValue = 
-            (ValueDouble)((Holon)state).getState(BehaviorTime.ITERATION_INTERVAL).getValue();
+            (ValueDouble)((Holon)state).getState(BehaviorTimeStepper.ITERATION_INTERVAL).getValue();
       super.initialize();
    }
 

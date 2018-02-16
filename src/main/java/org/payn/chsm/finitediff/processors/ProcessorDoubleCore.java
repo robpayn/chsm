@@ -3,7 +3,7 @@ package org.payn.chsm.finitediff.processors;
 import org.payn.chsm.Holon;
 import org.payn.chsm.finitediff.processors.interfaces.UpdaterCore;
 import org.payn.chsm.processors.ProcessorDouble;
-import org.payn.chsm.resources.time.BehaviorTime;
+import org.payn.chsm.resources.time.BehaviorTimeStepper;
 import org.payn.chsm.values.ValueDouble;
 
 /**
@@ -40,7 +40,7 @@ public class ProcessorDoubleCore extends ProcessorDouble implements UpdaterCore 
    public void setUpdateDependencies() 
    {
       Holon matrixHolon = (Holon)getController().getState();
-      timeInterval = (ValueDouble)matrixHolon.getState(BehaviorTime.ITERATION_INTERVAL).getValue();
+      timeInterval = (ValueDouble)matrixHolon.getState(BehaviorTimeStepper.ITERATION_INTERVAL).getValue();
    }
 
    /**

@@ -10,7 +10,7 @@ import org.payn.chsm.values.ValueLong;
  * @author robpayn
  *
  */
-public class BehaviorTime extends BehaviorAbstract {
+public class BehaviorTimeStepper extends BehaviorAbstract {
    
    /**
     * Parse an integer value of milliseconds into days/hours/minutes/seconds/milliseconds
