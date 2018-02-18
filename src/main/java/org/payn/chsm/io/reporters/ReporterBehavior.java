@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 
 import org.payn.chsm.Holon;
 import org.payn.chsm.State;
-import org.payn.chsm.io.SnapshotTable;
+import org.payn.chsm.io.SynopticTimeSeries;
 
 /**
  * File system outputter that generates one file for each behavior.
@@ -24,12 +24,12 @@ public class ReporterBehavior extends ReporterSingleThread {
    /**
     * Map of the behaviors to be outputted
     */
-   private HashMap<String,SnapshotTable> behaviorMap;
+   private HashMap<String,SynopticTimeSeries> behaviorMap;
    
    /**
-    * Map of the snapshot table indexed by file name
+    * Map of the time series table indexed by file name
     */
-   private LinkedHashMap<String,SnapshotTable> snapshotTableMap;
+   private LinkedHashMap<String,SynopticTimeSeries> timeSeriesMap;
 
    /**
     * Delimiter for text files
@@ -44,7 +44,7 @@ public class ReporterBehavior extends ReporterSingleThread {
     */
    public void setDelimiter(String delimiter) 
    {
-      this.delimiter = SnapshotTable.getDelimiter(delimiter);
+      this.delimiter = SynopticTimeSeries.getDelimiter(delimiter);
    }
    
    /**
@@ -83,17 +83,17 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void openLocation() throws Exception 
    {
-      behaviorMap = new HashMap<String, SnapshotTable>();
-      snapshotTableMap = new LinkedHashMap<String, SnapshotTable>();
+      behaviorMap = new HashMap<String, SynopticTimeSeries>();
+      timeSeriesMap = new LinkedHashMap<String, SynopticTimeSeries>();
       recurseHolons(source);
-      for (SnapshotTable snapshot: behaviorMap.values())
+      for (SynopticTimeSeries timeSeries: behaviorMap.values())
       {
-         snapshot.openLocationWriter();
+         timeSeries.openLocationWriter();
       }
    }
 
    /**
-    * Recurse through the holons to find all the behaviors to be outputted.
+    * Recurse through the holons to find all the behaviors to be reported.
     * 
     * @param holon
     *       starting holon
@@ -122,55 +122,59 @@ public class ReporterBehavior extends ReporterSingleThread {
                      (filterStateList != null && filterStateList.size() > 0);
             }
             
-            // Get the update snapshot for the behavior if it has already been created
-            SnapshotTable updateSnapshot = behaviorMap.get(behaviorName);
+            // Get the update time series for the behavior if it has already been created
+            SynopticTimeSeries updateTimeSeries = behaviorMap.get(behaviorName);
             
-            // Prepare both update and init snapshots if model is in initialization
+            // Prepare both update and init time series if model is in initialization
             if (iterationValue.n == 0)
             {
-               // Prepare the update snapshot if the behavior is in the filter
+               // Prepare the update time series if the behavior is in the filter
                if (isBehaviorFiltered)
                {
-                  configureUpdateSnapshot(updateSnapshot, behaviorName, filterStateList, currentState, false);
+                  configureUpdateTimeSeries(updateTimeSeries, behaviorName, 
+                        filterStateList, currentState, false);
                }
                
-               // Get the init snapshot for the behavior if it has already been created
-               SnapshotTable initSnapshot = behaviorMap.get(behaviorName + "_init");
+               // Get the init synoptic for the behavior if it has already been created
+               SynopticTimeSeries initSynoptic = behaviorMap.get(behaviorName + "_init");
                
-               // Add to the init snapshot of initialization output is active
+               // Add to the init synoptic of initialization output is active
                if (isInitActive)
                {
-                  // Create the init snapshot for the behavior if it has not been created
-                  if (initSnapshot == null)
+                  // Create the init synoptic for the behavior if it has not been created
+                  if (initSynoptic == null)
                   {
-                     String filename = behaviorName.replaceAll("\\.", "_") + "_init" + ".txt";
+                     String filename = behaviorName.replaceAll("\\.", "_") 
+                           + "_init" + ".txt";
                      File file = new File(
                            outputDir.getAbsolutePath() + File.separator + filename
                            );
-                     initSnapshot = new SnapshotTable(file, false, delimiter);
-                     behaviorMap.put(behaviorName + "_init", initSnapshot);
-                     snapshotTableMap.put(filename, initSnapshot);
+                     initSynoptic = new SynopticTimeSeries(file, false, delimiter);
+                     behaviorMap.put(behaviorName + "_init", initSynoptic);
+                     timeSeriesMap.put(filename, initSynoptic);
                   }
                   
-                  // Add the state to the init snapshot
-                  initSnapshot.addState(currentState, currentState.getName());
+                  // Add the state to the init time series
+                  initSynoptic.addState(currentState, currentState.getName());
                }
             }
             
-            // Prepare the update snapshot if model is in execution and the behavior is in the filter
+            // Prepare the update time series if model is in execution 
+            // and the behavior is in the filter
             else if (isBehaviorFiltered)
             {
-               configureUpdateSnapshot(updateSnapshot, behaviorName, filterStateList, currentState, true);
+               configureUpdateTimeSeries(updateTimeSeries, behaviorName, 
+                     filterStateList, currentState, true);
             }
          }
       }
    }
 
    /**
-    * Configure a snapshot table for the update output
+    * Configure a time series table for the update output
     * 
-    * @param updateSnapshot
-    *       update snapshot table
+    * @param updateTimeSeries
+    *       update time series table
     * @param behaviorName
     *       name of the behavior for the state
     * @param filterStateList
@@ -180,21 +184,21 @@ public class ReporterBehavior extends ReporterSingleThread {
     * @param append
     *       true to append data to the table (if it exists), false to overwrite
     */
-   private void configureUpdateSnapshot(SnapshotTable updateSnapshot,
+   private void configureUpdateTimeSeries(SynopticTimeSeries updateTimeSeries,
          String behaviorName, HashMap<String, String> filterStateList,
          State state, boolean append) 
    {
-      // Create the update snapshot for the behavior if it has not been created
+      // Create the update time series for the behavior if it has not been created
       // (create the file in "overwrite" mode)
-      if (updateSnapshot == null)
+      if (updateTimeSeries == null)
       {
          if (filenameMap.containsKey(behaviorName))
          {
             String filename = filenameMap.get(behaviorName);
-            if (snapshotTableMap.containsKey(filename))
+            if (timeSeriesMap.containsKey(filename))
             {
-               updateSnapshot = snapshotTableMap.get(filename);
-               behaviorMap.put(behaviorName, updateSnapshot);
+               updateTimeSeries = timeSeriesMap.get(filename);
+               behaviorMap.put(behaviorName, updateTimeSeries);
             }
             else
             {
@@ -202,9 +206,9 @@ public class ReporterBehavior extends ReporterSingleThread {
                      outputDir.getAbsolutePath() + File.separator + 
                         filename
                      );
-               updateSnapshot = new SnapshotTable(updateFile, append, delimiter);
-               behaviorMap.put(behaviorName, updateSnapshot);
-               snapshotTableMap.put(filename, updateSnapshot);
+               updateTimeSeries = new SynopticTimeSeries(updateFile, append, delimiter);
+               behaviorMap.put(behaviorName, updateTimeSeries);
+               timeSeriesMap.put(filename, updateTimeSeries);
             }
          }
          else
@@ -213,13 +217,14 @@ public class ReporterBehavior extends ReporterSingleThread {
             File updateFile = new File(
                   outputDir.getAbsolutePath() + File.separator + filename
                   );
-            updateSnapshot = new SnapshotTable(updateFile, append, delimiter);
-            behaviorMap.put(behaviorName, updateSnapshot);
-            snapshotTableMap.put(filename, updateSnapshot);
+            updateTimeSeries = new SynopticTimeSeries(updateFile, append, delimiter);
+            behaviorMap.put(behaviorName, updateTimeSeries);
+            timeSeriesMap.put(filename, updateTimeSeries);
          }
       }
       
-      // Add the dynamic state to the snapshot if it is in the filter or a filter is not specified for the behavior
+      // Add the dynamic state to the time series if it is in the filter 
+      // or a filter is not specified for the behavior
       if (!state.isStatic() && 
             (filterStateList == null || filterStateList.containsKey(state.toString())))
       {
@@ -232,7 +237,7 @@ public class ReporterBehavior extends ReporterSingleThread {
          {
             header = filterStateList.get(state.toString());
          }
-         updateSnapshot.addState(state, header);
+         updateTimeSeries.addState(state, header);
       }
    }
 
@@ -242,9 +247,9 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void bufferOutput() throws Exception 
    {
-      for (SnapshotTable snapshot: snapshotTableMap.values())
+      for (SynopticTimeSeries timeSeries: timeSeriesMap.values())
       {
-         snapshot.bufferOutput(iterationValue, timeValue);
+         timeSeries.bufferOutput(iterationValue, timeValue);
       }
    }
 
@@ -254,9 +259,9 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void backgroundWrite() throws Exception 
    {
-      for (SnapshotTable snapshot: snapshotTableMap.values())
+      for (SynopticTimeSeries timeSeries: timeSeriesMap.values())
       {
-         snapshot.write();
+         timeSeries.write();
       }
    }
 
@@ -266,9 +271,9 @@ public class ReporterBehavior extends ReporterSingleThread {
    @Override
    public void closeWhenFinished() throws Exception 
    {
-      for (SnapshotTable snapshot: snapshotTableMap.values())
+      for (SynopticTimeSeries timeSeries: timeSeriesMap.values())
       {
-         snapshot.closeLocationWriter();
+         timeSeries.closeLocationWriter();
       }
    }
    

@@ -84,7 +84,7 @@ public class InitialConditionTable {
          {
             tableMap = new HashMap<File, InitialConditionTable>();
          }
-         table = new InitialConditionTable(pathToFile, SnapshotTable.getDelimiter(delimiter));
+         table = new InitialConditionTable(pathToFile, SynopticTimeSeries.getDelimiter(delimiter));
          tableMap.put(pathToFile, table);
       }
       else

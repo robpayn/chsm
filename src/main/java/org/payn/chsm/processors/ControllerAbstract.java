@@ -1,6 +1,7 @@
 package org.payn.chsm.processors;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import org.payn.chsm.State;
 import org.payn.chsm.io.inputters.Inputter;
@@ -24,10 +25,10 @@ implements Controller {
    /**
     * List of reporters that generate output
     */
-   protected ArrayList<Reporter> reporters;
+   protected LinkedHashMap<String, Reporter> reporters;
    
    @Override
-   public ArrayList<Reporter> getReporters()
+   public LinkedHashMap<String, Reporter> getReporters()
    {
       return reporters;
    }
@@ -58,7 +59,7 @@ implements Controller {
     */
    public ControllerAbstract()
    {
-      reporters = new ArrayList<Reporter>();
+      reporters = new LinkedHashMap<String, Reporter>();
       inputters = new ArrayList<Inputter>();
    }
    
@@ -68,9 +69,9 @@ implements Controller {
     * @param reporter
     *       reporter to add
     */
-   public void addReporter(Reporter reporter)
+   public void addReporter(String reporterName, Reporter reporter)
    {
-      reporters.add(reporter);
+      reporters.put(reporterName, reporter);
    }
 
    /**

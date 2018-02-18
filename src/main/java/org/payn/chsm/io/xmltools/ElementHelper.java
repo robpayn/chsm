@@ -97,11 +97,22 @@ public class ElementHelper {
     * Get the value of the name attribute
     * 
     * @return
-    *       name
+    *       name of element
     */
    public String getName() 
    {
       return element.getAttribute("name");
+   }
+   
+   /**
+    * Get the value of the type attribute
+    * 
+    * @return
+    *       type of element
+    */
+   public String getType()
+   {
+      return element.getAttribute("type");
    }
    
    /**

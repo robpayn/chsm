@@ -47,7 +47,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
 
       // Initialize reporters
       loggerManager.statusUpdate("Initializing reporters...");
-      for (Reporter reporter: getReporters())
+      for (Reporter reporter: getReporters().values())
       {
          reporter.initialize(holon);
       }
@@ -70,15 +70,15 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       initialize();
       
       loggerManager.statusUpdate("Outputting initialized model...");
-      for (Reporter reporter: reporters)
+      for (Reporter reporter: reporters.values())
       {
          reporter.openLocation();
       }
-      for (Reporter reporter: reporters)
+      for (Reporter reporter: reporters.values())
       {
          reporter.write();
       }
-      for (Reporter reporter: reporters)
+      for (Reporter reporter: reporters.values())
       {
          reporter.closeLocation();
       }
@@ -102,7 +102,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       loggerManager.statusUpdate("Executing update loop...");
       executeIteration();
       
-      for (Reporter reporter: reporters)
+      for (Reporter reporter: reporters.values())
       {
          reporter.openLocation();
          reporter.conditionalWrite();
@@ -110,7 +110,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
       while(iterationValue.n < lastIter.n)
       {
          executeIteration();
-         for (Reporter reporter: reporters)
+         for (Reporter reporter: reporters.values())
          {
             reporter.conditionalWrite();
          }
@@ -127,7 +127,7 @@ public abstract class ControllerTimeStep extends ControllerHolon {
          inputter.close();
       }
       loggerManager.statusUpdate("Closing reporters...");
-      for (Reporter reporter: reporters)
+      for (Reporter reporter: reporters.values())
       {
          reporter.closeLocation();
       }

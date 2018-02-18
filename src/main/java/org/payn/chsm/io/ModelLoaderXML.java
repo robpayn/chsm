@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import org.payn.chsm.io.reporters.ReporterFactory;
 import org.payn.chsm.io.reporters.ReporterFactoryXML;
@@ -185,20 +186,23 @@ public class ModelLoaderXML extends ModelLoader {
    }
 
    @Override
-   protected ArrayList<ReporterFactory<?,?>> loadReporterFactories() throws Exception 
+   protected LinkedHashMap<String, ReporterFactory<?,?>> loadReporterFactories() 
+         throws Exception 
    {
       // Create the reporters and set their configurations
-      Iterator<ElementReporter> outputIter = documentConfig.getReporterIterator();
-      ArrayList<ReporterFactory<?,?>> list = new ArrayList<ReporterFactory<?,?>>();
+      Iterator<ElementReporter> outputIter = 
+            documentConfig.getReporterIterator();
+      LinkedHashMap<String, ReporterFactory<?,?>> list = 
+            new LinkedHashMap<String, ReporterFactory<?,?>>();
       while (outputIter.hasNext())
       {
-         ElementReporter outputElem = outputIter.next();
-         if (outputElem.isActive())
+         ElementReporter reporterElem = outputIter.next();
+         if (reporterElem.isActive())
          {
-            ReporterFactoryXML<?> reporterFactory = getReporterFactory(outputElem);
-            reporterFactory.setConfig(outputElem);
+            ReporterFactoryXML<?> reporterFactory = getReporterFactory(reporterElem);
+            reporterFactory.setConfig(reporterElem);
             reporterFactory.setLogger(loggerManager);
-            list.add(reporterFactory);
+            list.put(reporterElem.getName(), reporterFactory);
          }
       }
       return list;

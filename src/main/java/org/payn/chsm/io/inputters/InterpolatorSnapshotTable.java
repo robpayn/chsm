@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.payn.chsm.Holon;
-import org.payn.chsm.io.SnapshotTable;
+import org.payn.chsm.io.SynopticTimeSeries;
 import org.payn.chsm.io.reporters.ReporterBehavior;
 import org.payn.chsm.processors.Controller;
 import org.payn.chsm.processors.ProcessorDouble;
@@ -101,7 +101,7 @@ public class InterpolatorSnapshotTable implements Inputter {
             processor.getController(), 
             new File(pathName.string), 
             time, 
-            SnapshotTable.getDelimiter(delimiter.string), 
+            SynopticTimeSeries.getDelimiter(delimiter.string), 
             header, 
             type.toString()
             );
@@ -203,7 +203,7 @@ public class InterpolatorSnapshotTable implements Inputter {
          table = new InterpolatorSnapshotTable(
                path, 
                time, 
-               SnapshotTable.getDelimiter(delimiter)
+               SynopticTimeSeries.getDelimiter(delimiter)
                );
          controller.addInputter(table);
          interpolatorMap.put(path, table);

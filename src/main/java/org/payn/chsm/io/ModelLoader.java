@@ -5,6 +5,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 import org.payn.chsm.io.logger.Logger;
 import org.payn.chsm.io.logger.LoggerManager;
@@ -275,11 +277,11 @@ public abstract class ModelLoader {
       }
       
       loggerManager.statusUpdate("Loading the reporters...");
-      ArrayList<ReporterFactory<?,?>> factories = loadReporterFactories();
-      for (ReporterFactory<?,?> factory: factories)
+      LinkedHashMap<String, ReporterFactory<?,?>> factories = loadReporterFactories();
+      for (Entry<String, ReporterFactory<?,?>> entry: factories.entrySet())
       {
-         Reporter reporter = factory.createReporter(workingDir, argMap);
-         builder.getController().addReporter(reporter);
+         Reporter reporter = entry.getValue().createReporter(workingDir, argMap);
+         builder.getController().addReporter(entry.getKey(), reporter);
          loggerManager.statusUpdate(String.format(
                "   Loaded reporter %s ...", 
                reporter.getClass().getCanonicalName()
@@ -319,7 +321,8 @@ public abstract class ModelLoader {
     *       Array list of reporter factories
     * @throws Exception 
     */
-   protected abstract ArrayList<ReporterFactory<?,?>> loadReporterFactories() throws Exception;
+   protected abstract LinkedHashMap<String, ReporterFactory<?,?>> loadReporterFactories() 
+         throws Exception;
 
    /**
     * Get the configured controller class

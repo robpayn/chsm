@@ -1,6 +1,6 @@
 package org.payn.chsm.processors;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import org.payn.chsm.State;
 import org.payn.chsm.io.inputters.Inputter;
@@ -29,7 +29,7 @@ public interface Controller extends Processor {
     * @return
     *       list of reporters
     */
-   public abstract ArrayList<Reporter> getReporters();
+   public abstract LinkedHashMap<String, Reporter> getReporters();
 
    /**
     * Add a processor to be controlled

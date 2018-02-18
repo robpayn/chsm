@@ -17,7 +17,7 @@ import org.payn.chsm.values.ValueLong;
  * @author v78h241
  *
  */
-public class SnapshotTable {
+public class SynopticTimeSeries {
 
    /**
     * A map of delimiters
@@ -103,7 +103,7 @@ public class SnapshotTable {
    /**
     * Raw constructor
     */
-   public SnapshotTable()
+   public SynopticTimeSeries()
    {
       columns = new LinkedHashMap<State, Integer>();
       headers = new LinkedHashMap<State, String>();
@@ -117,7 +117,7 @@ public class SnapshotTable {
     * @param append
     *       flag to signify append status (true = append to file, false = overwrite file)
     */
-   public SnapshotTable(File file, boolean append)
+   public SynopticTimeSeries(File file, boolean append)
    {
       this();
       this.file = file;
@@ -135,7 +135,7 @@ public class SnapshotTable {
     * @param delimiter
     *       delimiter between columns
     */
-   public SnapshotTable(File file, boolean append, String delimiter) 
+   public SynopticTimeSeries(File file, boolean append, String delimiter) 
    {
       this(file, append);
       this.delimiter = delimiter;

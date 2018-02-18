@@ -12,16 +12,16 @@ import org.payn.chsm.io.logger.LoggerManager;
  * 
  * @param <CT>
  *      Type of object containing the configuration of the reporter
- * @param <HT> 
+ * @param <RT> 
  *      Type of reporter configured by this factory
  *
  */
-public abstract class ReporterFactory<CT, HT extends Reporter> {
+public abstract class ReporterFactory<CT, RT extends Reporter> {
    
    /**
     * Reporter built by this factory
     */
-   protected HT reporter;
+   protected RT reporter;
    
    /**
     * Configuration information
@@ -113,7 +113,7 @@ public abstract class ReporterFactory<CT, HT extends Reporter> {
     * @throws Exception
     *       if error in creating the new reporter
     */
-   protected abstract HT newReporter(File workingDir, HashMap<String, String> argMap) 
+   protected abstract RT newReporter(File workingDir, HashMap<String, String> argMap) 
          throws Exception;
 
  }
