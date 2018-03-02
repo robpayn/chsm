@@ -66,6 +66,8 @@ implements Controller {
    /**
     * Add a reporter to the controller
     * 
+    * @param reporterName
+    *       name for the reporter
     * @param reporter
     *       reporter to add
     */
