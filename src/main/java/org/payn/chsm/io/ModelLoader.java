@@ -121,7 +121,7 @@ public abstract class ModelLoader {
                ));
       }
       Class<?> loadedClass = loadClass(path, classPath);
-      return loadedClass.newInstance();
+      return loadedClass.getConstructor().newInstance();
    }
    
    /**
@@ -224,7 +224,7 @@ public abstract class ModelLoader {
       }
       for (Class<?> logger: loggerList)
       {
-         loggerManager.addLogger((Logger)logger.newInstance());
+         loggerManager.addLogger((Logger)logger.getConstructor().newInstance());
          System.out.println(String.format(
             "   Loaded logger %s ...",
             logger.getCanonicalName()

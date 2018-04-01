@@ -218,7 +218,7 @@ public abstract class ModelBuilder {
             {
                if (value == null)
                {
-                  value = valueClass.newInstance();
+                  value = valueClass.getConstructor().newInstance();
                }
                else
                {

@@ -71,7 +71,7 @@ public abstract class ResourceAbstract implements Resource {
                   defaultBehaviorName,
                   name
                   ));
-         behavior = (Behavior)loadClass(classpath).newInstance();
+         behavior = (Behavior)loadClass(classpath).getConstructor().newInstance();
          behavior.setResource(this);
          behavior.initialize(defaultBehaviorName);
          behaviorMap.put(behavior.getName(), behavior);

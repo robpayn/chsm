@@ -296,7 +296,7 @@ public class InterpolatorSnapshotTable implements Inputter {
       columnMap = new HashMap<String, Integer>();
       for (int i = 0; i < header.length; i++)
       {
-         columnMap.put(header[i], new Integer(i));
+         columnMap.put(header[i], Integer.valueOf(i));
       }
       if (!columnMap.containsKey(Time.class.getSimpleName()))
       {

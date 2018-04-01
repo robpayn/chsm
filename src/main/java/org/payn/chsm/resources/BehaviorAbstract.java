@@ -117,7 +117,7 @@ public abstract class BehaviorAbstract implements Behavior{
       }
       else
       {
-         return (Value)registeredStateMap.get(stateName).newInstance();
+         return (Value)registeredStateMap.get(stateName).getConstructor().newInstance();
       }
    }
 
@@ -160,7 +160,7 @@ public abstract class BehaviorAbstract implements Behavior{
       {
          try 
          {
-            installProcessor(holon, controller, entry.getKey(), entry.getValue().newInstance());
+            installProcessor(holon, controller, entry.getKey(), entry.getValue().getConstructor().newInstance());
          }
          catch (Exception e)
          {
